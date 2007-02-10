@@ -124,4 +124,3 @@ void CodfigLite::Entry::loadValue(std::ifstream& in)
 	}
 	_needToLoad = true;
 }
-

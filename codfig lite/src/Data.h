@@ -17,7 +17,7 @@ namespace CodfigLite
 
 		virtual Data* clone() const = 0;
 
-		virtual void fromString(std::string& in) = 0;
+		virtual void fromString(const std::string& in) = 0;
 
 		virtual std::string toString() const = 0;
 	};

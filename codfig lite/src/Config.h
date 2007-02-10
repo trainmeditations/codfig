@@ -57,7 +57,8 @@ void CodfigLite::Config::add(const std::string& key, const T& value)
 template <typename T>
 T& CodfigLite::Config::get(const std::string& key) const
 {
-	return getKeyExists(key).getValue<T>();
+	const Entry& entry = getKeyExists(key);
+	return entry.getValue<T>();
 }
 
 #endif //_CHRISFIG_H_NJ78555_

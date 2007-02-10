@@ -14,4 +14,5 @@ namespace CodfigLite
 		bool splitFirst(const std::string& s, char delim, std::string& left, std::string& right);
 	}
 }
+
 #endif //_STRINGMANIP_H_HS73K823KM_

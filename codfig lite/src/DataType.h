@@ -18,7 +18,7 @@ namespace CodfigLite
 		{
 		}
 
-		DataType(std::string& value)
+		DataType(const std::string& value)
 		{
 			fromString(value);
 		}
@@ -33,7 +33,7 @@ namespace CodfigLite
 			return new DataType(_data);
 		}
 
-		virtual void fromString(std::string& in)
+		virtual void fromString(const std::string& in)
 		{
 			std::stringstream ss(in);
 			ss >> _data;
@@ -70,7 +70,7 @@ namespace CodfigLite
 			return new DataType(_data);
 		}
 
-		virtual void fromString(std::string& in)
+		virtual void fromString(const std::string& in)
 		{
 			_data = in;
 		}

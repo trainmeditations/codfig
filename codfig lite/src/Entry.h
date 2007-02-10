@@ -79,7 +79,8 @@ T& CodfigLite::Entry::getValue() const
 	if (_needToLoad)
 	{
 		delete _data;
-		const_cast<Data*>(_data) = new DataType<T>(static_cast<std::string>(_value));
+		Data** oldData = (Data**)&_data;
+		*oldData = new DataType<T>(_value);
 	}
 	else
 	{

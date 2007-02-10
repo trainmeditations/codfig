@@ -15,4 +15,5 @@ namespace CodfigLite
 
 	class file_format_error : public codfiglite_exception { };
 }
-#endif
+
+#endif //__EXCEPTIONS_H_INCLUDED__DY62077_
