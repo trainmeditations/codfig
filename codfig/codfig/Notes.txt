@@ -1,0 +1,56 @@
+config profiles in one config file
+
+main profile with only diffs for other profiles...
+
+each config value is somewhere from the root value
+
+data internall represented as a tree
+
+
+node templates
+
+
+
+Project Requirements:
+
+This project is designed to create a library that allows configuration data of an application
+to be internally represented through an object oriented interface, while allowing that configuration
+data to be written to any configuration file structure as is required by the application programmer.
+
+The configuration data will be represented as one object to the programmer. This object, being
+an instance of the codfig class, will have the following classes available to it to build a
+structure for a configuration representation as required by the programmer. These classes, and
+their roles, are:
+
+codfig_profile: Each codfig_profile object represents a set of configuration data. Each codfig
+object will have a default codfig_profile object, and a vector of alternative codfig_profile
+objects. Each of these alternative objects will only store differences between themselves and
+the default profile. There will be no configuration values in an alternative profile that don't
+have a counterpart in the default profile. If a value is added to the configuration that doesn't
+already exist, it gets added to the default profile, regardless of what profile is currently
+selected. Selection of the profile will be done through a call to the codfig objects.
+
+codfig_section: From the top layer of the configuration data, we start with a vector of
+codfig_sections. Each of these sections represents a different section of the current
+applications configuration data. No configuration values are stored with a section, however
+a section can contain configuration values (represented to it by codfig_nodes, discussed below)
+and other codfig_sections.
+
+codfig_node: Nodes are the generic interface to the actual configuration data. Each node is
+altimately a key/data pair with the key represented by a string and the data represented by
+a conf_data object (discussed below). The node doesn't care about what kind of data it stores.
+A codfig_node can also contain other nodes itself, to create groups of values grouped under a
+"parent" value.
+
+conf_data: In order to represent the several different data types that each config value can
+represent without breaking the type checking of the C++ language, the conf_data class will
+process any type of data it is sent. If it is not one of the 4 explicit types, it will throw
+a codfig_bad_type exception. This will allow the programmer to check the types being added
+to the codfig object. The types allowed to be saved as config data are ints, floats, booleans
+and strings. As the object could be representing any one of those 4 types, it stores a value
+that keeps track of the current type. If the wrong type is requested or set, it will throw a
+codfig_wrong_type exception.
+
+File Output:
+
+For XML output, wile write a proper standards document
