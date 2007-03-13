@@ -53,4 +53,6 @@ codfig_wrong_type exception.
 
 File Output:
 
-For XML output, wile write a proper standards document
+For XML output, wile write a proper standards document. 
+
+For all io, check file for proper structure, throw exception if not compliant. Maybe try to fix.

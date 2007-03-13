@@ -15,6 +15,36 @@ namespace codfig {
 
     class codfig {
         private:
+            class conf_data{
+                /*public:
+                    conf_data();
+                    conf_data(const conf_data &);
+                    const conf_data & operator=(const conf_data &);
+                    ~conf_data();
+
+                    //type parsing
+                    void value(int & int_value) const;
+                    void value(const int & int_value);
+                    void value(float & float_value) const;
+                    void value(const float & float_value);
+                    void value(string & string_value) const;
+                    void value(const string & string_value);
+                    void value(bool & bool_value) const;
+                    void value(const bool & bool_value);
+
+                    //type checking
+                    template <class bad_t>
+                            void value(bad_t & bad_t_value) const;
+                    template <class bad_t>
+                            void value(const bad_t & bad_t_value) const;
+                private:
+                    enum types{INT, FLOAT, STRING, BOOL};
+                    types type;
+                    union {int intValue; float floatValue;
+                        string * stringValue; bool boolValue;} conf_value;*/
+                public:
+                    virtual void stringValue() const = 0;
+            };
             class conf_data_int: public conf_data{
                 public:
                     void stringValue() const;
@@ -46,36 +76,6 @@ namespace codfig {
                     void value(const double & double_value); //mutator
                 private:
                     double value;
-            };
-            class conf_data{
-                /*public:
-                    conf_data();
-                    conf_data(const conf_data &);
-                    const conf_data & operator=(const conf_data &);
-                    ~conf_data();
-
-                    //type parsing
-                    void value(int & int_value) const;
-                    void value(const int & int_value);
-                    void value(float & float_value) const;
-                    void value(const float & float_value);
-                    void value(string & string_value) const;
-                    void value(const string & string_value);
-                    void value(bool & bool_value) const;
-                    void value(const bool & bool_value);
-
-                    //type checking
-                    template <class bad_t>
-                            void value(bad_t & bad_t_value) const;
-                    template <class bad_t>
-                            void value(const bad_t & bad_t_value) const;
-                private:
-                    enum types{INT, FLOAT, STRING, BOOL};
-                    types type;
-                    union {int intValue; float floatValue;
-                        string * stringValue; bool boolValue;} conf_value;*/
-                public:
-                    virtual void stringValue() const = 0;
             };
             class codfig_node{
                 public:
