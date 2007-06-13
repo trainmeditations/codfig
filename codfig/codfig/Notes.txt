@@ -42,14 +42,8 @@ a conf_data object (discussed below). The node doesn't care about what kind of d
 A codfig_node can also contain other nodes itself, to create groups of values grouped under a
 "parent" value.
 
-conf_data: In order to represent the several different data types that each config value can
-represent without breaking the type checking of the C++ language, the conf_data class will
-process any type of data it is sent. If it is not one of the 4 explicit types, it will throw
-a codfig_bad_type exception. This will allow the programmer to check the types being added
-to the codfig object. The types allowed to be saved as config data are ints, floats, booleans
-and strings. As the object could be representing any one of those 4 types, it stores a value
-that keeps track of the current type. If the wrong type is requested or set, it will throw a
-codfig_wrong_type exception.
+cod_types must supply a regex to describe the valid string value of data. There must also be a
+function to take a string that matches that regex and transform it into the native data
 
 File Output:
 

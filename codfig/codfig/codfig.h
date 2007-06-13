@@ -10,101 +10,26 @@
 #include <vector>
          using std::vector;
 #include "codexception.h"
+#include "codtype.h"
 
 namespace codfig {
 
     class codfig {
         private:
-            class conf_data{
-                /*public:
-                    conf_data();
-                    conf_data(const conf_data &);
-                    const conf_data & operator=(const conf_data &);
-                    ~conf_data();
-
-                    //type parsing
-                    void value(int & int_value) const;
-                    void value(const int & int_value);
-                    void value(float & float_value) const;
-                    void value(const float & float_value);
-                    void value(string & string_value) const;
-                    void value(const string & string_value);
-                    void value(bool & bool_value) const;
-                    void value(const bool & bool_value);
-
-                    //type checking
-                    template <class bad_t>
-                            void value(bad_t & bad_t_value) const;
-                    template <class bad_t>
-                            void value(const bad_t & bad_t_value) const;
-                private:
-                    enum types{INT, FLOAT, STRING, BOOL};
-                    types type;
-                    union {int intValue; float floatValue;
-                        string * stringValue; bool boolValue;} conf_value;*/
-                public:
-                    virtual void stringValue() const = 0;
-            };
-            class conf_data_int: public conf_data{
-                public:
-                    void stringValue() const;
-                    void value(int & int_value) const; //accessor
-                    void value(const int & int_value); //mutator
-                private:
-                    int value;
-            };
-            class conf_data_bool: public conf_data{
-                public:
-                    void stringValue() const;
-                    void value(bool & bool_value) const; //accessor
-                    void value(const bool & bool_value); //mutator
-                private:
-                    bool value;
-            };
-            class conf_data_string: public conf_data{
-                public:
-                    void stringValue() const;
-                    void value(string & string_value) const; //accessor
-                    void value(const string & string_value); //mutator
-                private:
-                    string value;
-            };
-            class conf_data_double: public conf_data{
-                public:
-                    void stringValue() const;
-                    void value(double & double_value) const; //accessor
-                    void value(const double & double_value); //mutator
-                private:
-                    double value;
-            };
             class codfig_node{
                 public:
                     codfig_node(string node_id);
                     codfig_node(const codfig_node &);
                     const codfig_node & operator=(const codfig_node &);
                     ~codfig_node();
-                    //insert specialised methods for allowed data types which cast
-                    //down to the correct conf_data object, if the accessor can't
-                    //cast the type, then throw an exception
-                    void setValue(string name="", const int & value);
-                    void getValue(string name="", int & value) const;
 
-                    void setValue(string name="", const bool & value);
-                    void getValue(string name="", bool & value) const;
-
-                    void setValue(string name="", const double & value);
-                    void getValue(string name="", double & value) const;
-
-                    void setValue(string name="", const string & value);
-                    void getValue(string name="", string & value) const;
-
-                    template <class bad_data_t>
-                            void setValue(string name="", const bad_data_t & value);
-                    template <class bad_data_t>
-                            void getValue(string name="", bad_data_t & value) const;
+                    template <class data_t>
+                            void setValue(string name="", const data_t & value);
+                    template <class data_t>
+                            void getValue(string name="", data_t & value) const;
                 private:
                     vector<codfig_node *> nodes;
-                    conf_data * value;
+                    cod_type * value;
                     string name;
             };
             class codfig_section{
