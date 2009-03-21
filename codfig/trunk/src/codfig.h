@@ -14,7 +14,7 @@
 
 namespace codfig {
 
-    class codfig {
+    class Codfig {
         private:
             class codfig_node{
                 public:
@@ -24,9 +24,9 @@ namespace codfig {
                     ~codfig_node();
 
                     template <class data_t>
-                            void setValue(string name="", const data_t & value);
+                            void setValue(string name, const data_t & value);
                     template <class data_t>
-                            void getValue(string name="", data_t & value) const;
+                            void getValue(string name, data_t & value) const;
                 private:
                     vector<codfig_node *> nodes;
                     cod_type * value;
@@ -74,15 +74,15 @@ namespace codfig {
             vector<codfig_profile *> * other_profiles;
             codfig_profile * current_profile;
         public:
-            codfig(string appname="", int version=0);
+            Codfig(string appname="", int version=0);
 
             //the big 3
-			codfig(const codfig &);
-            const codfig & operator=(const codfig &);
-            ~codfig();
+            Codfig(const Codfig &);
+            const Codfig & operator=(const Codfig &);
+            ~Codfig();
 
             //for accessing and setting values
-			//getter
+            //getter
             template <class conf_data_t>
                 const conf_data_t & operator[] (string path) const;
 			//setter
@@ -102,9 +102,10 @@ namespace codfig {
             void selectProfile(string name);
             void removeProfile(string name);
             void copyProfile(string oldProfile, string newProfile);
-			/*
-			 * develop as cheap copies, only copy data if the profile copied from or copied to changes it
-			 */
+            /*
+             * develop as cheap copies, only copy data if the profile
+             * copied from or copied to changes it
+             */
     };
 }
 
