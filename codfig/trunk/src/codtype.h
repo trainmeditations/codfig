@@ -2,8 +2,8 @@
 // decleration of the codtype abstract class
 // Copyright (C) 2006 Shaun Bouckaert
 
-#ifndef NAGCHAMPA_CODTYPE_H
-#define NAGCHAMPA_CODTYPE_H
+#ifndef TRAINMEDITATION_CODTYPE_H
+#define TRAINMEDITATION_CODTYPE_H
 
 namespace codfig{
     class cod_type{

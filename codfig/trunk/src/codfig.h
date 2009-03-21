@@ -2,8 +2,8 @@
 // decleration of the codfig class and subclasses
 // Copyright (C) 2006 Shaun Bouckaert
 
-#ifndef NAGCHAMPA_CODFIG_H
-#define NAGCHAMPA_CODFIG_H
+#ifndef TRAINMEDITATIONS_CODFIG_H
+#define TRAINMEDITATIONS_CODFIG_H
 
 #include <string>
          using std::string;
@@ -76,13 +76,16 @@ namespace codfig {
         public:
             codfig(string appname="", int version=0);
 
-            codfig(const codfig &);
+            //the big 3
+			codfig(const codfig &);
             const codfig & operator=(const codfig &);
             ~codfig();
 
             //for accessing and setting values
+			//getter
             template <class conf_data_t>
                 const conf_data_t & operator[] (string path) const;
+			//setter
             template <class conf_data_t>
                 conf_data_t & operator[] (string path);
 
@@ -99,6 +102,9 @@ namespace codfig {
             void selectProfile(string name);
             void removeProfile(string name);
             void copyProfile(string oldProfile, string newProfile);
+			/*
+			 * develop as cheap copies, only copy data if the profile copied from or copied to changes it
+			 */
     };
 }
 
