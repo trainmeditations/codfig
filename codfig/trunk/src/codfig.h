@@ -23,12 +23,12 @@ namespace codfig {
                     const codfig_node & operator=(const codfig_node &);
                     ~codfig_node();
 
-                    template <class data_t>
+/*                  template <class data_t>
                             void setValue(string name, const data_t & value);
                     template <class data_t>
-                            void getValue(string name, data_t & value) const;
+                            void getValue(string name, data_t & value) const;*/
+
                 private:
-                    vector<codfig_node *> nodes;
                     cod_type * value;
                     string name;
             };
@@ -43,10 +43,10 @@ namespace codfig {
                     codfig_section & section(string name);
                     void removeSection(string name);
 
-                    template <class conf_data_t>
+/*                  template <class conf_data_t>
                             void setValue(string name, const conf_data_t & value);
                     template <class conf_data_t>
-                            void getValue(string name, conf_data_t & value) const;
+                            void getValue(string name, conf_data_t & value) const;*/
 
                 private:
                     string name;
@@ -60,9 +60,9 @@ namespace codfig {
                     const codfig_profile & operator=(const codfig_profile &);
                     ~codfig_profile();
 
-                    void addSection(string name);
+/*                  void addSection(string name);
                     codfig_section & section(string name);
-                    void removeSection(string name);
+                    void removeSection(string name);*/
 
                 private:
                     vector<codfig_section *> * sections;
@@ -70,11 +70,11 @@ namespace codfig {
             };
             string appname;
             int version;
-            codfig_profile * main_profile;
-            vector<codfig_profile *> * other_profiles;
+            codfig_profile * default_profile;
+            vector<codfig_profile *> other_profiles;
             codfig_profile * current_profile;
         public:
-            Codfig(string appname="", int version=0);
+            Codfig(string, int);
 
             //the big 3
             Codfig(const Codfig &);
@@ -94,6 +94,7 @@ namespace codfig {
             void addSection(string path);
             void removeSection(string path);
 
+			//for looking at config layout
             const vector<string> & sections(string path="") const;
             const vector<string> & config_values(string path="") const;
 
