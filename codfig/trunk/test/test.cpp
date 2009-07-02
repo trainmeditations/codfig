@@ -12,7 +12,7 @@ using namespace codfig;
 
 int main(int argc, char * argv []) {
 	//Test Object Creation
-	Codfig testConfig = Codfig("CodfigTest", 0);
+	Codfig testConfig("CodfigTest", 0);
 
 	//Test copying and assignment
 	//Unit Testing
