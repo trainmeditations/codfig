@@ -6,9 +6,9 @@
 #define TRAINMEDITATIONS_CODFIG_H
 
 #include <string>
-         using std::string;
+using std::string;
 #include <vector>
-         using std::vector;
+using std::vector;
 #include "codexception.h"
 #include "codtype.h"
 
@@ -23,36 +23,42 @@ namespace codfig {
                     const codfig_node & operator=(const codfig_node &);
                     ~codfig_node();
 
-/*                  template <class data_t>
-                            void setValue(string name, const data_t & value);
                     template <class data_t>
-                            void getValue(string name, data_t & value) const;*/
+                        void setValue(string name, const data_t & value);
+                    template <class data_t>
+                        void getValue(string name, data_t & value) const;
 
                 private:
-                    cod_type * value;
                     string name;
+                    AbstractCodType * value;
             };
+        public:
             class codfig_section{
                 public:
+                    void addSection(string name);
+                    codfig_section & section(string name);
+                    void removeSection(string name);
+
+                    template <class T>
+                        void addValue(string path, T value);
+                    void removeValue(string path);
+
+                    const AbstractCodType & operator[] (const char * path) const;
+                    AbstractCodType & operator[] (const char * path);
+
+                private:
+                    friend class Codfig;
+
                     codfig_section(string section_name);
                     codfig_section(const codfig_section &);
                     const codfig_section & operator=(const codfig_section &);
                     ~codfig_section();
 
-                    void addSection(string name);
-                    codfig_section & section(string name);
-                    void removeSection(string name);
-
-/*                  template <class conf_data_t>
-                            void setValue(string name, const conf_data_t & value);
-                    template <class conf_data_t>
-                            void getValue(string name, conf_data_t & value) const;*/
-
-                private:
                     string name;
                     vector<codfig_section *> sections;
                     vector<codfig_node *> nodes;
             };
+        private:
             class codfig_profile{
                 public:
                     codfig_profile(string profile_name);
@@ -60,19 +66,23 @@ namespace codfig {
                     const codfig_profile & operator=(const codfig_profile &);
                     ~codfig_profile();
 
-/*                  void addSection(string name);
-                    codfig_section & section(string name);
-                    void removeSection(string name);*/
+                    /* void addSection(string name);
+                       codfig_section & section(string name);
+                       void removeSection(string name);*/
 
                 private:
                     vector<codfig_section *> * sections;
                     string profile_name;
             };
+
+            //Codfig Fields
             string appname;
             int version;
             codfig_profile * default_profile;
             vector<codfig_profile *> other_profiles;
             codfig_profile * current_profile;
+
+            //Codfig Private Methods
         public:
             Codfig(string, int);
 
@@ -81,20 +91,11 @@ namespace codfig {
             const Codfig & operator=(const Codfig &);
             ~Codfig();
 
-            //for accessing and setting values
-            //getter
-            template <class conf_data_t>
-                const conf_data_t & operator[] (string path) const;
-			//setter
-            template <class conf_data_t>
-                conf_data_t & operator[] (string path);
-
             //for setting up the config layout
-            void removeValue(string path);
             void addSection(string path);
             void removeSection(string path);
 
-			//for looking at config layout
+            //for looking at config layout
             const vector<string> & sections(string path="") const;
             const vector<string> & config_values(string path="") const;
 
