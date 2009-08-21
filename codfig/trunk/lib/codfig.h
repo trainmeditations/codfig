@@ -1,5 +1,5 @@
 // File: codfig.h
-// decleration of the codfig class and subclasses
+// decleration of the Config controller class
 // Copyright (C) 2006 Shaun Bouckaert
 
 #ifndef TRAINMEDITATIONS_CODFIG_H
@@ -9,105 +9,36 @@
 using std::string;
 #include <vector>
 using std::vector;
-#include "codexception.h"
-#include "codtype.h"
+#include "codfigexceptions.h"
+#include "codfigmodel.h"
 
 namespace codfig {
 
-    class Codfig {
-        private:
-            class codfig_node{
-                public:
-                    codfig_node(string node_id);
-                    codfig_node(const codfig_node &);
-                    const codfig_node & operator=(const codfig_node &);
-                    ~codfig_node();
+    class Config {
+		public:
+			Config(const ApplicationID &applicationID);
+			~Config();
 
-                    template <class data_t>
-                        void setValue(string name, const data_t & value);
-                    template <class data_t>
-                        void getValue(string name, data_t & value) const;
+			int addProfile(const string &name);
+			void removeProfile(const int &index);
+			void selectProfile(const int &index);
+			void selectDefaultProfile();
+			const vector<string> getProfileList() const;
 
-                private:
-                    string name;
-                    AbstractCodType * value;
-            };
-        public:
-            class codfig_section{
-                public:
-                    void addSection(string name);
-                    codfig_section & section(string name);
-                    void removeSection(string name);
+			const ConfigSection &operator[](const string &path) const;
+			ConfigSection &operator[](const string &path);
 
-                    template <class T>
-                        void addValue(string path, T value);
-                    void removeValue(string path);
+			const ConfigValue &operator()(const string &path) const;
+			ConfigValue &operator()(const string &path);
 
-                    const AbstractCodType & operator[] (const char * path) const;
-                    AbstractCodType & operator[] (const char * path);
+		private:
+			ConfigSection &findSection(string path) const;
+			ConfigValue &findValue(string path) const;
 
-                private:
-                    friend class Codfig;
-
-                    codfig_section(string section_name);
-                    codfig_section(const codfig_section &);
-                    const codfig_section & operator=(const codfig_section &);
-                    ~codfig_section();
-
-                    string name;
-                    vector<codfig_section *> sections;
-                    vector<codfig_node *> nodes;
-            };
-        private:
-            class codfig_profile{
-                public:
-                    codfig_profile(string profile_name);
-                    codfig_profile(const codfig_profile &);
-                    const codfig_profile & operator=(const codfig_profile &);
-                    ~codfig_profile();
-
-                    /* void addSection(string name);
-                       codfig_section & section(string name);
-                       void removeSection(string name);*/
-
-                private:
-                    vector<codfig_section *> * sections;
-                    string profile_name;
-            };
-
-            //Codfig Fields
-            string appname;
-            int version;
-            codfig_profile * default_profile;
-            vector<codfig_profile *> other_profiles;
-            codfig_profile * current_profile;
-
-            //Codfig Private Methods
-        public:
-            Codfig(string, int);
-
-            //the big 3
-            Codfig(const Codfig &);
-            const Codfig & operator=(const Codfig &);
-            ~Codfig();
-
-            //for setting up the config layout
-            void addSection(string path);
-            void removeSection(string path);
-
-            //for looking at config layout
-            const vector<string> & sections(string path="") const;
-            const vector<string> & config_values(string path="") const;
-
-            //profile stuff
-            void addProfile(string name);
-            void selectProfile(string name);
-            void removeProfile(string name);
-            void copyProfile(string oldProfile, string newProfile);
-            /*
-             * develop as cheap copies, only copy data if the profile
-             * copied from or copied to changes it
-             */
+			ApplicationID appID;
+			ConfigProfile * defaultProfile;
+			ConfigProfile * currentProfile;
+			vector<ConfigProfile *> profiles;
     };
 }
 

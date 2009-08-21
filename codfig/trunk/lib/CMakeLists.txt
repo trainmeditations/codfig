@@ -1,1 +1,1 @@
-add_library( Codfig codfig.cpp codfig.h codtype.h codexception.h codtypes.h )
+add_library( Codfig codfig.cpp codfig.h codfigmodel.cpp codfigmodel.h codfigmodel_t.h codfigexceptions.h )

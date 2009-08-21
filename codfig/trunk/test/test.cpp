@@ -8,11 +8,12 @@
 using std::cout;
 using std::endl;
 
-using namespace codfig;
+using codfig::Config;
+using codfig::ApplicationID;
 
 int main(int argc, char * argv []) {
 	//Test Object Creation
-	Codfig testConfig("CodfigTest", 0);
+	Config testConfig(ApplicationID("Test App", "0.0.0", "Shaun Bouckaert"));
 
 	//Test copying and assignment
 	//Unit Testing
