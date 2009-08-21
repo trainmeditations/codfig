@@ -5,6 +5,8 @@
 #ifndef TRAINMEDITATIONS_CODFIGEXCEPTIONS_H
 #define TRAINMEDITATIONS_CODFIGEXCEPTIONS_H
 
+#include <stdexcept>
+
 namespace codfig {
 
 	class bad_path: public std::runtime_error {

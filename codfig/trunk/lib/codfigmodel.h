@@ -67,7 +67,7 @@ namespace codfig{
 			void addSection(const string &name);
 			void removeSection(const string &name);
 			ConfigSection & getSection(const string &name);
-			const vector<const string> getSectionNames() const;
+			const vector<string> getSectionNames() const;
 		private:
 			map<string, ConfigSection *> subSections;
 	};
@@ -75,7 +75,7 @@ namespace codfig{
 	class ConfigSection:public SectionContainer {
 		public:
 			~ConfigSection();
-			const vector<const string> getValueNames() const;
+			const vector<string> getValueNames() const;
 			ConfigValue & value(const string &name);
 		private:
 			map<string, ConfigValue *> values;

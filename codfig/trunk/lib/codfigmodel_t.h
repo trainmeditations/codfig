@@ -48,10 +48,10 @@ const T &ConfigValue::getValue() const {
 		if (ValueBox<T> * valueBox = dynamic_cast<ValueBox<T> *>(value)){
 			return valueBox->getValue();
 		} else {
-			throw wrong_type(name);
+			throw wrong_type("name");
 		}
 	} else {
-		throw value_not_set(name);
+		throw value_not_set("name");
 	}
 }
 
@@ -61,7 +61,7 @@ void ConfigValue::setValue(const T &newValue){
 		if (ValueBox<T> * valueBox = dynamic_cast<ValueBox<T> *>(value)){
 			valueBox->setValue(newValue);
 		} else {
-			throw wrong_type(name);
+			throw wrong_type("name");
 		}
 	} else {
 		value = new ValueBox<T>(newValue);

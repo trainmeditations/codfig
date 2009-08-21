@@ -52,8 +52,8 @@ ConfigSection & SectionContainer::getSection(const std::string &name) {
 	}
 }
 
-const vector<const string> SectionContainer::getSectionNames() const {
-	vector<const string> names;
+const vector<string> SectionContainer::getSectionNames() const {
+	vector<string> names;
 	for (map<string, ConfigSection *>::const_iterator iter = subSections.begin();
 		 iter != subSections.end(); ++iter) {
 			 names.push_back(iter->first);
@@ -68,8 +68,8 @@ ConfigSection::~ConfigSection() {
 	}
 }
 
-const vector<const string> ConfigSection::getValueNames() const {
-	vector<const string> names;
+const vector<string> ConfigSection::getValueNames() const {
+	vector<string> names;
 	for (map<string, ConfigValue *>::const_iterator iter = values.begin();
 		 iter != values.end(); ++iter) {
 			 names.push_back(iter->first);
