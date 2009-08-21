@@ -25,6 +25,9 @@ namespace codfig {
 			void selectDefaultProfile();
 			const vector<string> getProfileList() const;
 
+			void addSection(const string &name);
+			void removeSection(const string &name);
+
 			const ConfigSection &operator[](const string &path) const;
 			ConfigSection &operator[](const string &path);
 

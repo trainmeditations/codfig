@@ -66,6 +66,14 @@ ConfigValue & Config::operator ()(const string &path) {
 	return findValue(path);
 }
 
+void Config::addSection(const string &name) {
+	currentProfile->addSection(name);
+}
+
+void Config::removeSection(const string &name) {
+	currentProfile->removeSection(name);
+}
+
 ConfigSection & Config::findSection(string path) const {
 	SectionContainer *  currentSectionContainer = currentProfile;
 	string::size_type seperatorPos;
