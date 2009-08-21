@@ -7,6 +7,7 @@
  *#include <crtdbg.h>*/
 
 #include <iostream>
+#include <string>
 #include "codfig.h"
 
 using std::cout;
@@ -20,11 +21,10 @@ int main(int argc, char * argv []) {
 	Config testConfig(ApplicationID("Test App", "0.0.0", "Shaun Bouckaert"));
 
 	testConfig.addSection("accounts");
+	testConfig["accounts"].addSection("isp");
+	testConfig["accounts.isp"].addSection("smtp");
+	testConfig("accounts.isp.smtp.ip").setValue(string("127.0.0.1"));
+	testConfig("accounts.isp.smtp.port").setValue(80);
 
-	testConfig["accounts"];
-
-	//Test copying and assignment
-	//Unit Testing
-	//Test Object Distruction
 	return 0;
 }

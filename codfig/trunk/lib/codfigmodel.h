@@ -32,11 +32,11 @@ namespace codfig{
 		private:
 			class AbstractValueBox {
 				public:
-					virtual ~AbstractValueBox() = 0;
+					virtual ~AbstractValueBox();
 			};
 
 			template <class T>
-			class ValueBox {
+			class ValueBox:public AbstractValueBox {
 				public:
 					ValueBox(T value);
 					~ValueBox();

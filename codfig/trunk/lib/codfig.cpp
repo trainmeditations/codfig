@@ -77,7 +77,7 @@ void Config::removeSection(const string &name) {
 ConfigSection & Config::findSection(string path) const {
 	SectionContainer *  currentSectionContainer = currentProfile;
 	string::size_type seperatorPos;
-	while (seperatorPos = path.find('.') != string::npos) {
+	while ((seperatorPos = path.find('.',0)) != string::npos) {
 		currentSectionContainer = &(currentSectionContainer->getSection(path.substr(0, seperatorPos)));
 		path = path.substr(seperatorPos+1);
 	}

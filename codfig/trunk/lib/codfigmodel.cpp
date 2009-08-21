@@ -17,6 +17,8 @@ const string &ApplicationID::getDeveloper() const {
 	return developer;
 }
 
+ConfigValue::AbstractValueBox::~AbstractValueBox(){}
+
 ConfigValue::ConfigValue():value(NULL){}
 
 ConfigValue::~ConfigValue() {
@@ -81,7 +83,9 @@ ConfigValue & ConfigSection::value(const string &name) {
 	if (values.count(name)) {
 		return *values[name];
 	} else {
-		throw bad_path(name);
+		ConfigValue * newValue = new ConfigValue();
+		values.insert(map<string, ConfigValue *>::value_type(name, newValue));
+		return *newValue;
 	}
 }
 
