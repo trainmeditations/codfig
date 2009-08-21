@@ -17,7 +17,9 @@ template <class T>
 ConfigValue::ValueBox<T>::ValueBox(T value):storedValue(value){}
 
 template <class T>
-ConfigValue::ValueBox<T>::~ValueBox(){}
+ConfigValue::ValueBox<T> * ConfigValue::ValueBox<T>::clone() {
+	return new ConfigValue::ValueBox<T>(*this);
+}
 
 template <class T>
 const T &ConfigValue::ValueBox<T>::getValue() const {

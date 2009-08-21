@@ -17,12 +17,21 @@ const string &ApplicationID::getDeveloper() const {
 	return developer;
 }
 
-ConfigValue::AbstractValueBox::~AbstractValueBox(){}
-
 ConfigValue::ConfigValue():value(NULL){}
+
+ConfigValue::ConfigValue(const ConfigValue & other):value(other.value->clone()){}
 
 ConfigValue::~ConfigValue() {
 	if (value) delete value;
+}
+
+SectionContainer::SectionContainer() {}
+
+SectionContainer::SectionContainer(const SectionContainer & other) {
+	for (map<string, ConfigSection *>::const_iterator iter = other.subSections.begin();
+		iter != other.subSections.end(); ++iter) {
+			subSections.insert(map<string, ConfigSection *>::value_type(iter->first, new ConfigSection(*(iter->second))));
+	}
 }
 
 SectionContainer::~SectionContainer() {
@@ -61,6 +70,15 @@ const vector<string> SectionContainer::getSectionNames() const {
 			 names.push_back(iter->first);
 	}
 	return names;
+}
+
+ConfigSection::ConfigSection() {}
+
+ConfigSection::ConfigSection(const ConfigSection & other):SectionContainer(other) {
+	for (map<string, ConfigValue *>::const_iterator iter = other.values.begin();
+		iter != other.values.end(); ++iter) {
+			values.insert(map<string, ConfigValue *>::value_type(iter->first, new ConfigValue(*(iter->second))));
+	}
 }
 
 ConfigSection::~ConfigSection() {
