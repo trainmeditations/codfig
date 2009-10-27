@@ -32,14 +32,14 @@ namespace codfig{
 		private:
 			class AbstractValueBox {
 				public:
-					virtual AbstractValueBox * clone() = 0;
+					virtual ~AbstractValueBox();
 			};
 
 			template <class T>
 			class ValueBox:public AbstractValueBox {
 				public:
 					ValueBox(T value);
-					ValueBox<T> * clone();
+					~ValueBox();
 					const T &getValue() const;
 					void setValue(const T &newValue);
 					string getStringValue() const;
@@ -50,7 +50,6 @@ namespace codfig{
 
 		public:
 			ConfigValue();
-			ConfigValue(const ConfigValue &);
 			~ConfigValue();
 			template <class T>
 				const T &getValue() const;
@@ -64,8 +63,6 @@ namespace codfig{
 
 	class SectionContainer { //should this protected inherit from vector<ConfigSection *> ?
 		public:
-			SectionContainer();
-			SectionContainer(const SectionContainer &);
 			virtual ~SectionContainer();
 			void addSection(const string &name);
 			void removeSection(const string &name);
@@ -77,8 +74,6 @@ namespace codfig{
 
 	class ConfigSection:public SectionContainer {
 		public:
-			ConfigSection();
-			ConfigSection(const ConfigSection &);
 			~ConfigSection();
 			const vector<string> getValueNames() const;
 			ConfigValue & value(const string &name);

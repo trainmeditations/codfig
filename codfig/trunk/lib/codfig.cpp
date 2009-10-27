@@ -12,18 +12,6 @@ Config::Config(const ApplicationID &applicationID):
 appID(applicationID), defaultProfile(new ConfigProfile("default")),
 currentProfile(defaultProfile){}
 
-Config::Config(const Config &other):appID(other.appID), 
-defaultProfile(new ConfigProfile(*other.defaultProfile)),
-currentProfile(defaultProfile){
-	for (vector<ConfigProfile *>::const_iterator iter = other.profiles.begin();
-		iter != other.profiles.end(); ++iter) {
-			ConfigProfile * newProfile = new ConfigProfile(**iter);
-			profiles.push_back(newProfile);
-			if (other.currentProfile == *iter)
-				currentProfile = newProfile;
-	}
-}
-
 Config::~Config(){
 	currentProfile = NULL;
 	delete defaultProfile;

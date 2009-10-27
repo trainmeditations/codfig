@@ -17,7 +17,6 @@ namespace codfig {
     class Config {
 		public:
 			Config(const ApplicationID &applicationID);
-			Config(const Config &other);
 			~Config();
 
 			int addProfile(const string &name);
