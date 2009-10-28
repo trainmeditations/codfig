@@ -12,12 +12,47 @@ Config::Config(const ApplicationID &applicationID):
 appID(applicationID), defaultProfile(new ConfigProfile("default")),
 currentProfile(defaultProfile){}
 
+Config::Config(const Config & other):
+appID(other.appID), defaultProfile(new ConfigProfile(*(other.defaultProfile))),
+currentProfile(defaultProfile){
+    //Copy profiles and set the same currentProfile
+    copyProfiles(other);
+}
+
+Config & Config::operator=(const Config &rhs) {
+    if (this != &rhs) {
+        appID = rhs.appID;
+
+        delete defaultProfile;
+        defaultProfile = new ConfigProfile(*(rhs.defaultProfile));
+        currentProfile = defaultProfile;
+
+        for (vector<ConfigProfile *>::iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
+            delete *iter;
+            *iter = NULL;
+        }
+        profiles.clear();
+        copyProfiles(rhs);
+    }
+    return *this;
+}
+
+void Config::copyProfiles(const Config & other) {
+    ConfigProfile * newProfile = NULL;
+    for (vector<ConfigProfile *>::const_iterator other_iter = other.profiles.begin();
+      other_iter != other.profiles.end(); ++other_iter) {
+        newProfile = new ConfigProfile(*(*other_iter));
+        profiles.push_back(newProfile);
+        if (other.currentProfile == *other_iter) currentProfile = newProfile;
+    }
+}
+
 Config::~Config(){
 	currentProfile = NULL;
 	delete defaultProfile;
 	for (vector<ConfigProfile *>::iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
 		delete *iter;
-		*iter = 0;
+		*iter = NULL;
 	}
 }
 

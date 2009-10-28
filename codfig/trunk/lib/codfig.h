@@ -17,6 +17,8 @@ namespace codfig {
     class Config {
 		public:
 			Config(const ApplicationID &applicationID);
+			Config(const Config &other);
+			Config & operator=(const Config &rhs);
 			~Config();
 
 			int addProfile(const string &name);
@@ -37,6 +39,7 @@ namespace codfig {
 		private:
 			ConfigSection &findSection(string path) const;
 			ConfigValue &findValue(string path) const;
+			void copyProfiles(const Config &other);
 
 			ApplicationID appID;
 			ConfigProfile * defaultProfile;

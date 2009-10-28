@@ -32,6 +32,7 @@ namespace codfig{
 		private:
 			class AbstractValueBox {
 				public:
+                    virtual AbstractValueBox * cloneValue() const = 0;
 					virtual ~AbstractValueBox();
 			};
 
@@ -40,6 +41,7 @@ namespace codfig{
 				public:
 					ValueBox(T value);
 					~ValueBox();
+					ValueBox<T> * cloneValue() const;
 					const T &getValue() const;
 					void setValue(const T &newValue);
 					string getStringValue() const;
@@ -50,6 +52,8 @@ namespace codfig{
 
 		public:
 			ConfigValue();
+			ConfigValue(const ConfigValue & other);
+			ConfigValue & operator=(const ConfigValue & rhs);
 			~ConfigValue();
 			template <class T>
 				const T &getValue() const;
@@ -63,21 +67,29 @@ namespace codfig{
 
 	class SectionContainer { //should this protected inherit from vector<ConfigSection *> ?
 		public:
+            SectionContainer();
+            SectionContainer(const SectionContainer & other);
+            SectionContainer & operator=(const SectionContainer & rhs);
 			virtual ~SectionContainer();
 			void addSection(const string &name);
 			void removeSection(const string &name);
 			ConfigSection & getSection(const string &name);
 			const vector<string> getSectionNames() const;
 		private:
+            void copySections(const SectionContainer & other);
 			map<string, ConfigSection *> subSections;
 	};
 
 	class ConfigSection:public SectionContainer {
 		public:
+            ConfigSection();
+            ConfigSection(const ConfigSection & other);
+            ConfigSection & operator=(const ConfigSection & rhs);
 			~ConfigSection();
 			const vector<string> getValueNames() const;
 			ConfigValue & value(const string &name);
 		private:
+            void copyValues(const ConfigSection & other);
 			map<string, ConfigValue *> values;
 	};
 

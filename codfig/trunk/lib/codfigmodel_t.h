@@ -13,11 +13,16 @@ using namespace codfig;
 using std::ostringstream;
 using std::istringstream;
 
-template <class T> 
+template <class T>
 ConfigValue::ValueBox<T>::ValueBox(T value):storedValue(value){}
 
 template <class T>
 ConfigValue::ValueBox<T>::~ValueBox(){}
+
+template <class T>
+ConfigValue::ValueBox<T> * ConfigValue::ValueBox<T>::cloneValue() const {
+    return new ValueBox<T>(*this);
+}
 
 template <class T>
 const T &ConfigValue::ValueBox<T>::getValue() const {

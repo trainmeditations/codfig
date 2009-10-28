@@ -21,8 +21,49 @@ ConfigValue::AbstractValueBox::~AbstractValueBox(){}
 
 ConfigValue::ConfigValue():value(NULL){}
 
+ConfigValue::ConfigValue(const ConfigValue & other):value(NULL){
+    if (other.value) value = other.value->cloneValue();
+}
+
+ConfigValue & ConfigValue::operator=(const ConfigValue & other){
+    if (this != &other) {
+        delete value;
+        if (other.value) {
+            value = other.value->cloneValue();
+        } else {
+            value = NULL;
+        }
+    }
+    return *this;
+}
+
 ConfigValue::~ConfigValue() {
 	if (value) delete value;
+}
+
+SectionContainer::SectionContainer(){}
+
+SectionContainer::SectionContainer(const SectionContainer & other){
+    copySections(other);
+}
+
+SectionContainer & SectionContainer::operator=(const SectionContainer & rhs){
+    if (this != &rhs) {
+        for (map<string, ConfigSection *>::iterator iter = subSections.begin();
+          iter != subSections.end(); iter++){
+            delete iter->second;
+        }
+        subSections.clear();
+        copySections(rhs);
+    }
+    return *this;
+}
+
+void SectionContainer::copySections(const SectionContainer & other){
+    for (map<string, ConfigSection *>::const_iterator other_iter = other.subSections.begin();
+      other_iter != other.subSections.end(); other_iter++){
+        subSections[other_iter->first] = new ConfigSection(*(other_iter->second));
+    }
 }
 
 SectionContainer::~SectionContainer() {
@@ -34,7 +75,8 @@ SectionContainer::~SectionContainer() {
 
 void SectionContainer::addSection(const string &name) {
 	if (!subSections.count(name)) {
-		subSections.insert(map<string, ConfigSection *>::value_type(name, new ConfigSection()));
+		//subSections.insert(map<string, ConfigSection *>::value_type(name, new ConfigSection()));
+		subSections[name] = new ConfigSection();
 	} else {
 		throw duplicate_name("section", name);
 	}
@@ -42,6 +84,7 @@ void SectionContainer::addSection(const string &name) {
 
 void SectionContainer::removeSection(const string &name) {
 	if (subSections.count(name)) {
+	    delete subSections[name];
 		subSections.erase(name);
 	} //should I throw an exception on else?
 }
@@ -61,6 +104,31 @@ const vector<string> SectionContainer::getSectionNames() const {
 			 names.push_back(iter->first);
 	}
 	return names;
+}
+
+ConfigSection::ConfigSection(){}
+
+ConfigSection::ConfigSection(const ConfigSection & other):SectionContainer(other){
+    copyValues(other);
+}
+
+ConfigSection & ConfigSection::operator=(const ConfigSection & rhs) {
+    if (this != &rhs) {
+        for (map<string, ConfigValue *>::iterator iter = values.begin(); iter != values.end(); ++iter){
+            delete iter->second;
+        }
+        values.clear();
+        copyValues(rhs);
+        SectionContainer::operator=(rhs);
+    }
+    return *this;
+}
+
+void ConfigSection::copyValues(const ConfigSection & other){
+    for (map<string, ConfigValue *>::const_iterator other_iter = other.values.begin();
+      other_iter != other.values.end(); ++other_iter){
+        values[other_iter->first] = new ConfigValue(*(other_iter->second));
+    }
 }
 
 ConfigSection::~ConfigSection() {
