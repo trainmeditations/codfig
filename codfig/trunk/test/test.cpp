@@ -2,9 +2,11 @@
  * Test Driver for Codfig Configuration Library
  */
 
-/*#define _CRTDBG_MAP_ALLOC
- *#include <stdlib.h>
- *#include <crtdbg.h>*/
+#ifdef _MSC_VER
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#endif
 
 #include <iostream>
 #include <string>
@@ -25,15 +27,39 @@ bool runTest(Test);
 
 int main(int argc, char * argv []) {
     cout << "Begining Tests" << endl;
-	//Test Object Creation
-	Config testConfig = getFixture(fullConfig);
-	cout << "Have Fixture" << endl;
-	Config otherConfig(testConfig);
-	cout << testConfig("accounts.isp.smtp.ip").getValue<string>()<<":"<<testConfig("accounts.isp.smtp.port").getValue<int>()<<endl;
-	otherConfig("accounts.isp.smtp.ip").setValue<string>(string("127.0.0.2"));
-	otherConfig("accounts.isp.smtp.port").setValue<int>(23);
-	cout << otherConfig("accounts.isp.smtp.ip").getValue<string>()<<":"<<otherConfig("accounts.isp.smtp.port").getValue<int>()<<endl;
+	runTest(basic);
+
+	//MS Visual C++ Memory Leak Detection
+	#ifdef _MSC_VER
+	_CrtDumpMemoryLeaks();
+	#endif
+
 	return 0;
+}
+
+bool runTest(Test test){
+	new int(0);
+	string testName;
+	bool result = false;
+	cout << "Running test \"";
+	switch(test){
+
+	case basic:
+	{
+		cout << (testName = "basic") << "\"." << endl;
+		//Test Object Creation
+		Config testConfig = getFixture(fullConfig);
+		cout << "Have Fixture" << endl;
+		cout << testConfig("accounts.isp.smtp.ip").getValue<string>()<<":"<<testConfig("accounts.isp.smtp.port").getValue<int>()<<endl;
+	}break;
+
+	default:
+		cout << "!!!TEST NOT IMPLEMENTED!!!\"" << endl;
+		return false;
+	}
+
+	cout << "Completed test \"" << testName << "\"." << endl;
+	return result;
 }
 
 Config getFixture(Fixture fixture) {
