@@ -129,6 +129,10 @@ void Config::removeSection(const string &name) {
 	currentProfile->removeSection(name);
 }
 
+const vector<string> Config::getSectionNames() const {
+	return currentProfile->getSectionNames();
+}
+
 ConfigSection & Config::findSection(string path) const {
 	SectionContainer *  currentSectionContainer = currentProfile;
 	string::size_type seperatorPos;

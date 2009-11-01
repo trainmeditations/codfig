@@ -33,6 +33,7 @@
 #include <iostream>
 #include <string>
 #include "codfig.h"
+#include "tests.h"
 
 using std::cout;
 using std::endl;
@@ -41,16 +42,19 @@ using codfig::Config;
 using codfig::ApplicationID;
 
 enum Fixture { fullConfig };
-enum Test { values, structure };
+
+enum Test { values, structure, exceptions };
 
 Config getFixture(Fixture);
 
-bool runTest(Test);
+bool runTests(Test);
+
 
 int main(int argc, char * argv []) {
     cout << "Begining Tests" << endl;
-	runTest(values);
-	runTest(structure);
+	runTests(values);
+	runTests(structure);
+	runTests(exceptions);
 
 	//MS Visual C++ Memory Leak Detection - Uncomment the lines to use
 	#ifdef _MSC_VER
@@ -58,10 +62,12 @@ int main(int argc, char * argv []) {
 	#endif
 	//END MS Visual C++ Memory Leak Detection Code
 
+	cout << endl << "Completed Test Suite." << endl << endl;
+
 	return 0;
 }
 
-bool runTest(Test test){
+bool runTests(Test test){
 	string testName;
 	cout << endl << "Running test \"";
 	unsigned int failures = 0;
@@ -74,39 +80,45 @@ bool runTest(Test test){
 		Config testConfig = getFixture(fullConfig);
 
 		//Compare string value
-		cout << "|Compare string value: ";
-		if (testConfig("accounts.isp.smtp.ip").getValue<string>() == "127.0.0.1") {
-		    cout << "success." << endl;
-		} else {
-		    cout << "failure!" << endl;
-		    failures++;
-		}
+		failures += boolTest("Compare string value",
+			testConfig("accounts.isp.smtp.ip").getValue<string>() == "127.0.0.1");
 
 		//Compare int value
-		cout << "|Compare int value: ";
-		if (testConfig("accounts.isp.smtp.port").getValue<int>() == 25) {
-		    cout << "success." << endl;
-		} else {
-		    cout << "failure!" << endl;
-		    failures++;
-		}
+		failures += boolTest("Compare int value",
+			testConfig("accounts.isp.smtp.port").getValue<int>() == 25);
 
 		//Compare float value
-		cout << "|Compare float value: ";
-		if (testConfig("accounts.isp.smtp.data").getValue<float>() == 17.0F) {
-		    cout << "success." << endl;
-		} else {
-		    cout << "failure!" << endl;
-		    failures++;
-		}
+		failures += boolTest("Compare float value",
+			testConfig("accounts.isp.smtp.data").getValue<float>() == 17.0F);
 
 		//Compare bool value
-		cout << "|Compare bool value: ";
-		if (testConfig("accounts.isp.smtp.default").getValue<bool>() == false) {
-		    cout << "success." << endl;
-		} else {
-		    cout << "failure!" << endl;
-		}
+		failures += boolTest("Compare bool value",
+			testConfig("accounts.isp.smtp.default").getValue<bool>() == false);
+	}break;
+
+	case structure:
+	{
+		cout << (testName = "structure") << "\"." << endl;
+		Config testConfig = getFixture(fullConfig);
+
+		failures += boolTest("Check number of root sections",
+			testConfig.getSectionNames().size() == 1);
+
+		failures += boolTest("Check number of sub-sections",
+			testConfig["accounts"].getSectionNames().size() == 2);
+
+		failures += boolTest("Check number of values",
+			testConfig["accounts.isp.smtp"].getValueNames().size() == 4);
+	}break;
+
+	case exceptions:
+	{
+		cout << (testName = "exception") << "\"." << endl;
+		Config testConfig = getFixture(fullConfig);
+
+		failures += exceptionTest
+			<codfig::bad_path, const codfig::ConfigSection &(codfig::Config::*)(const std::string &) const>
+			("Section bad_path check", "bad.path", testConfig, &codfig::Config::operator[]);
 	}break;
 
 	default:
