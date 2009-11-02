@@ -46,7 +46,7 @@ namespace codfig {
 
 	class duplicate_name: public std::runtime_error {
 		public:
-			explicit duplicate_name(const std::string &type, const std::string &name):std::runtime_error("A " + type + " named " + name + " already exists."){}
+			explicit duplicate_name(const std::string &type, const std::string &name):std::runtime_error("A " + type + " named \"" + name + "\" already exists."){}
 	};
 }
 

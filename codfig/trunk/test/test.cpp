@@ -119,6 +119,9 @@ bool runTests(Test test){
 		failures += exceptionTest
 			<codfig::bad_path, const codfig::ConfigSection &(codfig::Config::*)(const std::string &) const>
 			("Section bad_path check", "bad.path", testConfig, &codfig::Config::operator[]);
+        failures += exceptionTest
+            <codfig::duplicate_name>
+            ("Section duplicate_name check", "accounts", testConfig, &codfig::Config::addSection);
 	}break;
 
 	default:

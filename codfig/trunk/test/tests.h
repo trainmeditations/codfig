@@ -28,7 +28,7 @@ using std::endl;
 
 int boolTest(const char *, bool);
 
-template <class E, class F, class A, class O>
+/*template <class E, class F, class A, class O>
 int exceptionTest(const char *, A, const O &, F);//replace third arg with variable argument list
 
 template <class E, class F, class A, class O>
@@ -45,6 +45,27 @@ int exceptionTest(const char * message, A argument, const O & object, F function
 			cout << "failure: wrong exception thrown!" << endl;
 			return 1;
 	}
+}*/
+
+
+template <class E, class F, class A, class O>
+int exceptionTest(const char *, A, O &, F);
+
+template <class E, class F, class A, class O>
+int exceptionTest(const char * message, A argument, O & object, F functionP) {
+	cout << "|-" << message << ": ";
+	try {
+			(object.*functionP)(argument);
+			cout << "failure: no exception thrown!" << endl;
+			return 1;
+	} catch (const E & e) {
+			cout << "success: exception thrown with message:" << endl << "\t\"" << e.what() << "\"" << endl;
+			return 0;
+	} catch (...) {
+			cout << "failure: wrong exception thrown!" << endl;
+			return 1;
+	}
 }
+
 
 #endif
