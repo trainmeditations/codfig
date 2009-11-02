@@ -21,6 +21,11 @@
 #ifndef TESTS_H
 #define TESTS_H
 
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
 int boolTest(const char *, bool);
 
 template <class E, class F, class A, class O>
