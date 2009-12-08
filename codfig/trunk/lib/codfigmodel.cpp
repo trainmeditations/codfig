@@ -1,5 +1,5 @@
 /*
- * Copyright Shaun Bouckaert 2009
+ * Copyright © Shaun Bouckaert 2009
  *
  * This file is part of Codfig.
  *
@@ -39,10 +39,11 @@ const string &ApplicationID::getDeveloper() const {
 
 ConfigValue::AbstractValueBox::~AbstractValueBox(){}
 
-ConfigValue::ConfigValue():value(NULL){}
+ConfigValue::ConfigValue():value(NULL),changed(false){}
 
 ConfigValue::ConfigValue(const ConfigValue & other):value(NULL){
     if (other.value) value = other.value->cloneValue();
+	changed = other.changed;
 }
 
 ConfigValue & ConfigValue::operator=(const ConfigValue & other){
@@ -53,8 +54,17 @@ ConfigValue & ConfigValue::operator=(const ConfigValue & other){
         } else {
             value = NULL;
         }
+		changed = other.changed;
     }
     return *this;
+}
+
+bool ConfigValue::hasChanged() const {
+	return changed;
+}
+
+void ConfigValue::setChanged(bool isChanged) {
+	changed = isChanged;
 }
 
 ConfigValue::~ConfigValue() {

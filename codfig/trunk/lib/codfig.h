@@ -1,5 +1,5 @@
 /*
- * Copyright Shaun Bouckaert 2009
+ * Copyright © Shaun Bouckaert 2009
  *
  * This file is part of Codfig.
  *
@@ -20,7 +20,6 @@
 
 // File: codfig.h
 // decleration of the Config controller class
-// Copyright (C) 2006 Shaun Bouckaert
 
 #ifndef TRAINMEDITATIONS_CODFIG_H
 #define TRAINMEDITATIONS_CODFIG_H
@@ -67,6 +66,9 @@ namespace codfig {
 			ConfigProfile * currentProfile;
 			vector<ConfigProfile *> profiles;
     };
+	class ConfigIO;
 }
+
+codfig::ConfigIO & operator>>(codfig::ConfigIO &, codfig::Config &);
 
 #endif

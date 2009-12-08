@@ -1,5 +1,5 @@
 /*
- * Copyright Shaun Bouckaert 2009
+ * Copyright © Shaun Bouckaert 2009
  *
  * This file is part of Codfig.
  *
@@ -20,7 +20,6 @@
 
 // File: codfigmodel.h
 // model of configuration data
-// Copyright (C) Shaun Bouckaert
 
 #ifndef TRAINMEDITATION_CODFIGMODEL_H
 #define TRAINMEDITATION_CODFIGMODEL_H
@@ -74,6 +73,8 @@ namespace codfig{
 			ConfigValue();
 			ConfigValue(const ConfigValue & other);
 			ConfigValue & operator=(const ConfigValue & rhs);
+			bool hasChanged() const;
+			void setChanged(bool);
 			~ConfigValue();
 			template <class T>
 				const T &getValue() const;
@@ -81,6 +82,7 @@ namespace codfig{
 				void setValue(const T &newValue);
 		private:
 			AbstractValueBox * value;
+			bool changed;
 	};
 
 	class ConfigSection;

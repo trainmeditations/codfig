@@ -18,20 +18,21 @@
  *
  */
 
-#include <iostream>
+// File: codfigio_ini.h
+// decleration of the ConfigIO controller class for INI files
 
-#include "tests.h"
+#ifndef TRAINMEDITATIONS_CODFIGIO_INI_H
+#define TRAINMEDITATIONS_CODFIGIO_INI_H
 
-using std::cout;
-using std::endl;
+#include "codfigfileio.h"
 
-int boolTest(const char * message, bool test) {
-	cout << "|-" << message << ": ";
-	if (test) {
-		cout << "success." << endl;
-		return 0;
-	} else {
-		cout << "failure!" << endl;
-		return 1;
-	}
+namespace codfig {
+	class ConfigIOini:public ConfigFileIO {
+	public:
+		Config getConfig();
+		void saveConfig(const Config &);
+	private:
+	};
 }
+
+#endif

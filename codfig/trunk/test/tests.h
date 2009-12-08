@@ -1,5 +1,5 @@
 /*
- * Copyright Shaun Bouckaert 2009
+ * Copyright © Shaun Bouckaert 2009
  *
  * This file is part of Codfig.
  *
@@ -47,9 +47,6 @@ int exceptionTest(const char * message, A argument, const O & object, F function
 	}
 }*/
 
-
-template <class E, class F, class A, class O>
-int exceptionTest(const char *, A, O &, F);
 
 template <class E, class F, class A, class O>
 int exceptionTest(const char * message, A argument, O & object, F functionP) {

@@ -1,5 +1,5 @@
 /*
- * Copyright Shaun Bouckaert 2009
+ * Copyright © Shaun Bouckaert 2009
  *
  * This file is part of Codfig.
  *
@@ -33,6 +33,7 @@
 #include <iostream>
 #include <string>
 #include "codfig.h"
+#include "codfigio_ini.h"
 #include "tests.h"
 
 using std::cout;
@@ -40,6 +41,7 @@ using std::endl;
 
 using codfig::Config;
 using codfig::ApplicationID;
+using codfig::ConfigIOini;
 
 enum Fixture { fullConfig };
 
@@ -55,6 +57,8 @@ int main(int argc, char * argv []) {
 	runTests(values);
 	runTests(structure);
 	runTests(exceptions);
+
+	ConfigIOini testINI;
 
 	//MS Visual C++ Memory Leak Detection - Uncomment the lines to use
 	#ifdef _MSC_VER

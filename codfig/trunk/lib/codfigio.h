@@ -1,5 +1,5 @@
 /*
- * Copyright © Shaun Bouckaert 2009
+ * Copyright Â© Shaun Bouckaert 2009
  *
  * This file is part of Codfig.
  *
@@ -18,20 +18,27 @@
  *
  */
 
-#include <iostream>
+// File: codfigio.h
+// decleration of the ConfigIO controller class
 
-#include "tests.h"
+#ifndef TRAINMEDITATIONS_CODFIGIO_H
+#define TRAINMEDITATIONS_CODFIGIO_H
 
-using std::cout;
-using std::endl;
+#include <string>
+#include "codfig.h"
 
-int boolTest(const char * message, bool test) {
-	cout << "|-" << message << ": ";
-	if (test) {
-		cout << "success." << endl;
-		return 0;
-	} else {
-		cout << "failure!" << endl;
-		return 1;
-	}
+using std::string;
+
+namespace codfig {
+
+	class Config;
+
+	class ConfigIO {
+	public:
+		virtual Config getConfig() = 0;
+		virtual void saveConfig(const Config &) = 0;
+	private:
+	};
 }
+
+#endif

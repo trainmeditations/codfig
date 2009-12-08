@@ -1,5 +1,5 @@
 /*
- * Copyright Shaun Bouckaert 2009
+ * Copyright © Shaun Bouckaert 2009
  *
  * This file is part of Codfig.
  *
@@ -21,6 +21,7 @@
 #include <algorithm>
 
 #include "codfig.h"
+#include "codfigio.h"
 
 using namespace codfig;
 
@@ -146,4 +147,9 @@ ConfigSection & Config::findSection(string path) const {
 ConfigValue & Config::findValue(string path) const {
 	string::size_type seperatorPos = path.find_last_of('.');
 	return findSection(path.substr(0, seperatorPos)).value(path.substr(seperatorPos+1));
+}
+
+ConfigIO & operator>>(ConfigIO & in, Config & config){
+	config = in.getConfig();
+	return in;
 }

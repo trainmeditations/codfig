@@ -1,5 +1,5 @@
 /*
- * Copyright © Shaun Bouckaert 2009
+ * Copyright Â© Shaun Bouckaert 2009
  *
  * This file is part of Codfig.
  *
@@ -18,20 +18,17 @@
  *
  */
 
-#include <iostream>
+// File: codfigexceptions.cpp
+// Definition of exception classes
 
-#include "tests.h"
+#include "codfigexceptions.h"
 
-using std::cout;
-using std::endl;
+using namespace codfig;
 
-int boolTest(const char * message, bool test) {
-	cout << "|-" << message << ": ";
-	if (test) {
-		cout << "success." << endl;
-		return 0;
-	} else {
-		cout << "failure!" << endl;
-		return 1;
-	}
-}
+bad_path::bad_path(const std::string &path):std::runtime_error("Bad path to section: " + path){}
+
+wrong_type::wrong_type(const std::string &name):std::logic_error("Wrong type for value " + name + "."){}
+
+value_not_set::value_not_set(const std::string &name):std::runtime_error("Value not set for value " + name + "."){}
+
+duplicate_name::duplicate_name(const std::string &type, const std::string &name):std::runtime_error("A " + type + " named \"" + name + "\" already exists."){}
