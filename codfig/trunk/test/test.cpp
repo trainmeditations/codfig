@@ -1,5 +1,5 @@
 /*
- * Copyright © Shaun Bouckaert 2009
+ * Copyright Â© Shaun Bouckaert 2009
  *
  * This file is part of Codfig.
  *
@@ -45,7 +45,7 @@ using codfig::ConfigIOini;
 
 enum Fixture { fullConfig };
 
-enum Test { values, structure, exceptions };
+enum Test { values, structure, exceptions, io };
 
 Config getFixture(Fixture);
 
@@ -57,8 +57,7 @@ int main(int argc, char * argv []) {
 	runTests(values);
 	runTests(structure);
 	runTests(exceptions);
-
-	ConfigIOini testINI;
+	runTests(io);
 
 	//MS Visual C++ Memory Leak Detection - Uncomment the lines to use
 	#ifdef _MSC_VER
@@ -85,19 +84,19 @@ bool runTests(Test test){
 
 		//Compare string value
 		failures += boolTest("Compare string value",
-			testConfig("accounts.isp.smtp.ip").getValue<string>() == "127.0.0.1");
+			testConfig("accounts.isp.smtp.ip").value<string>() == "127.0.0.1");
 
 		//Compare int value
 		failures += boolTest("Compare int value",
-			testConfig("accounts.isp.smtp.port").getValue<int>() == 25);
+			testConfig("accounts.isp.smtp.port").value<int>() == 25);
 
 		//Compare float value
 		failures += boolTest("Compare float value",
-			testConfig("accounts.isp.smtp.data").getValue<float>() == 17.0F);
+			testConfig("accounts.isp.smtp.data").value<float>() == 17.0F);
 
 		//Compare bool value
 		failures += boolTest("Compare bool value",
-			testConfig("accounts.isp.smtp.default").getValue<bool>() == false);
+			testConfig("accounts.isp.smtp.default").value<bool>() == false);
 	}break;
 
 	case structure:
@@ -128,6 +127,37 @@ bool runTests(Test test){
             ("Section duplicate_name check", "accounts", testConfig, &codfig::Config::addSection);
 	}break;
 
+	case io:
+	{
+		cout << (testName = "ini IO") << "\"." << endl;
+		Config testIOConfig(ApplicationID("Test App", "0.0.0", "Shaun Bouckaert"));
+		ConfigIOini("test.ini").getConfig(testIOConfig);
+
+		failures += boolTest("Check number of root sections",
+							 testIOConfig.getSectionNames().size() == 2);
+		failures += boolTest(("Check first root section name " + testIOConfig.getSectionNames()[0]).c_str(),
+							 testIOConfig.getSectionNames()[0] == "owner" || testIOConfig.getSectionNames()[0] == "database");
+		failures += boolTest(("Check second root section name " + testIOConfig.getSectionNames()[1]).c_str(),
+							 testIOConfig.getSectionNames()[1] == "database" || testIOConfig.getSectionNames()[1] == "owner");
+		failures += boolTest("Checknumber of first section subsections",
+							 testIOConfig["owner"].getSectionNames().size() == 1);
+		failures += boolTest("Check first section's' first subsection name",
+							 testIOConfig["owner"].getSectionNames()[0] == "info");
+
+		failures += boolTest("Check name value",
+							 testIOConfig("owner.info.name").value<string>() == "Mirititi");
+		failures += boolTest("Check organiziation value",
+							 testIOConfig("owner.info.organization").value<string>() == "big lamer   ");
+		failures += boolTest("Check server value",
+							 testIOConfig("database.server").value<string>() == "192.0.2.62     ");
+		failures += boolTest("Check port value",
+							 testIOConfig("database.port").value<string>() == "143");
+		failures += boolTest("Check file value",
+							 testIOConfig("database.file").value<string>() == "\"big lamer payroll.dat\"");
+		failures += boolTest("Check file2 value",
+							 testIOConfig("database.file2").value<string>() == "");
+	}break;
+
 	default:
 		cout << "!!!TEST NOT IMPLEMENTED!!!\"" << endl;
 		return false;
@@ -149,10 +179,10 @@ Config getFixture(Fixture fixture) {
        	testConfig.addSection("accounts");
         testConfig["accounts"].addSection("isp");
         testConfig["accounts.isp"].addSection("smtp");
-        testConfig("accounts.isp.smtp.ip").setValue<string>("127.0.0.1");
-        testConfig("accounts.isp.smtp.port").setValue<int>(25);
-        testConfig("accounts.isp.smtp.data").setValue<float>(17.0F);
-        testConfig("accounts.isp.smtp.default").setValue<bool>(false);
+		testConfig("accounts.isp.smtp.ip").value<string>() = "127.0.0.1";
+		testConfig("accounts.isp.smtp.port").value<int>() = 25;
+		testConfig("accounts.isp.smtp.data").value<float>() = 17.0F;
+		testConfig("accounts.isp.smtp.default").value<bool>() = false;
         testConfig["accounts"].addSection("isp2");
         testConfig.addProfile("Test Profile");
         break;

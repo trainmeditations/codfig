@@ -26,12 +26,24 @@
 
 #include "codfigfileio.h"
 
+#include <string>
+using std::string;
+
 namespace codfig {
 	class ConfigIOini:public ConfigFileIO {
 	public:
-		Config getConfig();
+		ConfigIOini(const string & iniFilePath, const char &sectionPathSeperator = '.');
+		void getConfig(Config &);
 		void saveConfig(const Config &);
 	private:
+		void processLine(string line);
+		void addSections(string line);
+		void addSubSections(string path);
+		void addValue(string line);
+		string _path;
+		Config * _config;
+		char _sectPathSep;
+		ConfigSection * _currentSection;
 	};
 }
 

@@ -23,36 +23,24 @@
 using namespace codfig;
 
 ApplicationID::ApplicationID(const string &applicationName, const string &applicationVersion, const string &developer):
-appName(applicationName), appVer(applicationVersion), developer(developer){}
-
-const string &ApplicationID::getApplicationName() const {
-	return appName;
-}
-
-const string &ApplicationID::getApplicationVersion() const {
-	return appVer;
-}
-
-const string &ApplicationID::getDeveloper() const {
-	return developer;
-}
+_appName(applicationName), _appVer(applicationVersion), _developer(developer){}
 
 ConfigValue::AbstractValueBox::~AbstractValueBox(){}
 
-ConfigValue::ConfigValue():value(NULL),changed(false){}
+ConfigValue::ConfigValue():_value(NULL),changed(false){}
 
-ConfigValue::ConfigValue(const ConfigValue & other):value(NULL){
-    if (other.value) value = other.value->cloneValue();
+ConfigValue::ConfigValue(const ConfigValue & other):_value(NULL){
+	if (other._value) _value = other._value->cloneValue();
 	changed = other.changed;
 }
 
 ConfigValue & ConfigValue::operator=(const ConfigValue & other){
     if (this != &other) {
-        delete value;
-        if (other.value) {
-            value = other.value->cloneValue();
+		delete _value;
+		if (other._value) {
+			_value = other._value->cloneValue();
         } else {
-            value = NULL;
+			_value = NULL;
         }
 		changed = other.changed;
     }
@@ -68,7 +56,7 @@ void ConfigValue::setChanged(bool isChanged) {
 }
 
 ConfigValue::~ConfigValue() {
-	if (value) delete value;
+	if (_value) delete _value;
 }
 
 SectionContainer::SectionContainer(){}

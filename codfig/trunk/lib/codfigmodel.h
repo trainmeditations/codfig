@@ -34,100 +34,100 @@ using std::map;
 
 namespace codfig{
 	class ApplicationID {
-		public:
-			ApplicationID(const string &applicationName,
-			              const string &applicationVersion,
-						  const string &developer);
-			const string &getApplicationName() const;
-			const string &getApplicationVersion() const;
-			const string &getDeveloper() const;
-		private:
-			string appName;
-			string appVer;
-			string developer;
+	public:
+		ApplicationID(const string &applicationName,
+					  const string &applicationVersion,
+					  const string &developer);
+		inline const string &applicationName() const { return _appName;}
+		inline const string &applicationVersion() const {return _appVer;}
+		inline const string &developer() const {return _developer;}
+	private:
+		string _appName;
+		string _appVer;
+		string _developer;
 	};
 
 	class ConfigValue {
-		private:
-			class AbstractValueBox {
-				public:
-                    virtual AbstractValueBox * cloneValue() const = 0;
-					virtual ~AbstractValueBox();
-			};
-
-			template <class T>
-			class ValueBox:public AbstractValueBox {
-				public:
-					ValueBox(T value);
-					~ValueBox();
-					ValueBox<T> * cloneValue() const;
-					const T &getValue() const;
-					void setValue(const T &newValue);
-					string getStringValue() const;
-					void setValueByString(const string &stringValue);
-				private:
-					T storedValue;
-			};
-
+	private:
+		class AbstractValueBox {
 		public:
-			ConfigValue();
-			ConfigValue(const ConfigValue & other);
-			ConfigValue & operator=(const ConfigValue & rhs);
-			bool hasChanged() const;
-			void setChanged(bool);
-			~ConfigValue();
-			template <class T>
-				const T &getValue() const;
-			template <class T>
-				void setValue(const T &newValue);
+			virtual AbstractValueBox * cloneValue() const = 0;
+			virtual ~AbstractValueBox();
+		};
+
+		template <class T> class ValueBox:public AbstractValueBox {
+		public:
+			ValueBox();
+			ValueBox(T value);
+			~ValueBox();
+			ValueBox<T> * cloneValue() const;
+			inline const T &value() const {return _value;}
+			inline T &value() { return _value;}
+			string getStringValue() const;
+			void setValueByString(const string &stringValue);
 		private:
-			AbstractValueBox * value;
-			bool changed;
+			T _value;
+		};
+
+	public:
+		ConfigValue();
+		ConfigValue(const ConfigValue & other);
+		ConfigValue & operator=(const ConfigValue & rhs);
+		bool hasChanged() const;
+		void setChanged(bool);
+		~ConfigValue();
+		template <class T>
+				const T &value() const;
+		template <class T>
+				T &value();
+	private:
+		AbstractValueBox * _value;
+		bool changed;
 	};
 
 	class ConfigSection;
 
 	class SectionContainer { //should this protected inherit from vector<ConfigSection *> ?
-		public:
-            SectionContainer();
-            SectionContainer(const SectionContainer & other);
-            SectionContainer & operator=(const SectionContainer & rhs);
-			virtual ~SectionContainer();
-			void addSection(const string &name);
-			void removeSection(const string &name);
-			ConfigSection & getSection(const string &name);
-			const vector<string> getSectionNames() const;
-		private:
-            void copySections(const SectionContainer & other);
-			map<string, ConfigSection *> subSections;
+	public:
+		SectionContainer();
+		SectionContainer(const SectionContainer & other);
+		SectionContainer & operator=(const SectionContainer & rhs);
+		virtual ~SectionContainer();
+		void addSection(const string &name);
+		void removeSection(const string &name);
+		ConfigSection & getSection(const string &name);
+		const vector<string> getSectionNames() const;
+	private:
+		void copySections(const SectionContainer & other);
+		map<string, ConfigSection *> subSections;
 	};
 
 	class ConfigSection:public SectionContainer {
-		public:
-            ConfigSection();
-            ConfigSection(const ConfigSection & other);
-            ConfigSection & operator=(const ConfigSection & rhs);
-			~ConfigSection();
-			const vector<string> getValueNames() const;
-			ConfigValue & value(const string &name);
-		private:
-            void copyValues(const ConfigSection & other);
-			map<string, ConfigValue *> values;
+	public:
+		ConfigSection();
+		ConfigSection(const ConfigSection & other);
+		ConfigSection & operator=(const ConfigSection & rhs);
+		~ConfigSection();
+		const vector<string> getValueNames() const;
+		ConfigValue & value(const string &name);
+	private:
+		void copyValues(const ConfigSection & other);
+		map<string, ConfigValue *> values;
 	};
 
 	class ConfigProfile:public SectionContainer {
-		public:
-			ConfigProfile(const string & profileName);
-			void setName(const string &newName);
-			const string &getName() const;
-		private:
-			string name;
+	public:
+		ConfigProfile(const string & profileName);
+		void setName(const string &newName);
+		const string &getName() const;
+	private:
+		string name;
 	};
 }
 
 /************************
- * Template Definitions *
- ************************/
+* Template Definitions *
+************************/
 
 #include "codfigmodel_t.h"
 

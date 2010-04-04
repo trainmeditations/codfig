@@ -23,6 +23,8 @@
 #include "codfig.h"
 #include "codfigio.h"
 
+static const char DefaultPathSep = '.';
+
 using namespace codfig;
 
 /*
@@ -31,11 +33,11 @@ using namespace codfig;
 
 Config::Config(const ApplicationID &applicationID):
 appID(applicationID), defaultProfile(new ConfigProfile("default")),
-currentProfile(defaultProfile){}
+currentProfile(defaultProfile), _pathSeperator(DefaultPathSep){}
 
 Config::Config(const Config & other):
 appID(other.appID), defaultProfile(new ConfigProfile(*(other.defaultProfile))),
-currentProfile(defaultProfile){
+currentProfile(defaultProfile), _pathSeperator(other._pathSeperator){
     //Copy profiles and set the same currentProfile
     copyProfiles(other);
 }
@@ -135,21 +137,25 @@ const vector<string> Config::getSectionNames() const {
 }
 
 ConfigSection & Config::findSection(string path) const {
+	/*
+	 * Starting from the top level section container
+	 * select make currentSectionContainer be equal to
+	 * the section with the name in path up until the
+	 * first period and update path tothe rest of the
+	 * string following that period.
+	 */
 	SectionContainer *  currentSectionContainer = currentProfile;
 	string::size_type seperatorPos;
-	while ((seperatorPos = path.find('.',0)) != string::npos) {
+	while ((seperatorPos = path.find(_pathSeperator)) != string::npos) {
 		currentSectionContainer = &(currentSectionContainer->getSection(path.substr(0, seperatorPos)));
 		path = path.substr(seperatorPos+1);
 	}
+	/**/
+
 	return currentSectionContainer->getSection(path);
 }
 
 ConfigValue & Config::findValue(string path) const {
-	string::size_type seperatorPos = path.find_last_of('.');
+	string::size_type seperatorPos = path.find_last_of(_pathSeperator);
 	return findSection(path.substr(0, seperatorPos)).value(path.substr(seperatorPos+1));
-}
-
-ConfigIO & operator>>(ConfigIO & in, Config & config){
-	config = in.getConfig();
-	return in;
 }

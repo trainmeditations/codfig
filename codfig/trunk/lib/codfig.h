@@ -40,6 +40,9 @@ namespace codfig {
 			Config & operator=(const Config &rhs);
 			~Config();
 
+			inline void setPathSeperator(char pathSeperator)
+			{ _pathSeperator=pathSeperator; }
+
 			int addProfile(const string &name);
 			void removeProfile(const int &index);
 			void selectProfile(const int &index);
@@ -65,10 +68,8 @@ namespace codfig {
 			ConfigProfile * defaultProfile;
 			ConfigProfile * currentProfile;
 			vector<ConfigProfile *> profiles;
+			char _pathSeperator;
     };
-	class ConfigIO;
 }
-
-codfig::ConfigIO & operator>>(codfig::ConfigIO &, codfig::Config &);
 
 #endif

@@ -24,10 +24,7 @@
 #ifndef TRAINMEDITATIONS_CODFIGIO_H
 #define TRAINMEDITATIONS_CODFIGIO_H
 
-#include <string>
 #include "codfig.h"
-
-using std::string;
 
 namespace codfig {
 
@@ -35,7 +32,7 @@ namespace codfig {
 
 	class ConfigIO {
 	public:
-		virtual Config getConfig() = 0;
+		virtual void getConfig(Config &) = 0;
 		virtual void saveConfig(const Config &) = 0;
 	private:
 	};
