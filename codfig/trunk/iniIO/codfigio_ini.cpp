@@ -46,8 +46,31 @@ void ConfigIOini::getConfig(Config & config)
 	_config = NULL;
 }
 
-void ConfigIOini::saveConfig(const Config & theConfig)
+void ConfigIOini::saveConfig(const Config & config)
 {
+	std::ofstream out( _path.c_str(),  std::ofstream::out | std::ofstream::trunc);
+	out << ";CODFIG: " << config.applicationID().applicationName()
+			<< " Version: " << config.applicationID().applicationVersion()
+			<< " By: " << config.applicationID().developer() << std::endl;
+	vector<string> sections(config.getSectionNames());
+	for (vector<string>::const_iterator iter = sections.begin(); iter != sections.end(); ++iter) {
+		writeSection(config[*iter], *iter, out);
+	}
+}
+
+void ConfigIOini::writeSection(const ConfigSection &section, const string &currentSectPath, std::ofstream & out)
+{
+	vector<string> names(section.getValueNames());
+	if (names.size() > 0) {
+		out << '[' << currentSectPath << ']' << std::endl;
+		for (vector<string>::const_iterator iter = names.begin(); iter != names.end(); ++iter) {
+			out << *iter << "=" << section.value(*iter).stringValue() << std::endl;
+		}
+	}
+	names = section.getSectionNames();
+	for (vector<string>::const_iterator iter = names.begin(); iter != names.end(); ++iter) {
+		writeSection(section.getSection(*iter), currentSectPath + "." + *iter, out);
+	}
 }
 
 void ConfigIOini::processLine(string line)

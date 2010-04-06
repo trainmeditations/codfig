@@ -40,6 +40,8 @@ namespace codfig {
 			Config & operator=(const Config &rhs);
 			~Config();
 
+			inline const ApplicationID & applicationID() const { return appID; }
+
 			inline void setPathSeperator(char pathSeperator)
 			{ _pathSeperator=pathSeperator; }
 

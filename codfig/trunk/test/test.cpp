@@ -45,7 +45,7 @@ using codfig::ConfigIOini;
 
 enum Fixture { fullConfig };
 
-enum Test { values, structure, exceptions, io };
+enum Test { values, structure, exceptions, iniIn, iniOut };
 
 Config getFixture(Fixture);
 
@@ -57,7 +57,8 @@ int main(int argc, char * argv []) {
 	runTests(values);
 	runTests(structure);
 	runTests(exceptions);
-	runTests(io);
+	runTests(iniIn);
+	runTests(iniOut);
 
 	//MS Visual C++ Memory Leak Detection - Uncomment the lines to use
 	#ifdef _MSC_VER
@@ -127,9 +128,9 @@ bool runTests(Test test){
             ("Section duplicate_name check", "accounts", testConfig, &codfig::Config::addSection);
 	}break;
 
-	case io:
+	case iniIn:
 	{
-		cout << (testName = "ini IO") << "\"." << endl;
+		cout << (testName = "ini Input") << "\"." << endl;
 		Config testIOConfig(ApplicationID("Test App", "0.0.0", "Shaun Bouckaert"));
 		ConfigIOini("test.ini").getConfig(testIOConfig);
 
@@ -158,6 +159,13 @@ bool runTests(Test test){
 							 testIOConfig("database.file2").value<string>() == "");
 	}break;
 
+	case iniOut:
+	{
+		cout << (testName = "ini Output") << "\"." << endl;
+		Config testConfig = getFixture(fullConfig);
+		ConfigIOini("testout.ini").saveConfig(testConfig);
+	}break;
+
 	default:
 		cout << "!!!TEST NOT IMPLEMENTED!!!\"" << endl;
 		return false;
@@ -184,6 +192,7 @@ Config getFixture(Fixture fixture) {
 		testConfig("accounts.isp.smtp.data").value<float>() = 17.0F;
 		testConfig("accounts.isp.smtp.default").value<bool>() = false;
         testConfig["accounts"].addSection("isp2");
+		testConfig("accounts.isp2.number").value<string>() = "073344556677";
         testConfig.addProfile("Test Profile");
         break;
     }

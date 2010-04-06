@@ -47,6 +47,10 @@ ConfigValue & ConfigValue::operator=(const ConfigValue & other){
     return *this;
 }
 
+string ConfigValue::stringValue() const {
+	return _value->getStringValue();
+}
+
 bool ConfigValue::hasChanged() const {
 	return changed;
 }
@@ -115,6 +119,14 @@ ConfigSection & SectionContainer::getSection(const std::string &name) {
 	}
 }
 
+const ConfigSection & SectionContainer::getSection(const string &name) const {
+	if (subSections.count(name)) {
+		return *(*subSections.find(name)).second;
+	} else {
+		throw bad_path(name);
+	}
+}
+
 const vector<string> SectionContainer::getSectionNames() const {
 	vector<string> names;
 	for (map<string, ConfigSection *>::const_iterator iter = subSections.begin();
@@ -172,6 +184,18 @@ ConfigValue & ConfigSection::value(const string &name) {
 		ConfigValue * newValue = new ConfigValue();
 		values.insert(map<string, ConfigValue *>::value_type(name, newValue));
 		return *newValue;
+	}
+}
+
+const ConfigValue & ConfigSection::value(const string &name) const {
+	if (values.count(name)) {
+		return *(*values.find(name)).second;
+	} else {
+		//ConfigValue * newValue = new ConfigValue();
+		//values.insert(map<string, ConfigValue *>::value_type(name, newValue));
+		//return *newValue;
+		//TODO: THROW ERROR
+		throw value_not_set("name");
 	}
 }
 

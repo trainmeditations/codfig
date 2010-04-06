@@ -53,6 +53,7 @@ namespace codfig{
 		public:
 			virtual AbstractValueBox * cloneValue() const = 0;
 			virtual ~AbstractValueBox();
+			virtual string getStringValue() const = 0;
 		};
 
 		template <class T> class ValueBox:public AbstractValueBox {
@@ -80,6 +81,7 @@ namespace codfig{
 				const T &value() const;
 		template <class T>
 				T &value();
+		string stringValue() const;
 	private:
 		AbstractValueBox * _value;
 		bool changed;
@@ -96,6 +98,7 @@ namespace codfig{
 		void addSection(const string &name);
 		void removeSection(const string &name);
 		ConfigSection & getSection(const string &name);
+		const ConfigSection & getSection(const string &name) const;
 		const vector<string> getSectionNames() const;
 	private:
 		void copySections(const SectionContainer & other);
@@ -110,6 +113,7 @@ namespace codfig{
 		~ConfigSection();
 		const vector<string> getValueNames() const;
 		ConfigValue & value(const string &name);
+		const ConfigValue & value(const string &name) const;
 	private:
 		void copyValues(const ConfigSection & other);
 		map<string, ConfigValue *> values;

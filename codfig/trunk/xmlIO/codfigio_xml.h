@@ -1,5 +1,5 @@
 /*
- * Copyright © Shaun Bouckaert 2009
+ * Copyright © Shaun Bouckaert 2010
  *
  * This file is part of Codfig.
  *
@@ -18,11 +18,11 @@
  *
  */
 
-// File: codfigio_ini.h
-// decleration of the ConfigIO controller class for INI files
+// File: codfigio_xml.h
+// decleration of the ConfigIO controller class for xml files
 
-#ifndef TRAINMEDITATIONS_CODFIGIO_INI_H
-#define TRAINMEDITATIONS_CODFIGIO_INI_H
+#ifndef TRAINMEDITATIONS_CODFIGIO_XML_H
+#define TRAINMEDITATIONS_CODFIGIO_XML_H
 
 #include "codfigfileio.h"
 
@@ -30,22 +30,13 @@
 using std::string;
 
 namespace codfig {
-	class ConfigIOini:public ConfigFileIO {
+	class ConfigIOxml:public ConfigFileIO {
 	public:
-		ConfigIOini(const string & iniFilePath, const char &sectionPathSeperator = '.');
+		ConfigIOxml(const string & xmlFilePath);
 		void getConfig(Config &);
 		void saveConfig(const Config &);
 	private:
-		void processLine(string line);
-		void addSections(string line);
-		void addSubSections(string path);
-		void addValue(string line);
-
-		void writeSection(const ConfigSection & section, const string & currentSectPath, std::ofstream & out);
 		string _path;
-		Config * _config;
-		char _sectPathSep;
-		ConfigSection * _currentSection;
 	};
 }
 

@@ -48,7 +48,7 @@ ConfigValue::ValueBox<T> * ConfigValue::ValueBox<T>::cloneValue() const {
 
 template <class T>
 string ConfigValue::ValueBox<T>::getStringValue() const {
-	ostringstream outstring();
+	ostringstream outstring;
 	outstring << _value;
 	return outstring.str();
 }

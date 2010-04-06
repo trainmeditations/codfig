@@ -3,4 +3,5 @@ project (CODFIG)
 
 add_subdirectory (lib)
 add_subdirectory (iniIO)
+add_subdirectory (xmlIO)
 add_subdirectory (test)
