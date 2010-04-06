@@ -136,6 +136,7 @@ bool runTests(Test test){
 
 		failures += boolTest("Check number of root sections",
 							 testIOConfig.getSectionNames().size() == 2);
+		if (failures) break;
 		failures += boolTest(("Check first root section name " + testIOConfig.getSectionNames()[0]).c_str(),
 							 testIOConfig.getSectionNames()[0] == "owner" || testIOConfig.getSectionNames()[0] == "database");
 		failures += boolTest(("Check second root section name " + testIOConfig.getSectionNames()[1]).c_str(),
