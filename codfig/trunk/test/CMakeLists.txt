@@ -6,5 +6,5 @@ INCLUDE_DIRECTORIES(${CODFIG_SOURCE_DIR}/lib ${CODFIG_SOURCE_DIR}/iniIO)
 ADD_EXECUTABLE(codfigTest test.cpp tests.cpp tests.h)
 
 #Link the executable to the Hello library
-TARGET_LINK_LIBRARIES(codfigTest Codfig CodfigINI CodfigXML)
+TARGET_LINK_LIBRARIES(codfigTest Codfig CodfigINI CodfigXML CodfigYAML)
 
