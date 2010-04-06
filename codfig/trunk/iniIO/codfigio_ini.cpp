@@ -69,7 +69,7 @@ void ConfigIOini::writeSection(const ConfigSection &section, const string &curre
 	}
 	names = section.getSectionNames();
 	for (vector<string>::const_iterator iter = names.begin(); iter != names.end(); ++iter) {
-		writeSection(section.getSection(*iter), currentSectPath + "." + *iter, out);
+		writeSection(section.getSection(*iter), currentSectPath + _sectPathSep + *iter, out);
 	}
 }
 
