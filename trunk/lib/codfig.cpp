@@ -31,8 +31,10 @@ using namespace codfig;
  * main Config class
  */
 
-Config::Config(const ApplicationID &applicationID):
-appID(applicationID), defaultProfile(new ConfigProfile("default")),
+Config::Config(const string &applicationName,
+               const string &applicationVersion,
+               const string &developer):
+appID(applicationName, applicationVersion, developer), defaultProfile(new ConfigProfile("default")),
 currentProfile(defaultProfile), _pathSeperator(DefaultPathSep){}
 
 Config::Config(const Config & other):

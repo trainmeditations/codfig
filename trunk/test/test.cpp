@@ -53,16 +53,24 @@ enum Test { values, structure, exceptions, iniIn, iniOut };
 
 Config getFixture(Fixture);
 
-bool runTests(Test);
+bool runTests(Test, bool = false);
 
 
 int main(int argc, char * argv []) {
+    string colourArg;
+    bool colours = false;
+    if (argc > 1)
+        colourArg = string(argv[1]);
+    if (colourArg == "colours")
+        colours = true;
     cout << "Begining Tests" << endl;
-	runTests(values);
-	runTests(structure);
-	runTests(exceptions);
-	runTests(iniIn);
-	runTests(iniOut);
+        runTests(values, colours);
+        runTests(structure, colours);
+        runTests(exceptions, colours);
+#if Test_INI
+        runTests(iniIn, colours);
+        runTests(iniOut, colours);
+#endif
 
 	//MS Visual C++ Memory Leak Detection - Uncomment the lines to use
 	#ifdef _MSC_VER
@@ -75,11 +83,17 @@ int main(int argc, char * argv []) {
 	return 0;
 }
 
-bool runTests(Test test){
+bool runTests(Test test, bool colours){
 	string testName;
 	cout << endl << "Running test \"";
 	unsigned int failures = 0;
-	switch(test){
+        string failText, successText, resetText;
+        if (colours) {
+            failText = "\033[22;31m";
+            successText = "\033[22;32m";
+            resetText = "\033[m";
+        }
+        switch(test){
 
 	case values:
 	{
@@ -89,7 +103,7 @@ bool runTests(Test test){
 
 		//Compare string value
 		failures += boolTest("Compare string value",
-			testConfig("accounts.isp.smtp.ip").value<string>() == "127.0.0.1");
+                        testConfig("accounts.isp.smtp.ip").value<string>() == "127.0.0.1");
 
 		//Compare int value
 		failures += boolTest("Compare int value",
@@ -181,14 +195,14 @@ bool runTests(Test test){
 	}
 
     if (failures)
-        cout << failures << ((failures == 1)?" failure":" failures") << " during test \"" << testName << "\"." << endl;
+        cout << failText << failures << ((failures == 1)?" failure":" failures") << " during test \"" << testName << "\"." << resetText << endl;
     else
-        cout << "Completed test \"" << testName << "\" successfully." << endl;
+        cout << successText << "Completed test \"" << testName << "\" successfully." << resetText << endl;
     return !failures;
 }
 
 Config getFixture(Fixture fixture) {
-    Config testConfig(ApplicationID("Test App", "0.0.0", "Shaun Bouckaert"));
+    Config testConfig("Test App", "0.0.0", "Shaun Bouckaert");
     //cout << "Creating fixture \"";
     switch(fixture){
     case fullConfig:
