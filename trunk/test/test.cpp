@@ -33,15 +33,19 @@
 #include <iostream>
 #include <string>
 #include "codfig.h"
-#include "codfigio_ini.h"
 #include "tests.h"
+#include "buildopts.h"
 
 using std::cout;
 using std::endl;
 
 using codfig::Config;
 using codfig::ApplicationID;
+
+#if Test_INI
+#include "codfigio_ini.h"
 using codfig::ConfigIOini;
+#endif
 
 enum Fixture { fullConfig };
 
@@ -128,6 +132,8 @@ bool runTests(Test test){
             ("Section duplicate_name check", "accounts", testConfig, &codfig::Config::addSection);
 	}break;
 
+#if Test_INI
+
 	case iniIn:
 	{
 		cout << (testName = "ini Input") << "\"." << endl;
@@ -166,6 +172,8 @@ bool runTests(Test test){
 		Config testConfig = getFixture(fullConfig);
 		ConfigIOini("testout.ini").saveConfig(testConfig);
 	}break;
+
+#endif
 
 	default:
 		cout << "!!!TEST NOT IMPLEMENTED!!!\"" << endl;
