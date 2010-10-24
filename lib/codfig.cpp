@@ -110,13 +110,13 @@ const vector<string> Config::getProfileList() const {
 	return profileList;
 }
 
-const ConfigSection & Config::operator [](const string &path) const {
+/*const ConfigSection & Config::operator [](const string &path) const {
 	return findSection(path);
 }
 
 ConfigSection & Config::operator [](const string &path) {
 	return findSection(path);
-}
+}*/
 
 const ConfigValue & Config::operator ()(const string &path) const {
 	return findValue(path);
