@@ -35,7 +35,9 @@ namespace codfig {
 
     class Config {
 		public:
-			Config(const ApplicationID &applicationID);
+                        Config(const string &applicationName,
+                               const string &applicationVersion,
+                               const string &developer);
 			Config(const Config &other);
 			Config & operator=(const Config &rhs);
 			~Config();
