@@ -57,8 +57,8 @@ namespace codfig {
 			void removeSection(const string &name);
 			const vector<string> getSectionNames() const;
 
-			const ConfigSection &operator[](const string &path) const;
-			ConfigSection &operator[](const string &path);
+                        /*const ConfigSection &operator[](const string &path) const;
+                        ConfigSection &operator[](const string &path);*/
 
 			const ConfigValue &operator()(const string &path) const;
 			ConfigValue &operator()(const string &path);
