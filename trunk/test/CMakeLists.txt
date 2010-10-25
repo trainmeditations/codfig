@@ -2,9 +2,9 @@
 IF (BUILD_INI)
 	SET (OPT_INCS ${OPT_INCS} "${Codfig_SOURCE_DIR}/iniIO")
 	SET (OPT_LIBS ${OPT_LIBS} CodfigINI)
-	SET (Test_INI "true")
+	SET (Test_INI "1")
 ELSE (BUILD_INI)
-	SET (Test_INI "false")
+	SET (Test_INI "0")
 ENDIF (BUILD_INI)
 
 SET (OPT_INCS ${OPT_INCS} "${Codfig_BINARY_DIR}/test")
