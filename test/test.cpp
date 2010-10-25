@@ -38,9 +38,9 @@
 
 using std::cout;
 using std::endl;
+using std::string;
 
 using codfig::Config;
-using codfig::ApplicationID;
 
 #if Test_INI
 #include "codfigio_ini.h"
@@ -57,7 +57,13 @@ bool runTests(Test, bool = false);
 
 
 int main(int argc, char * argv []) {
-    string colourArg;
+	//MS Visual C++ Memory Leak Detection - Uncomment the lines to use
+	#ifdef _MSC_VER
+	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+	#endif
+	//END MS Visual C++ Memory Leak Detection Code
+
+	string colourArg;
     bool colours = false;
     if (argc > 1)
         colourArg = string(argv[1]);
@@ -72,12 +78,6 @@ int main(int argc, char * argv []) {
         runTests(iniOut, colours);
 #endif
 
-	//MS Visual C++ Memory Leak Detection - Uncomment the lines to use
-	#ifdef _MSC_VER
-	_CrtDumpMemoryLeaks();
-	#endif
-	//END MS Visual C++ Memory Leak Detection Code
-
 	cout << endl << "Completed Test Suite." << endl << endl;
 
 	return 0;
@@ -87,13 +87,13 @@ bool runTests(Test test, bool colours){
 	string testName;
 	cout << endl << "Running test \"";
 	unsigned int failures = 0;
-        string failText, successText, resetText;
-        if (colours) {
-            failText = "\033[22;31m";
-            successText = "\033[22;32m";
-            resetText = "\033[m";
-        }
-        switch(test){
+    string failText, successText, resetText;
+    if (colours) {
+        failText = "\033[22;31m";
+        successText = "\033[22;32m";
+        resetText = "\033[m";
+    }
+    switch(test){
 
 	case values:
 	{
@@ -207,7 +207,7 @@ Config getFixture(Fixture fixture) {
     switch(fixture){
     case fullConfig:
         //cout << "fullConfig\"" << endl;
-       	testConfig.addSection("accounts");
+//       	testConfig.addSection("accounts");
 //        testConfig["accounts"].addSection("isp");
 //        testConfig["accounts.isp"].addSection("smtp");
 //		testConfig("accounts.isp.smtp.ip").value<string>() = "127.0.0.1";
@@ -216,7 +216,7 @@ Config getFixture(Fixture fixture) {
 //		testConfig("accounts.isp.smtp.default").value<bool>() = false;
 //        testConfig["accounts"].addSection("isp2");
 //		testConfig("accounts.isp2.number").value<string>() = "073344556677";
-        testConfig.addProfile("Test Profile");
+//        testConfig.addProfile("Test Profile");
         break;
     }
     //cout << "Returning Fixture" << endl;
