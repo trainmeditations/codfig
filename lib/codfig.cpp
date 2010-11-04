@@ -118,17 +118,17 @@ ConfigSection & Config::operator [](const string &path) {
 	return findSection(path);
 }*/
 
-const ConfigValue & Config::operator ()(const string &path) const {
+const ConfigValue & Config::operator[](const string &path) const {
 	return findValue(path);
 }
 
-ConfigValue & Config::operator ()(const string &path) {
+ConfigValue & Config::operator[](const string &path) {
 	return findValue(path);
 }
 
-void Config::addSection(const string &name) {
+/*void Config::addSection(const string &name) {
 	currentProfile->addSection(name);
-}
+}*/
 
 void Config::removeSection(const string &name) {
 	currentProfile->removeSection(name);
