@@ -35,9 +35,9 @@ namespace codfig {
 
     class Config {
 		public:
-                        Config(const string &applicationName,
-                               const string &applicationVersion,
-                               const string &developer);
+            Config(const string &applicationName,
+                    const string &applicationVersion,
+                    const string &developer);
 			Config(const Config &other);
 			Config & operator=(const Config &rhs);
 			~Config();
@@ -53,15 +53,15 @@ namespace codfig {
 			void selectDefaultProfile();
 			const vector<string> getProfileList() const;
 
-			void addSection(const string &name);
+			/*void addSection(const string &name);*/
 			void removeSection(const string &name);
 			const vector<string> getSectionNames() const;
 
                         /*const ConfigSection &operator[](const string &path) const;
                         ConfigSection &operator[](const string &path);*/
 
-			const ConfigValue &operator()(const string &path) const;
-			ConfigValue &operator()(const string &path);
+			const ConfigValue &operator[](const string &path) const;
+			ConfigValue &operator[](const string &path);
 
 		private:
 			ConfigSection &findSection(string path) const;
