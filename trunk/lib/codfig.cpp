@@ -118,12 +118,12 @@ ConfigSection & Config::operator [](const string &path) {
 	return findSection(path);
 }*/
 
-const ConfigValue & Config::operator[](const string &path) const {
-	return findValue(path);
+const ConfigEntry & Config::operator[](const string &path) const {
+	return findEntry(path);
 }
 
-ConfigValue & Config::operator[](const string &path) {
-	return findValue(path);
+ConfigEntry & Config::operator[](const string &path) {
+	return findEntry(path);
 }
 
 /*void Config::addSection(const string &name) {
@@ -138,26 +138,53 @@ const vector<string> Config::getSectionNames() const {
 	return currentProfile->getSectionNames();
 }
 
-ConfigSection & Config::findSection(string path) const {
+const ConfigSection & Config::findSection(string path) const
+{
 	/*
 	 * Starting from the top level section container
 	 * select make currentSectionContainer be equal to
 	 * the section with the name in path up until the
-	 * first period and update path tothe rest of the
+	 * first period and update path to the rest of the
 	 * string following that period.
 	 */
-	SectionContainer *  currentSectionContainer = currentProfile;
+	const SectionContainer *currentSC = currentProfile;
 	string::size_type seperatorPos;
 	while ((seperatorPos = path.find(_pathSeperator)) != string::npos) {
-		currentSectionContainer = &(currentSectionContainer->getSection(path.substr(0, seperatorPos)));
+		currentSC = &(currentSC->getSection(path.substr(0, seperatorPos)));
 		path = path.substr(seperatorPos+1);
 	}
 	/**/
 
-	return currentSectionContainer->getSection(path);
+	return currentSC->getSection(path);
+}
+ConfigSection & Config::findSection(string path)
+{
+    SectionContainer *currentSC = currentProfile;
+    string::size_type seperatorPos;
+    while ((seperatorPos = path.find(_pathSeperator)) != string::npos) {
+        currentSC = &(currentSC->getSection(path.substr(0, seperatorPos)));
+        path = path.substr(seperatorPos+1);
+    }
+
+    return currentSC->getSection(path);
 }
 
-ConfigValue & Config::findValue(string path) const {
+const ConfigValue & Config::findValue(const string &path) const 
+{
 	string::size_type seperatorPos = path.find_last_of(_pathSeperator);
 	return findSection(path.substr(0, seperatorPos)).value(path.substr(seperatorPos+1));
+}
+
+const ConfigEntry & Config::findEntry(const string &path) const
+{
+    string::size_type seperatorPos = path.find_last_of(_pathSeperator);
+    const ConfigSection &section = findSection(path.substr(0, seperatorPos));
+    return seperatorPos == string::npos?section:section.entry(path.substr(seperatorPos+1));
+}
+
+ConfigEntry & Config::findEntry(const string &path)
+{
+    string::size_type seperatorPos = path.find_last_of(_pathSeperator);
+    ConfigSection &section = findSection(path.substr(0, seperatorPos));
+    return seperatorPos == string::npos?section:section.entry(path.substr(seperatorPos+1));
 }

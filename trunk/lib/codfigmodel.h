@@ -47,8 +47,8 @@ namespace codfig{
 		string _developer;
 	};
 
-	class ConfigValue {
-	private:
+    class ConfigEntry {
+	protected:
 		class AbstractValueBox {
 		public:
 			virtual AbstractValueBox * cloneValue() const = 0;
@@ -70,50 +70,65 @@ namespace codfig{
 			T _value;
 		};
 
-	public:
-		ConfigValue();
-		ConfigValue(const ConfigValue & other);
-		ConfigValue & operator=(const ConfigValue & rhs);
-		bool hasChanged() const;
-		void setChanged(bool);
-		~ConfigValue();
+    public:
+        ConfigEntry();
+        ConfigEntry(const ConfigEntry & other);
+		ConfigEntry & operator=(const ConfigEntry & rhs);
+        virtual ~ConfigEntry();
+		string stringValue() const;
+        enum EntryType {
+            Section,
+            Value
+        };
+        virtual EntryType entryType() const = 0;
 		template <class T>
 				const T &value() const;
 		template <class T>
 				T &value();
-		string stringValue() const;
-	private:
-		AbstractValueBox * _value;
+		bool hasChanged() const;
+		void setChanged(bool);
+    private:
+        AbstractValueBox * _value;
 		bool changed;
+    };
+
+	class ConfigValue: public ConfigEntry {
+	public:
+		inline EntryType entryType() const {return Value;}
 	};
 
 	class ConfigSection;
 
-	class SectionContainer { //should this protected inherit from vector<ConfigSection *> ?
+	class SectionContainer { //should this protected inherit from map<string, ConfigSection *> ?
 	public:
 		SectionContainer();
 		SectionContainer(const SectionContainer & other);
 		SectionContainer & operator=(const SectionContainer & rhs);
 		virtual ~SectionContainer();
-		void addSection(const string &name);
+		ConfigSection * addSection(const string &name);
 		void removeSection(const string &name);
 		ConfigSection & getSection(const string &name);
 		const ConfigSection & getSection(const string &name) const;
 		const vector<string> getSectionNames() const;
+        bool hasSection(const string &name) const;
 	private:
 		void copySections(const SectionContainer & other);
 		map<string, ConfigSection *> subSections;
 	};
 
-	class ConfigSection:public SectionContainer {
+	class ConfigSection:public SectionContainer, public ConfigEntry {
 	public:
 		ConfigSection();
 		ConfigSection(const ConfigSection & other);
 		ConfigSection & operator=(const ConfigSection & rhs);
 		~ConfigSection();
+        inline EntryType entryType() const {return Section;}
 		const vector<string> getValueNames() const;
 		ConfigValue & value(const string &name);
 		const ConfigValue & value(const string &name) const;
+        ConfigEntry & entry(const string &name);
+        const ConfigEntry & entry(const string &name) const;
+        bool hasValue(const string &name) const;
 	private:
 		void copyValues(const ConfigSection & other);
 		map<string, ConfigValue *> values;

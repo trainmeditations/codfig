@@ -64,5 +64,30 @@ int exceptionTest(const char * message, A argument, O & object, F functionP) {
 	}
 }
 
+template <class F, class A, class O>
+int noExceptionTest(const char *message, A argument, O & object, F functionP) {
+    cout << "|-" << message << ": ";
+    try {
+        (object.*functionP)(argument);
+        cout << "success: no exception thrown!" << endl;
+        return 0;
+    } catch (...) {
+        cout << "failure: unexpected exception thrown!" << endl;
+        return 1;
+    }
+}
 
+template <class D, class A>
+int isDescendant(const char *message, A &ancestor) {
+    cout << "|-" << message << ": ";
+    A *ancestorP = &ancestor;
+    D *descendant = dynamic_cast<D *>(ancestorP);
+    if (descendant != NULL) {
+        cout << "success: object is a descendant" << endl;
+        return 0;
+    } else {
+        cout << "failure: object is not a descendant" << endl;
+        return 1;
+    }
+}
 #endif

@@ -33,34 +33,34 @@ using std::ostringstream;
 using std::istringstream;
 
 template <class T>
-ConfigValue::ValueBox<T>::ValueBox(){}
+ConfigEntry::ValueBox<T>::ValueBox(){}
 
 template <class T>
-ConfigValue::ValueBox<T>::ValueBox(T value):_value(value){}
+ConfigEntry::ValueBox<T>::ValueBox(T value):_value(value){}
 
 template <class T>
-ConfigValue::ValueBox<T>::~ValueBox(){}
+ConfigEntry::ValueBox<T>::~ValueBox(){}
 
 template <class T>
-ConfigValue::ValueBox<T> * ConfigValue::ValueBox<T>::cloneValue() const {
+ConfigEntry::ValueBox<T> * ConfigValue::ValueBox<T>::cloneValue() const {
     return new ValueBox<T>(*this);
 }
 
 template <class T>
-string ConfigValue::ValueBox<T>::getStringValue() const {
+string ConfigEntry::ValueBox<T>::getStringValue() const {
 	ostringstream outstring;
 	outstring << _value;
 	return outstring.str();
 }
 
 template <class T>
-void ConfigValue::ValueBox<T>::setValueByString(const std::string &stringValue) {
+void ConfigEntry::ValueBox<T>::setValueByString(const std::string &stringValue) {
 	istringstream instream(stringValue);
 	instream >> _value;
 }
 
 template <class T>
-const T &ConfigValue::value() const {
+const T &ConfigEntry::value() const {
 	if (_value) {
 		if (ValueBox<T> * valueBox = dynamic_cast<ValueBox<T> *>(_value)){
 			return valueBox->value();
@@ -73,7 +73,7 @@ const T &ConfigValue::value() const {
 }
 
 template <class T>
-T &ConfigValue::value() {
+T &ConfigEntry::value() {
 	if (_value) {
 		if (ValueBox<T> * valueBox = dynamic_cast<ValueBox<T> *>(_value)) {
 			return valueBox->value();
