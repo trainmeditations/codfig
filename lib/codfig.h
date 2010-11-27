@@ -53,20 +53,20 @@ namespace codfig {
 			void selectDefaultProfile();
 			const vector<string> getProfileList() const;
 
-			/*void addSection(const string &name);*/
 			void removeSection(const string &name);
 			const vector<string> getSectionNames() const;
 
-                        /*const ConfigSection &operator[](const string &path) const;
-                        ConfigSection &operator[](const string &path);*/
-
-			const ConfigValue &operator[](const string &path) const;
-			ConfigValue &operator[](const string &path);
+            const ConfigEntry &operator[](const string &path) const;
+			ConfigEntry &operator[](const string &path);
 
 		private:
-			ConfigSection &findSection(string path) const;
-			ConfigValue &findValue(string path) const;
-			void copyProfiles(const Config &other);
+			ConfigSection &findSection(string path);
+			const ConfigSection &findSection(string path) const;
+            ConfigValue &findValue(const string &path);
+            const ConfigValue &findValue(const string &path) const;
+            ConfigEntry &findEntry(const string &path);
+			const ConfigEntry &findEntry(const string &path) const;
+            void copyProfiles(const Config &other);
 
 			ApplicationID appID;
 			ConfigProfile * defaultProfile;

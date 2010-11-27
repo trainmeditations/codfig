@@ -85,6 +85,8 @@ int main(int argc, char * argv []) {
 
 bool runTests(Test test, bool colours){
 	string testName;
+    ConfigSection * testSect;
+    ConfigEntry *testEntry;
 	cout << endl << "Running test \"";
 	unsigned int failures = 0;
     string failText, successText, resetText;
@@ -97,51 +99,60 @@ bool runTests(Test test, bool colours){
 
 	case values:
 	{
-                cout << (testName = "values") << "\"." << endl;
-/*		//Test Object Creation
+        cout << (testName = "values") << "\"." << endl;
+		//Test Object Creation
 		Config testConfig = getFixture(fullConfig);
 
 		//Compare string value
 		failures += boolTest("Compare string value",
-                        testConfig("accounts.isp.smtp.ip").value<string>() == "127.0.0.1");
+            testConfig["accounts.isp.smtp.ip"].value<string>() == "127.0.0.1");
 
 		//Compare int value
 		failures += boolTest("Compare int value",
-			testConfig("accounts.isp.smtp.port").value<int>() == 25);
+			testConfig["accounts.isp.smtp.port"].value<int>() == 25);
 
 		//Compare float value
 		failures += boolTest("Compare float value",
-			testConfig("accounts.isp.smtp.data").value<float>() == 17.0F);
+			testConfig["accounts.isp.smtp.data"].value<float>() == 17.0F);
 
 		//Compare bool value
 		failures += boolTest("Compare bool value",
-                        testConfig("accounts.isp.smtp.default").value<bool>() == false);*/
+            testConfig["accounts.isp.smtp.default"].value<bool>() == false);
 	}break;
 
 	case structure:
 	{
-                cout << (testName = "structure") << "\"." << endl;
-/*		Config testConfig = getFixture(fullConfig);
+        cout << (testName = "structure") << "\"." << endl;
+		Config testConfig = getFixture(fullConfig);
 
-                failures += boolTest("Check number of root sections",
+        failures += boolTest("Check number of root sections",
 			testConfig.getSectionNames().size() == 1);
-
+        testEntry = &testConfig["accounts"];
+        testSect = dynamic_cast<ConfigSection *>(testEntry);
+        if (testSect)
 		failures += boolTest("Check number of sub-sections",
-			testConfig["accounts"].getSectionNames().size() == 2);
-
+			testSect->getSectionNames().size() == 2);
+        testSect = dynamic_cast<ConfigSection *>(&(testConfig["accounts.isp.smtp"]));
+        if (testSect)
 		failures += boolTest("Check number of values",
-                        testConfig["accounts.isp.smtp"].getValueNames().size() == 4);*/
+                        testSect->getValueNames().size() == 4);
 	}break;
+
+
 
 	case exceptions:
 	{
-                cout << (testName = "exception") << "\"." << endl;
-/*		Config testConfig = getFixture(fullConfig);
+        cout << (testName = "exception") << "\"." << endl;
+		Config testConfig = getFixture(fullConfig);
+        const Config & cTestConfig(testConfig);
 
-		failures += exceptionTest
-			<codfig::bad_path, const codfig::ConfigSection &(codfig::Config::*)(const std::string &) const>
-			("Section bad_path check", "bad.path", testConfig, &codfig::Config::operator[]);
+        failures += noExceptionTest
+            <codfig::ConfigEntry &(codfig::Config::*)(const std::string &)>
+            ("non-const Section/Value create check", "new.path", testConfig, &codfig::Config::operator[]);
         failures += exceptionTest
+			<codfig::bad_path, const codfig::ConfigEntry &(codfig::Config::*)(const std::string &) const>
+			("Const section bad_path check", "bad.path", cTestConfig, &codfig::Config::operator[]);
+        /*failures += exceptionTest
             <codfig::duplicate_name>
             ("Section duplicate_name check", "accounts", testConfig, &codfig::Config::addSection);*/
 	}break;
@@ -207,16 +218,13 @@ Config getFixture(Fixture fixture) {
     switch(fixture){
     case fullConfig:
         //cout << "fullConfig\"" << endl;
-//       	testConfig.addSection("accounts");
-//        testConfig["accounts"].addSection("isp");
-//        testConfig["accounts.isp"].addSection("smtp");
-//		testConfig("accounts.isp.smtp.ip").value<string>() = "127.0.0.1";
-//		testConfig("accounts.isp.smtp.port").value<int>() = 25;
-//		testConfig("accounts.isp.smtp.data").value<float>() = 17.0F;
-//		testConfig("accounts.isp.smtp.default").value<bool>() = false;
-//        testConfig["accounts"].addSection("isp2");
-//		testConfig("accounts.isp2.number").value<string>() = "073344556677";
-//        testConfig.addProfile("Test Profile");
+        testConfig["accounts.isp"].value<string>() = "Test ISP";
+		testConfig["accounts.isp.smtp.ip"].value<string>() = "127.0.0.1";
+		testConfig["accounts.isp.smtp.port"].value<int>() = 25;
+		testConfig["accounts.isp.smtp.data"].value<float>() = 17.0F;
+		testConfig["accounts.isp.smtp.default"].value<bool>() = false;
+        testConfig["accounts.isp2.number"].value<string>() = "073344556677";
+        testConfig.addProfile("Test Profile");
         break;
     }
     //cout << "Returning Fixture" << endl;
