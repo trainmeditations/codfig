@@ -131,8 +131,14 @@ void SectionContainer::removeSection(const string &name)
 
 ConfigSection & SectionContainer::getSection(const std::string &name)
 {
+    ConfigSection *section = NULL;
     if (subSections.count(name)) {
         return *subSections[name];
+    } else if ((section = dynamic_cast<ConfigSection *>(this)) && section->hasValue(name)){
+        ConfigSection * newCS = new ConfigSection(section->value(name));
+        subSections[name] = newCS;
+        section->removeValue(name);
+        return *newCS;
     } else {
         return *(addSection(name));
     }
@@ -162,6 +168,10 @@ const vector<string> SectionContainer::getSectionNames() const
 }
 
 ConfigSection::ConfigSection()
+{}
+
+ConfigSection::ConfigSection(const ConfigValue &value):
+        ConfigEntry(value)
 {}
 
 ConfigSection::ConfigSection(const ConfigSection & other):SectionContainer(other)
@@ -195,6 +205,13 @@ ConfigSection::~ConfigSection()
         delete iter->second;
         iter->second = NULL;
     }
+}
+
+void ConfigSection::removeValue(const string &name)
+{
+    ConfigValue *value = values[name];
+    values.erase(values.find(name));
+    delete value;
 }
 
 const vector<string> ConfigSection::getValueNames() const
