@@ -33,57 +33,57 @@ using std::ostringstream;
 using std::istringstream;
 
 template <class T>
-ConfigEntry::ValueBox<T>::ValueBox(){}
+        ConfigEntry::ValueBox<T>::ValueBox(){}
 
 template <class T>
-ConfigEntry::ValueBox<T>::ValueBox(T value):_value(value){}
+        ConfigEntry::ValueBox<T>::ValueBox(T value):_value(value){}
 
 template <class T>
-ConfigEntry::ValueBox<T>::~ValueBox(){}
+        ConfigEntry::ValueBox<T>::~ValueBox(){}
 
 template <class T>
-ConfigEntry::ValueBox<T> * ConfigValue::ValueBox<T>::cloneValue() const {
+        ConfigEntry::ValueBox<T> * ConfigValue::ValueBox<T>::cloneValue() const {
     return new ValueBox<T>(*this);
 }
 
 template <class T>
-string ConfigEntry::ValueBox<T>::getStringValue() const {
-	ostringstream outstring;
-	outstring << _value;
-	return outstring.str();
+        string ConfigEntry::ValueBox<T>::getStringValue() const {
+    ostringstream outstring;
+    outstring << _value;
+    return outstring.str();
 }
 
 template <class T>
-void ConfigEntry::ValueBox<T>::setValueByString(const std::string &stringValue) {
-	istringstream instream(stringValue);
-	instream >> _value;
+        void ConfigEntry::ValueBox<T>::setValueByString(const std::string &stringValue) {
+    istringstream instream(stringValue);
+    instream >> _value;
 }
 
 template <class T>
-const T &ConfigEntry::value() const {
-	if (_value) {
-		if (ValueBox<T> * valueBox = dynamic_cast<ValueBox<T> *>(_value)){
-			return valueBox->value();
-		} else {
-			throw wrong_type("name");
-		}
-	} else {
-		throw value_not_set("name");
-	}
+        const T &ConfigEntry::value() const {
+    if (_value) {
+        if (ValueBox<T> * valueBox = dynamic_cast<ValueBox<T> *>(_value)){
+            return valueBox->value();
+        } else {
+            throw wrong_type("name");
+        }
+    } else {
+        throw value_not_set("name");
+    }
 }
 
 template <class T>
-T &ConfigEntry::value() {
-	if (_value) {
-		if (ValueBox<T> * valueBox = dynamic_cast<ValueBox<T> *>(_value)) {
-			return valueBox->value();
-		} else {
-			throw wrong_type("name");
-		}
-	} else {
-		_value = new ValueBox<T>();
-		return static_cast<ValueBox<T> *>(_value)->value();
-	}
+        T &ConfigEntry::value() {
+    if (_value) {
+        if (ValueBox<T> * valueBox = dynamic_cast<ValueBox<T> *>(_value)) {
+            return valueBox->value();
+        } else {
+            throw wrong_type("name");
+        }
+    } else {
+        _value = new ValueBox<T>();
+        return static_cast<ValueBox<T> *>(_value)->value();
+    }
 }
 
 #endif

@@ -64,6 +64,22 @@ int exceptionTest(const char * message, A argument, O & object, F functionP) {
 	}
 }
 
+template <class E, class F, class O>
+        int exceptionTestNoArg(const char * message, O & object, F functionP) {
+    cout << "|-" << message << ": ";
+    try {
+        (object.*functionP)();
+        cout << "failure: no exception thrown!" << endl;
+        return 1;
+    } catch (const E &e) {
+        cout << "success: exception thrown with message:" << endl << "\t\"" << e.what() << "\"" << endl;
+        return 0;
+    } catch (...) {
+        cout << "failure: wrong exception thrown!" << endl;
+        return 1;
+    }
+}
+
 template <class F, class A, class O>
 int noExceptionTest(const char *message, A argument, O & object, F functionP) {
     cout << "|-" << message << ": ";

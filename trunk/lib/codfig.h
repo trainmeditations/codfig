@@ -34,45 +34,45 @@ using std::vector;
 namespace codfig {
 
     class Config {
-		public:
-            Config(const string &applicationName,
-                    const string &applicationVersion,
-                    const string &developer);
-			Config(const Config &other);
-			Config & operator=(const Config &rhs);
-			~Config();
+    public:
+        Config(const string &applicationName,
+                const string &applicationVersion,
+                const string &developer);
+        Config(const Config &other);
+        Config & operator=(const Config &rhs);
+        ~Config();
 
-			inline const ApplicationID & applicationID() const { return appID; }
+        inline const ApplicationID & applicationID() const { return appID; }
 
-			inline void setPathSeperator(char pathSeperator)
-			{ _pathSeperator=pathSeperator; }
+        inline void setPathSeperator(char pathSeperator)
+               { _pathSeperator=pathSeperator; }
 
-			int addProfile(const string &name);
-			void removeProfile(const int &index);
-			void selectProfile(const int &index);
-			void selectDefaultProfile();
-			const vector<string> getProfileList() const;
+        int addProfile(const string &name);
+        void removeProfile(const int &index);
+        void selectProfile(const int &index);
+        void selectDefaultProfile();
+        const vector<string> getProfileList() const;
 
-			void removeSection(const string &name);
-			const vector<string> getSectionNames() const;
+        void removeSection(const string &name);
+        const vector<string> getSectionNames() const;
 
-            const ConfigEntry &operator[](const string &path) const;
-			ConfigEntry &operator[](const string &path);
+        const ConfigEntry &operator[](const string &path) const;
+        ConfigEntry &operator[](const string &path);
 
-		private:
-			ConfigSection &findSection(string path);
-			const ConfigSection &findSection(string path) const;
-            ConfigValue &findValue(const string &path);
-            const ConfigValue &findValue(const string &path) const;
-            ConfigEntry &findEntry(const string &path);
-			const ConfigEntry &findEntry(const string &path) const;
-            void copyProfiles(const Config &other);
+    private:
+        ConfigSection &findSection(string path);
+        const ConfigSection &findSection(string path) const;
+        ConfigValue &findValue(const string &path);
+        const ConfigValue &findValue(const string &path) const;
+        ConfigEntry &findEntry(const string &path);
+        const ConfigEntry &findEntry(const string &path) const;
+        void copyProfiles(const Config &other);
 
-			ApplicationID appID;
-			ConfigProfile * defaultProfile;
-			ConfigProfile * currentProfile;
-			vector<ConfigProfile *> profiles;
-			char _pathSeperator;
+        ApplicationID appID;
+        ConfigProfile * defaultProfile;
+        ConfigProfile * currentProfile;
+        vector<ConfigProfile *> profiles;
+        char _pathSeperator;
     };
 }
 
