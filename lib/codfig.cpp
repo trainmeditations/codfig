@@ -110,14 +110,6 @@ const vector<string> Config::getProfileList() const {
 	return profileList;
 }
 
-/*const ConfigSection & Config::operator [](const string &path) const {
-	return findSection(path);
-}
-
-ConfigSection & Config::operator [](const string &path) {
-	return findSection(path);
-}*/
-
 const ConfigEntry & Config::operator[](const string &path) const {
 	return findEntry(path);
 }
@@ -125,10 +117,6 @@ const ConfigEntry & Config::operator[](const string &path) const {
 ConfigEntry & Config::operator[](const string &path) {
 	return findEntry(path);
 }
-
-/*void Config::addSection(const string &name) {
-	currentProfile->addSection(name);
-}*/
 
 void Config::removeSection(const string &name) {
 	currentProfile->removeSection(name);
