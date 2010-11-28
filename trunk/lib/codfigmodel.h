@@ -122,6 +122,7 @@ namespace codfig{
         ConfigSection();
         ConfigSection(const ConfigSection & other);
         ConfigSection & operator=(const ConfigSection & rhs);
+        ConfigSection(const ConfigValue &value);
         ~ConfigSection();
         inline EntryType entryType() const {return Section;}
         const vector<string> getValueNames() const;
@@ -130,6 +131,7 @@ namespace codfig{
         ConfigEntry & entry(const string &name);
         const ConfigEntry & entry(const string &name) const;
         bool hasValue(const string &name) const;
+        void removeValue(const string &name);
     private:
         void copyValues(const ConfigSection & other);
         map<string, ConfigValue *> values;

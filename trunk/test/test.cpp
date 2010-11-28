@@ -102,6 +102,9 @@ bool runTests(Test test, bool colours){
             //Test Object Creation
             Config testConfig = getFixture(fullConfig);
 
+            failures += boolTest("Earlier branch value",
+                                 testConfig["accounts.isp.testValue"].value<int>() == 9999);
+
             //Compare string value
             failures += boolTest("Compare string value",
                                  testConfig["accounts.isp.smtp.ip"].value<string>() == "127.0.0.1");
@@ -142,7 +145,7 @@ bool runTests(Test test, bool colours){
         case exceptions:
         {
             cout << (testName = "exception") << "\"." << endl;
-                Config testConfig = getFixture(fullConfig);
+            Config testConfig = getFixture(fullConfig);
             const Config & cTestConfig(testConfig);
 
             failures += noExceptionTest
@@ -151,14 +154,12 @@ bool runTests(Test test, bool colours){
             failures += exceptionTest
                         <codfig::bad_path, const codfig::ConfigEntry &(codfig::Config::*)(const std::string &) const>
                         ("Const section bad_path check", "bad.path", cTestConfig, &codfig::Config::operator[]);
-            ConfigEntry & testEntry(testConfig["accounts.isp.smtp.data"]);
+
+            ConfigEntry & testEntry(testConfig["accounts.isp.smtp.data"]); //data value is type float
             failures += exceptionTestNoArg
                         <codfig::wrong_type, int &(codfig::ConfigEntry::*)()>
                         ("Check for exception on wrong type", testEntry, &codfig::ConfigEntry::value<int>);
 
-            /*failures += exceptionTest
-                        <codfig::duplicate_name>
-                        ("Section duplicate_name check", "accounts", testConfig, &codfig::Config::addSection);*/
         }break;
 
 #if Test_INI
@@ -222,10 +223,11 @@ Config getFixture(Fixture fixture) {
     switch(fixture){
     case fullConfig:
         testConfig["accounts.isp"].value<string>() = "Test ISP";
-                testConfig["accounts.isp.smtp.ip"].value<string>() = "127.0.0.1";
-                testConfig["accounts.isp.smtp.port"].value<int>() = 25;
-                testConfig["accounts.isp.smtp.data"].value<float>() = 17.0F;
-                testConfig["accounts.isp.smtp.default"].value<bool>() = false;
+        testConfig["accounts.isp.testValue"].value<int>() = 9999;
+        testConfig["accounts.isp.smtp.ip"].value<string>() = "127.0.0.1";
+        testConfig["accounts.isp.smtp.port"].value<int>() = 25;
+        testConfig["accounts.isp.smtp.data"].value<float>() = 17.0F;
+        testConfig["accounts.isp.smtp.default"].value<bool>() = false;
         testConfig["accounts.isp2.number"].value<string>() = "073344556677";
         testConfig.addProfile("Test Profile");
         break;
