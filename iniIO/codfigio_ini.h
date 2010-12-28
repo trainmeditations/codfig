@@ -32,20 +32,9 @@ using std::string;
 namespace codfig {
 	class ConfigIOini:public ConfigFileIO {
 	public:
-		ConfigIOini(const string & iniFilePath, const char &sectionPathSeperator = '.');
-		void getConfig(Config &);
-		void saveConfig(const Config &);
-	private:
-		void processLine(string line);
-		void addSections(string line);
-		void addSubSections(string path);
-		void addValue(string line);
-
-		void writeSection(const ConfigSection & section, const string & currentSectPath, std::ofstream & out);
-		string _path;
-		Config * _config;
-		char _sectPathSep;
-		ConfigSection * _currentSection;
+		ConfigIOini(const string &iniFilePath);
+        void getValue(const string &path, ConfigEntry &value);
+        void writeValue(const string &path, ConfigEntry &value);
 	};
 }
 

@@ -47,6 +47,8 @@ namespace codfig{
         string _developer;
     };
 
+    class ConfigSection;
+    
     class ConfigEntry {
     protected:
         class AbstractValueBox {
@@ -75,6 +77,7 @@ namespace codfig{
         ConfigEntry(const ConfigEntry & other);
         ConfigEntry & operator=(const ConfigEntry & rhs);
         virtual ~ConfigEntry();
+        ConfigSection &asSection();
         string stringValue() const;
         enum EntryType {
             Section,
@@ -98,9 +101,7 @@ namespace codfig{
         inline EntryType entryType() const {return Value;}
     };
 
-    class ConfigSection;
-
-    class SectionContainer { //should this protected inherit from map<string, ConfigSection *> ?
+    class SectionContainer {
     public:
         SectionContainer();
         SectionContainer(const SectionContainer & other);

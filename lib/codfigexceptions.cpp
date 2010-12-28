@@ -32,3 +32,5 @@ wrong_type::wrong_type(const std::string &name):std::logic_error("Wrong type for
 value_not_set::value_not_set(const std::string &name):std::runtime_error("Value not set for value " + name + "."){}
 
 duplicate_name::duplicate_name(const std::string &type, const std::string &name):std::runtime_error("A " + type + " named \"" + name + "\" already exists."){}
+
+not_a_section::not_a_section():std::runtime_error("ConfigEntry is not a section."){}

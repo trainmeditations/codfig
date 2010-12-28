@@ -157,12 +157,6 @@ ConfigSection & Config::findSection(string path)
     return currentSC->getSection(path);
 }
 
-const ConfigValue & Config::findValue(const string &path) const 
-{
-	string::size_type seperatorPos = path.find_last_of(_pathSeperator);
-	return findSection(path.substr(0, seperatorPos)).value(path.substr(seperatorPos+1));
-}
-
 const ConfigEntry & Config::findEntry(const string &path) const
 {
     string::size_type seperatorPos = path.find_last_of(_pathSeperator);
