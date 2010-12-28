@@ -18,23 +18,42 @@
  *
  */
 
-// File: codfigio.h
-// decleration of the ConfigIO controller class
-
 #ifndef TRAINMEDITATIONS_CODFIGIO_H
 #define TRAINMEDITATIONS_CODFIGIO_H
 
-#include "codfig.h"
+#include <string>
+#include "codfigmodel.h"
+
+using std::string;
 
 namespace codfig {
 
-	class Config;
+    /// Abstract IO Class
+    /**
+     * Declares the basic interface to be implemented by all
+     * IO modules.
+     */
 
 	class ConfigIO {
-	public:
-		virtual void getConfig(Config &) = 0;
-		virtual void saveConfig(const Config &) = 0;
-	private:
+    protected:
+
+        /// Retrieve a value from the IO Source
+        /**
+         * Implement this function to return a ConfigEntry containing
+         * the value stored as the appropriate type. Should be a
+         * a ConfigValue if the path points to a node, and a
+         * ConfigSection if it points to a section value.
+         * @param[in] path   The path to the entry.
+         * @param[out] value The ConfigEntry containing the value.
+         */
+        virtual void getValue(const string &path, ConfigEntry &value) = 0;
+
+        /// Write a value to the IO Source
+        /**
+         * Implement this function to write a ConfigEntry containing
+         * the value to be stored.
+         */
+        virtual void writeValue(const string &, ConfigEntry &) = 0;
 	};
 }
 

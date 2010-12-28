@@ -50,6 +50,15 @@ ConfigEntry & ConfigEntry::operator=(const ConfigEntry & other)
     return *this;
 }
 
+ConfigSection & ConfigEntry::asSection()
+{
+    if (this->entryType() == Section) {
+        return dynamic_cast<ConfigSection &>(*this);
+    } else {
+        throw not_a_section();
+    }
+}
+
 string ConfigEntry::stringValue() const
 {
     return _value->getStringValue();

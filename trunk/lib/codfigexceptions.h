@@ -48,6 +48,11 @@ namespace codfig {
 		public:
 			explicit duplicate_name(const std::string &type, const std::string &name);
 	};
+
+    class not_a_section: public std::runtime_error {
+        public:
+            explicit not_a_section();
+    };
 }
 
 #endif

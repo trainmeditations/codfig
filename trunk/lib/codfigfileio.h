@@ -25,15 +25,15 @@
 #define TRAINMEDITATIONS_CODFIGFILEIO_H
 
 #include <string>
+#include <fstream>
 #include "codfigio.h"
-
-using std::string;
 
 namespace codfig {
 	class ConfigFileIO:public ConfigIO {
+    protected:
+        ConfigFileIO(const std::string &);
 	protected:
-		int openFile(string filename);
-		void closeFile(int fd);
+        std::string _filename;
 	};
 }
 

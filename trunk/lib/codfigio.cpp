@@ -18,9 +18,6 @@
  *
  */
 
-// File: codfigio.cpp
-// definition of the ConfigIO controller class
-
 #include "codfigio.h"
 
 using namespace codfig;

@@ -62,8 +62,6 @@ namespace codfig {
     private:
         ConfigSection &findSection(string path);
         const ConfigSection &findSection(string path) const;
-        ConfigValue &findValue(const string &path);
-        const ConfigValue &findValue(const string &path) const;
         ConfigEntry &findEntry(const string &path);
         const ConfigEntry &findEntry(const string &path) const;
         void copyProfiles(const Config &other);
