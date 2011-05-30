@@ -31,9 +31,10 @@
 namespace codfig {
 	class ConfigFileIO:public ConfigIO {
     protected:
-        ConfigFileIO(const std::string &);
+        ConfigFileIO(const std::string &filename);
 	protected:
         std::string _filename;
+        const static std::string stdConfigPath;
 	};
 }
 

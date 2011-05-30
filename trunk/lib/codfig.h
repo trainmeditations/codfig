@@ -30,22 +30,35 @@ using std::string;
 using std::vector;
 #include "codfigexceptions.h"
 #include "codfigmodel.h"
+#include "codfigio.h"
 
 namespace codfig {
 
     class Config {
     public:
+        enum SaveStatus {
+            Saved,
+            IOError,
+            Fail
+        };
+
         Config(const string &applicationName,
                 const string &applicationVersion,
                 const string &developer);
+        Config(ConfigIO * source);/*create config from source object*/
         Config(const Config &other);
         Config & operator=(const Config &rhs);
         ~Config();
 
-        inline const ApplicationID & applicationID() const { return appID; }
+        inline const ApplicationID & applicationID() const { return appID; };
 
-        inline void setPathSeperator(char pathSeperator)
-               { _pathSeperator=pathSeperator; }
+        void setSource(ConfigIO *source);
+        bool save();
+        void reload();
+        void loadFromSource(ConfigIO *source);
+        
+        inline void setPathSeperator(char pathSeparator)
+               { _pathSeparator=pathSeparator; }
 
         int addProfile(const string &name);
         void removeProfile(const int &index);
@@ -70,7 +83,8 @@ namespace codfig {
         ConfigProfile * defaultProfile;
         ConfigProfile * currentProfile;
         vector<ConfigProfile *> profiles;
-        char _pathSeperator;
+        char _pathSeparator;
+        ConfigIO * _source;
     };
 }
 

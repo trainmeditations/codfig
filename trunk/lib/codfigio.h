@@ -22,9 +22,11 @@
 #define TRAINMEDITATIONS_CODFIGIO_H
 
 #include <string>
+#include <vector>
 #include "codfigmodel.h"
 
 using std::string;
+using std::vector;
 
 namespace codfig {
 
@@ -51,9 +53,19 @@ namespace codfig {
         /// Write a value to the IO Source
         /**
          * Implement this function to write a ConfigEntry containing
-         * the value to be stored.
+         * the value to be stored. It should store the value in a
+         * format appropriate way depending on whether it is a section
+         * or a value.
+         * @param[in] path  The path to write the entry.
+         * @param[in] entry The ConfigEntry to write.
          */
-        virtual void writeValue(const string &, ConfigEntry &) = 0;
+        virtual void writeValue(const string &path, const ConfigEntry &entry) = 0;
+
+        virtual ApplicationID getAppID() = 0;
+
+        virtual vector<string> profiles() = 0;
+        virtual vector<string> sections(const string &profile, const string &section="") = 0;
+        virtual vector<string> values(const string &profile, const string &section) = 0;
 	};
 }
 
