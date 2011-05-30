@@ -9,6 +9,6 @@ using namespace codfig;
 ConfigFileIO::ConfigFileIO(const string &filename):
 _filename(filename)
 {
-    fstream file(filename);
+    fstream file(filename.c_str());
     file.close();
 }

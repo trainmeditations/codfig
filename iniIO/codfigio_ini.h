@@ -20,6 +20,7 @@
 
 // File: codfigio_ini.h
 // decleration of the ConfigIO controller class for INI files
+// INI files do not support different profiles.
 
 #ifndef TRAINMEDITATIONS_CODFIGIO_INI_H
 #define TRAINMEDITATIONS_CODFIGIO_INI_H

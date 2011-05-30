@@ -35,11 +35,11 @@ Config::Config(const string &applicationName,
                const string &applicationVersion,
                const string &developer):
 appID(applicationName, applicationVersion, developer), defaultProfile(new ConfigProfile("default")),
-currentProfile(defaultProfile), _pathSeperator(DefaultPathSep){}
+currentProfile(defaultProfile), _pathSeparator(DefaultPathSep){}
 
 Config::Config(const Config & other):
 appID(other.appID), defaultProfile(new ConfigProfile(*(other.defaultProfile))),
-currentProfile(defaultProfile), _pathSeperator(other._pathSeperator){
+currentProfile(defaultProfile), _pathSeparator(other._pathSeparator){
     //Copy profiles and set the same currentProfile
     copyProfiles(other);
 }
@@ -137,7 +137,7 @@ const ConfigSection & Config::findSection(string path) const
 	 */
 	const SectionContainer *currentSC = currentProfile;
 	string::size_type seperatorPos;
-	while ((seperatorPos = path.find(_pathSeperator)) != string::npos) {
+	while ((seperatorPos = path.find(_pathSeparator)) != string::npos) {
 		currentSC = &(currentSC->getSection(path.substr(0, seperatorPos)));
 		path = path.substr(seperatorPos+1);
 	}
@@ -149,7 +149,7 @@ ConfigSection & Config::findSection(string path)
 {
     SectionContainer *currentSC = currentProfile;
     string::size_type seperatorPos;
-    while ((seperatorPos = path.find(_pathSeperator)) != string::npos) {
+    while ((seperatorPos = path.find(_pathSeparator)) != string::npos) {
         currentSC = &(currentSC->getSection(path.substr(0, seperatorPos)));
         path = path.substr(seperatorPos+1);
     }
@@ -159,14 +159,14 @@ ConfigSection & Config::findSection(string path)
 
 const ConfigEntry & Config::findEntry(const string &path) const
 {
-    string::size_type seperatorPos = path.find_last_of(_pathSeperator);
+    string::size_type seperatorPos = path.find_last_of(_pathSeparator);
     const ConfigSection &section = findSection(path.substr(0, seperatorPos));
     return seperatorPos == string::npos?section:section.entry(path.substr(seperatorPos+1));
 }
 
 ConfigEntry & Config::findEntry(const string &path)
 {
-    string::size_type seperatorPos = path.find_last_of(_pathSeperator);
+    string::size_type seperatorPos = path.find_last_of(_pathSeparator);
     ConfigSection &section = findSection(path.substr(0, seperatorPos));
     return seperatorPos == string::npos?section:section.entry(path.substr(seperatorPos+1));
 }

@@ -32,6 +32,7 @@
 
 #include <iostream>
 #include <string>
+#include <cstdlib>
 #include "codfig.h"
 #include "tests.h"
 #include "buildopts.h"
@@ -57,13 +58,14 @@ bool runTests(Test, bool = false);
 
 
 int main(int argc, char * argv []) {
-        //MS Visual C++ Memory Leak Detection - Uncomment the lines to use
-        #ifdef _MSC_VER
-        _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-        #endif
-        //END MS Visual C++ Memory Leak Detection Code
+    //MS Visual C++ Memory Leak Detection - Uncomment the lines to use
+    #ifdef _MSC_VER
+    _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+    #endif
+    //END MS Visual C++ Memory Leak Detection Code
 
-        string colourArg;
+    /*int * blah = new int(0x12345678);*/
+    string colourArg;
     bool colours = false;
     if (argc > 1)
         colourArg = string(argv[1]);
@@ -79,6 +81,7 @@ int main(int argc, char * argv []) {
 #endif
 
         cout << endl << "Completed Test Suite." << endl << endl;
+        std::cin.get();
 
         return 0;
 }
