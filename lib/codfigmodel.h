@@ -47,9 +47,9 @@ namespace codfig{
         string _developer;
     };
 
-    class ConfigSection;
+    class ConfigEntry;
     
-    class ConfigEntry {
+    class ConfigValue {
     protected:
         class AbstractValueBox {
         public:
@@ -73,72 +73,47 @@ namespace codfig{
         };
 
     public:
-        ConfigEntry();
-        ConfigEntry(const ConfigEntry & other);
-        ConfigEntry & operator=(const ConfigEntry & rhs);
-        virtual ~ConfigEntry();
-        ConfigSection &asSection();
+        ConfigValue();
+        ConfigValue(const ConfigValue & other);
+        ConfigValue & operator=(const ConfigValue & rhs);
+        virtual ~ConfigValue();
         string stringValue() const;
-        enum EntryType {
-            Section,
-            Value
-        };
-        virtual EntryType entryType() const = 0;
         template <class T>
             const T &value() const;
         template <class T>
             T &value();
         int intValue();
-        bool hasChanged() const;
-        void setChanged(bool);
     private:
         AbstractValueBox * _value;
-        bool changed;
     };
 
-    class ConfigValue: public ConfigEntry {
+    class EntryContainer {
     public:
-        inline EntryType entryType() const {return Value;}
-    };
-
-    class SectionContainer {
-    public:
-        SectionContainer();
-        SectionContainer(const SectionContainer & other);
-        SectionContainer & operator=(const SectionContainer & rhs);
-        virtual ~SectionContainer();
-        ConfigSection * addSection(const string &name);
-        void removeSection(const string &name);
-        ConfigSection & getSection(const string &name);
-        const ConfigSection & getSection(const string &name) const;
-        const vector<string> getSectionNames() const;
-        bool hasSection(const string &name) const;
+        EntryContainer();
+        EntryContainer(const EntryContainer & other);
+        EntryContainer & operator=(const EntryContainer & rhs);
+        virtual ~EntryContainer();
+        ConfigEntry * addEntry(const string &name);
+        void removeEntry(const string &name);
+        ConfigEntry & getEntry(const string &name);
+        const ConfigEntry & getEntry(const string &name) const;
+        const vector<string> getEntryNames() const;
+        bool hasEntry(const string &name) const;
     private:
-        void copySections(const SectionContainer & other);
-        map<string, ConfigSection *> subSections;
+        void copyEntries(const EntryContainer & other);
+        map<string, ConfigEntry *> subEntries;
     };
 
-    class ConfigSection:public SectionContainer, public ConfigEntry {
+    class ConfigEntry:public EntryContainer, public ConfigValue {
     public:
-        ConfigSection();
-        ConfigSection(const ConfigSection & other);
-        ConfigSection & operator=(const ConfigSection & rhs);
-        ConfigSection(const ConfigValue &value);
-        ~ConfigSection();
-        inline EntryType entryType() const {return Section;}
-        const vector<string> getValueNames() const;
-        ConfigValue & value(const string &name);
-        const ConfigValue & value(const string &name) const;
-        ConfigEntry & entry(const string &name);
-        const ConfigEntry & entry(const string &name) const;
-        bool hasValue(const string &name) const;
-        void removeValue(const string &name);
-    private:
-        void copyValues(const ConfigSection & other);
-        map<string, ConfigValue *> values;
+        ConfigEntry();
+        ConfigEntry(const ConfigEntry & other);
+        ConfigEntry & operator=(const ConfigEntry & rhs);
+        //ConfigEntry(const ConfigValue &value);
+        ~ConfigEntry();
     };
 
-    class ConfigProfile:public SectionContainer {
+    class ConfigProfile:public EntryContainer {
     public:
         ConfigProfile(const string & profileName);
         void setName(const string &newName);

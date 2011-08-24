@@ -118,55 +118,38 @@ ConfigEntry & Config::operator[](const string &path) {
 	return findEntry(path);
 }
 
-void Config::removeSection(const string &name) {
-	currentProfile->removeSection(name);
+void Config::removeEntry(const string &name) {
+	currentProfile->removeEntry(name);
 }
 
-const vector<string> Config::getSectionNames() const {
-	return currentProfile->getSectionNames();
+const vector<string> Config::getEntryNames() const {
+	return currentProfile->getEntryNames();
 }
 
-const ConfigSection & Config::findSection(string path) const
+const ConfigEntry & Config::findEntry(string path) const
 {
-	/*
-	 * Starting from the top level section container
-	 * select make currentSectionContainer be equal to
-	 * the section with the name in path up until the
-	 * first period and update path to the rest of the
-	 * string following that period.
-	 */
-	const SectionContainer *currentSC = currentProfile;
-	string::size_type seperatorPos;
-	while ((seperatorPos = path.find(_pathSeparator)) != string::npos) {
-		currentSC = &(currentSC->getSection(path.substr(0, seperatorPos)));
-		path = path.substr(seperatorPos+1);
+	const EntryContainer *currentEC = currentProfile;
+	string::size_type separatorPos;
+	while ((separatorPos = path.find(_pathSeparator)) != string::npos) {
+		currentEC = &(currentEC->getEntry(path.substr(0, separatorPos)));
+		path = path.substr(separatorPos+1);
 	}
-	/**/
-
-	return currentSC->getSection(path);
-}
-ConfigSection & Config::findSection(string path)
-{
-    SectionContainer *currentSC = currentProfile;
-    string::size_type seperatorPos;
-    while ((seperatorPos = path.find(_pathSeparator)) != string::npos) {
-        currentSC = &(currentSC->getSection(path.substr(0, seperatorPos)));
-        path = path.substr(seperatorPos+1);
-    }
-
-    return currentSC->getSection(path);
+	return currentEC->getEntry(path);
+    /*string::size_type seperatorPos = path.find_last_of(_pathSeparator);
+    const ConfigEntry &entry = findEntry(path.substr(0, seperatorPos));
+    return seperatorPos == string::npos?entry:entry.getEntry(path.substr(seperatorPos+1));*/
 }
 
-const ConfigEntry & Config::findEntry(const string &path) const
+ConfigEntry & Config::findEntry(string path)
 {
-    string::size_type seperatorPos = path.find_last_of(_pathSeparator);
-    const ConfigSection &section = findSection(path.substr(0, seperatorPos));
-    return seperatorPos == string::npos?section:section.entry(path.substr(seperatorPos+1));
-}
-
-ConfigEntry & Config::findEntry(const string &path)
-{
-    string::size_type seperatorPos = path.find_last_of(_pathSeparator);
-    ConfigSection &section = findSection(path.substr(0, seperatorPos));
-    return seperatorPos == string::npos?section:section.entry(path.substr(seperatorPos+1));
+	EntryContainer *currentEC = currentProfile;
+	string::size_type separatorPos;
+	while ((separatorPos = path.find(_pathSeparator)) != string::npos) {
+		currentEC = &(currentEC->getEntry(path.substr(0, separatorPos)));
+		path = path.substr(separatorPos+1);
+	}
+	return currentEC->getEntry(path);
+    /*string::size_type seperatorPos = path.find_last_of(_pathSeparator);
+    ConfigEntry &section = findEntry(path.substr(0, seperatorPos));
+    return seperatorPos == string::npos?section:section.getEntry(path.substr(seperatorPos+1));*/
 }

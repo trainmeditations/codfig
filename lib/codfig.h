@@ -66,17 +66,15 @@ namespace codfig {
         void selectDefaultProfile();
         const vector<string> getProfileList() const;
 
-        void removeSection(const string &name);
-        const vector<string> getSectionNames() const;
+        void removeEntry(const string &name);
+        const vector<string> getEntryNames() const;
 
         const ConfigEntry &operator[](const string &path) const;
         ConfigEntry &operator[](const string &path);
 
     private:
-        ConfigSection &findSection(string path);
-        const ConfigSection &findSection(string path) const;
-        ConfigEntry &findEntry(const string &path);
-        const ConfigEntry &findEntry(const string &path) const;
+        ConfigEntry &findEntry(string path);
+        const ConfigEntry &findEntry(string path) const;
         void copyProfiles(const Config &other);
 
         ApplicationID appID;
