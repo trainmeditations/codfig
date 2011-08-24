@@ -64,7 +64,7 @@ int main(int argc, char * argv []) {
     #endif
     //END MS Visual C++ Memory Leak Detection Code
 
-    /*int * blah = new int(0x12345678);*/
+    //int * blah = new int(0x12345678);
     string colourArg;
     bool colours = false;
     if (argc > 1)
@@ -88,9 +88,8 @@ int main(int argc, char * argv []) {
 
 bool runTests(Test test, bool colours){
     string testName;
-    ConfigSection * testSect;
-    ConfigEntry *testEntry;
     cout << endl << "Running test \"";
+	ConfigEntry * testEntry = NULL;
     unsigned int failures = 0;
     string failText, successText, resetText;
     if (colours) {
@@ -104,6 +103,8 @@ bool runTests(Test test, bool colours){
             cout << (testName = "values") << "\"." << endl;
             //Test Object Creation
             Config testConfig = getFixture(fullConfig);
+
+			testEntry = &(testConfig["accounts.isp.testValue"]);
 
             failures += boolTest("Earlier branch value",
                                  testConfig["accounts.isp.testValue"].value<int>() == 9999);
@@ -131,16 +132,15 @@ bool runTests(Test test, bool colours){
         Config testConfig = getFixture(fullConfig);
 
         failures += boolTest("Check number of root sections",
-                             testConfig.getSectionNames().size() == 1);
+                             testConfig.getEntryNames().size() == 1);
         testEntry = &testConfig["accounts"];
-        testSect = dynamic_cast<ConfigSection *>(testEntry);
-        if (testSect)
-            failures += boolTest("Check number of sub-sections",
-                                 testSect->getSectionNames().size() == 2);
-        testSect = dynamic_cast<ConfigSection *>(&(testConfig["accounts.isp.smtp"]));
-        if (testSect)
-            failures += boolTest("Check number of values",
-                                 testSect->getValueNames().size() == 4);
+        if (testEntry)
+            failures += boolTest("Check number of sub-entries",
+                                 testEntry->getEntryNames().size() == 2);
+        testEntry = &(testConfig["accounts.isp.smtp"]);
+        if (testEntry)
+            failures += boolTest("Check number of sub-entries",
+                                 testEntry->getEntryNames().size() == 4);
         }break;
 
 
@@ -163,9 +163,9 @@ bool runTests(Test test, bool colours){
                         <codfig::wrong_type, int &(codfig::ConfigEntry::*)()>
                         ("Check for exception on wrong type", testEntry, &codfig::ConfigEntry::value<int>);
 
-            failures += exceptionTestNoArg
+            /*failures += exceptionTestNoArg
                         <codfig::not_a_section, ConfigSection &(codfig::ConfigEntry::*)()>
-                        ("Check for exception on conversion to section of value", testEntry, &codfig::ConfigEntry::asSection);
+                        ("Check for exception on conversion to section of value", testEntry, &codfig::ConfigEntry::asSection);*/
 
         }break;
 
@@ -177,7 +177,7 @@ bool runTests(Test test, bool colours){
             Config testIOConfig("Test App", "0.0.0", "Shaun Bouckaert");
             
             failures += boolTest("Check number of root sections",
-                                 testIOConfig.getSectionNames().size() == 2);
+                                 testIOConfig.getEntryNames().size() == 2);
             if (failures) break;
             /*failures += boolTest(("Check first root section name " + testIOConfig.getSectionNames()[0]).c_str(),
                                  testIOConfig.getSectionNames()[0] == "owner" || testIOConfig.getSectionNames()[0] == "database");

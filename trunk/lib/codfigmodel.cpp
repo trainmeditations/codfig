@@ -26,18 +26,18 @@ ApplicationID::ApplicationID(const string &applicationName, const string &applic
         _appName(applicationName), _appVer(applicationVersion), _developer(developer)
 {}
 
-ConfigEntry::AbstractValueBox::~AbstractValueBox()
+ConfigValue::AbstractValueBox::~AbstractValueBox()
 {}
 
-ConfigEntry::ConfigEntry():_value(NULL),changed(false)
+ConfigValue::ConfigValue():_value(NULL)
 {}
 
-ConfigEntry::ConfigEntry(const ConfigEntry & other):_value(NULL), changed(other.changed)
+ConfigValue::ConfigValue(const ConfigValue & other):_value(NULL)
 {
     if (other._value) _value = other._value->cloneValue();
 }
 
-ConfigEntry & ConfigEntry::operator=(const ConfigEntry & other)
+ConfigValue & ConfigValue::operator=(const ConfigValue & other)
 {
     if (this != &other) {
         delete _value;
@@ -50,234 +50,132 @@ ConfigEntry & ConfigEntry::operator=(const ConfigEntry & other)
     return *this;
 }
 
-ConfigSection & ConfigEntry::asSection()
-{
-    if (this->entryType() == Section) {
-        return dynamic_cast<ConfigSection &>(*this);
-    } else {
-        throw not_a_section();
-    }
-}
-
-string ConfigEntry::stringValue() const
+string ConfigValue::stringValue() const
 {
     return _value->getStringValue();
 }
 
-bool ConfigEntry::hasChanged() const
-{
-    return changed;
-}
-
-void ConfigEntry::setChanged(bool isChanged)
-{
-    changed = isChanged;
-}
-
-ConfigEntry::~ConfigEntry()
+ConfigValue::~ConfigValue()
 {
     if (_value) delete _value;
 }
 
-SectionContainer::SectionContainer()
+EntryContainer::EntryContainer()
 {}
 
-SectionContainer::SectionContainer(const SectionContainer & other)
+EntryContainer::EntryContainer(const EntryContainer & other)
 {
-    copySections(other);
+    copyEntries(other);
 }
 
-SectionContainer & SectionContainer::operator=(const SectionContainer & rhs)
+EntryContainer & EntryContainer::operator=(const EntryContainer & rhs)
 {
     if (this != &rhs) {
-        for (map<string, ConfigSection *>::iterator iter = subSections.begin(); iter != subSections.end(); iter++) {
+        for (map<string, ConfigEntry *>::iterator iter = subEntries.begin(); iter != subEntries.end(); iter++) {
             delete iter->second;
         }
-        subSections.clear();
-        copySections(rhs);
+        subEntries.clear();
+        copyEntries(rhs);
     }
     return *this;
 }
 
-void SectionContainer::copySections(const SectionContainer & other)
+void EntryContainer::copyEntries(const EntryContainer & other)
 {
-    for (map<string, ConfigSection *>::const_iterator other_iter = other.subSections.begin(); other_iter != other.subSections.end(); other_iter++) {
-        subSections[other_iter->first] = new ConfigSection(*(other_iter->second));
+    for (map<string, ConfigEntry *>::const_iterator other_iter = other.subEntries.begin(); other_iter != other.subEntries.end(); other_iter++) {
+        subEntries[other_iter->first] = new ConfigEntry(*(other_iter->second));
     }
 }
 
-SectionContainer::~SectionContainer()
+EntryContainer::~EntryContainer()
 {
-    for (map<string, ConfigSection *>::iterator iter = subSections.begin(); iter != subSections.end(); ++iter) {
+    for (map<string, ConfigEntry *>::iterator iter = subEntries.begin(); iter != subEntries.end(); ++iter) {
         delete iter->second;
         iter->second = NULL;
     }
 }
 
-ConfigSection * SectionContainer::addSection(const string &name)
+ConfigEntry * EntryContainer::addEntry(const string &name)
 {
     /*
      * TODO: check if value exists and replace it with a section
      *
      */
-    if (!subSections.count(name)) {
+    if (!subEntries.count(name)) {
         //subSections.insert(map<string, ConfigSection *>::value_type(name, new ConfigSection()));
-        ConfigSection * newCS = new ConfigSection();
-        subSections[name] = newCS;
-        return newCS;
+        ConfigEntry * newCE = new ConfigEntry();
+        subEntries[name] = newCE;
+        return newCE;
     } else {
         throw duplicate_name("section", name);
     }
 }
 
-void SectionContainer::removeSection(const string &name)
+void EntryContainer::removeEntry(const string &name)
 {
-    if (subSections.count(name)) {
-        delete subSections[name];
-        subSections.erase(name);
+    if (subEntries.count(name)) {
+        delete subEntries[name];
+        subEntries.erase(name);
     } //should I throw an exception on else? strict mode?
 }
 
-ConfigSection & SectionContainer::getSection(const std::string &name)
+ConfigEntry & EntryContainer::getEntry(const std::string &name)
 {
-    ConfigSection *section = NULL;
-    if (subSections.count(name)) {
-        return *subSections[name];
-    } else if ((section = dynamic_cast<ConfigSection *>(this)) && section->hasValue(name)){
-        ConfigSection * newCS = new ConfigSection(section->value(name));
-        subSections[name] = newCS;
-        section->removeValue(name);
-        return *newCS;
+    if (subEntries.count(name)) {
+        return *subEntries[name];
     } else {
-        return *(addSection(name));
+        return *(addEntry(name));
     }
 }
 
-const ConfigSection & SectionContainer::getSection(const string &name) const
+const ConfigEntry & EntryContainer::getEntry(const string &name) const
 {
-    if (subSections.count(name)) {
-        return *(*subSections.find(name)).second;
+    if (subEntries.count(name)) {
+        return *(*subEntries.find(name)).second;
     } else {
         throw bad_path(name);
     }
 }
 
-bool SectionContainer::hasSection(const string &name) const
+bool EntryContainer::hasEntry(const string &name) const
 {
-    return subSections.count(name)?true:false;
+    return subEntries.count(name)?true:false;
 }
 
-const vector<string> SectionContainer::getSectionNames() const
+const vector<string> EntryContainer::getEntryNames() const
 {
     vector<string> names;
-    for (map<string, ConfigSection *>::const_iterator iter = subSections.begin(); iter != subSections.end(); ++iter) {
+    for (map<string, ConfigEntry *>::const_iterator iter = subEntries.begin(); iter != subEntries.end(); ++iter) {
         names.push_back(iter->first);
     }
     return names;
 }
 
-ConfigSection::ConfigSection()
+ConfigEntry::ConfigEntry()
 {}
 
-ConfigSection::ConfigSection(const ConfigValue &value):
+/*ConfigSection::ConfigSection(const ConfigValue &value):
         ConfigEntry(value)
+{}*/
+
+ConfigEntry::ConfigEntry(const ConfigEntry & other):EntryContainer(other), ConfigValue(other)
 {}
 
-ConfigSection::ConfigSection(const ConfigSection & other):SectionContainer(other)
-{
-    copyValues(other);
-}
-
-ConfigSection & ConfigSection::operator=(const ConfigSection & rhs)
+ConfigEntry & ConfigEntry::operator=(const ConfigEntry & rhs)
 {
     if (this != &rhs) {
-        for (map<string, ConfigValue *>::iterator iter = values.begin(); iter != values.end(); ++iter) {
-            delete iter->second;
-        }
-        values.clear();
-        copyValues(rhs);
-        SectionContainer::operator=(rhs);
+        EntryContainer::operator=(rhs);
+		ConfigValue::operator=(rhs);
     }
     return *this;
 }
 
-void ConfigSection::copyValues(const ConfigSection & other)
-{
-    for (map<string, ConfigValue *>::const_iterator other_iter = other.values.begin(); other_iter != other.values.end(); ++other_iter) {
-        values[other_iter->first] = new ConfigValue(*(other_iter->second));
-    }
-}
+ConfigEntry::~ConfigEntry()
+{}
 
-ConfigSection::~ConfigSection()
-{
-    for (map<string, ConfigValue *>::iterator iter = values.begin(); iter != values.end(); ++iter) {
-        delete iter->second;
-        iter->second = NULL;
-    }
-}
-
-void ConfigSection::removeValue(const string &name)
-{
-    ConfigValue *value = values[name];
-    values.erase(values.find(name));
-    delete value;
-}
-
-const vector<string> ConfigSection::getValueNames() const
-{
-    vector<string> names;
-    for (map<string, ConfigValue *>::const_iterator iter = values.begin(); iter != values.end(); ++iter) {
-        names.push_back(iter->first);
-    }
-    return names;
-}
-
-ConfigValue & ConfigSection::value(const string &name)
-{
-    if (values.count(name)) {
-        return *values[name];
-    } else {
-        ConfigValue * newValue = new ConfigValue();
-        values.insert(map<string, ConfigValue *>::value_type(name, newValue));
-        return *newValue;
-    }
-}
-
-const ConfigValue & ConfigSection::value(const string &name) const
-{
-    if (values.count(name)) {
-        return *(*values.find(name)).second;
-    } else {
-        throw value_not_set("name");
-    }
-}
-
-int ConfigEntry::intValue()
+int ConfigValue::intValue()
 {
     return value<int>();
-}
-
-bool ConfigSection::hasValue(const string &name) const
-{
-    return values.count(name)?true:false; //pointless code to hush compiler
-}
-
-ConfigEntry & ConfigSection::entry(const string &name)
-{
-    if (hasSection(name)) {
-        return getSection(name);
-    } else {
-        return value(name);
-    }
-}
-
-const ConfigEntry & ConfigSection::entry(const string &name) const
-{
-    if (hasSection(name)) {
-        return getSection(name);
-    } else {
-        return value(name);
-    }
 }
 
 ConfigProfile::ConfigProfile(const string & profileName):name(profileName)
