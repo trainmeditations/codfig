@@ -103,7 +103,7 @@ ConfigEntry * EntryContainer::addEntry(const string &name)
      */
     if (!subEntries.count(name)) {
         //subSections.insert(map<string, ConfigSection *>::value_type(name, new ConfigSection()));
-        ConfigEntry * newCE = new ConfigEntry();
+        ConfigEntry * newCE = new ConfigEntry(this, name);
         subEntries[name] = newCE;
         return newCE;
     } else {
@@ -151,8 +151,15 @@ const vector<string> EntryContainer::getEntryNames() const
     return names;
 }
 
-ConfigEntry::ConfigEntry()
-{}
+ConfigEntry::ConfigEntry(EntryContainer *parent, const string &name): _parent(parent)
+{
+    ConfigEntry * parentE = NULL;
+    if (parentE = dynamic_cast<ConfigEntry *>(parent)) {
+        _path = parentE->path() + '.' + name;
+    } else {
+        _path = name;
+    }
+}
 
 /*ConfigSection::ConfigSection(const ConfigValue &value):
         ConfigEntry(value)

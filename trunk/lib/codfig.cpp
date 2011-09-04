@@ -23,8 +23,6 @@
 #include "codfig.h"
 #include "codfigio.h"
 
-static const char DefaultPathSep = '.';
-
 using namespace codfig;
 
 /*
@@ -35,7 +33,7 @@ Config::Config(const string &applicationName,
                const string &applicationVersion,
                const string &developer):
 appID(applicationName, applicationVersion, developer), defaultProfile(new ConfigProfile("default")),
-currentProfile(defaultProfile), _pathSeparator(DefaultPathSep){}
+currentProfile(defaultProfile), _pathSeparator('.'){}
 
 Config::Config(const Config & other):
 appID(other.appID), defaultProfile(new ConfigProfile(*(other.defaultProfile))),
