@@ -45,12 +45,12 @@ namespace codfig {
         Config(const string &applicationName,
                 const string &applicationVersion,
                 const string &developer);
-        Config(ConfigIO * source);/*create config from source object*/
+        //Config(ConfigIO * source);/*create config from source object*/
         Config(const Config &other);
         Config & operator=(const Config &rhs);
         ~Config();
 
-        inline const ApplicationID & applicationID() const { return appID; };
+        inline const ApplicationID & applicationID() const { return appID; }
 
         void setSource(ConfigIO *source);
         bool save();

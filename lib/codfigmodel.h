@@ -106,11 +106,15 @@ namespace codfig{
 
     class ConfigEntry:public EntryContainer, public ConfigValue {
     public:
-        ConfigEntry();
+        ConfigEntry(EntryContainer *parent, const string &name);
         ConfigEntry(const ConfigEntry & other);
         ConfigEntry & operator=(const ConfigEntry & rhs);
+        inline const string &path() const {return _path;}
         //ConfigEntry(const ConfigValue &value);
         ~ConfigEntry();
+    private:
+        string _path;
+        EntryContainer *_parent;
     };
 
     class ConfigProfile:public EntryContainer {
