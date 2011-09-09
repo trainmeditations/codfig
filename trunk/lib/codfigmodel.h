@@ -107,12 +107,13 @@ namespace codfig{
     class ConfigEntry:public EntryContainer, public ConfigValue {
     public:
         ConfigEntry(EntryContainer *parent, const string &name);
-        ConfigEntry(const ConfigEntry & other);
-        ConfigEntry & operator=(const ConfigEntry & rhs);
+        ConfigEntry(const ConfigEntry & other, EntryContainer *parent);
         inline const string &path() const {return _path;}
         //ConfigEntry(const ConfigValue &value);
         ~ConfigEntry();
     private:
+        ConfigEntry(const ConfigEntry & other);
+        ConfigEntry & operator=(const ConfigEntry & rhs);
         string _path;
         EntryContainer *_parent;
     };

@@ -83,7 +83,7 @@ EntryContainer & EntryContainer::operator=(const EntryContainer & rhs)
 void EntryContainer::copyEntries(const EntryContainer & other)
 {
     for (map<string, ConfigEntry *>::const_iterator other_iter = other.subEntries.begin(); other_iter != other.subEntries.end(); other_iter++) {
-        subEntries[other_iter->first] = new ConfigEntry(*(other_iter->second));
+        subEntries[other_iter->first] = new ConfigEntry(*(other_iter->second), this);
     }
 }
 
@@ -165,17 +165,18 @@ ConfigEntry::ConfigEntry(EntryContainer *parent, const string &name): _parent(pa
         ConfigEntry(value)
 {}*/
 
-ConfigEntry::ConfigEntry(const ConfigEntry & other):EntryContainer(other), ConfigValue(other)
+ConfigEntry::ConfigEntry(const ConfigEntry & other, EntryContainer *parent):
+EntryContainer(other), ConfigValue(other), _parent(parent)
 {}
 
-ConfigEntry & ConfigEntry::operator=(const ConfigEntry & rhs)
+/*ConfigEntry & ConfigEntry::operator=(const ConfigEntry & rhs)
 {
     if (this != &rhs) {
         EntryContainer::operator=(rhs);
 		ConfigValue::operator=(rhs);
     }
     return *this;
-}
+}*/
 
 ConfigEntry::~ConfigEntry()
 {}
