@@ -23,7 +23,7 @@
 
 #include <string>
 #include <vector>
-#include "codfigmodel.h"
+#include "codfig.h"
 
 using std::string;
 using std::vector;
@@ -36,37 +36,33 @@ namespace codfig {
      * IO modules.
      */
 
-	class ConfigIO {
+    class ConfigIO {
+    public:
+        virtual ~ConfigIO() = 0;
+        virtual ApplicationID getAppID() = 0;
+        void readConfig(Config &config);
+        void writeConfig(Config &config);
+
+        //virtual void writeValue(const ConfigEntry &entry) = 0;
+        //virtual void removeEntry(const string &path) = 0;
+
     protected:
 
-        /// Retrieve a value from the IO Source
-        /**
-         * Implement this function to return a ConfigEntry containing
-         * the value stored as the appropriate type. Should be a
-         * a ConfigValue if the path points to a node, and a
-         * ConfigSection if it points to a section value.
-         * @param[in] path   The path to the entry.
-         * @param[out] value The ConfigEntry containing the value.
-         */
-        virtual void getValue(const string &path, ConfigEntry &value) = 0;
+        //READING
+        void startProfile(Config &config, const string &name);
+        void addPath(Config &config, const string &path);
+        template <class T>
+            void addEntry(Config &config, const string &path, const T& value);
 
-        /// Write a value to the IO Source
-        /**
-         * Implement this function to write a ConfigEntry containing
-         * the value to be stored. It should store the value in a
-         * format appropriate way depending on whether it is a section
-         * or a value.
-         * @param[in] path  The path to write the entry.
-         * @param[in] entry The ConfigEntry to write.
-         */
-        virtual void writeValue(const string &path, const ConfigEntry &entry) = 0;
+        //WRITING
 
-        virtual ApplicationID getAppID() = 0;
-
-        virtual vector<string> profiles() = 0;
-        virtual vector<string> sections(const string &profile, const string &section="") = 0;
-        virtual vector<string> values(const string &profile, const string &section) = 0;
 	};
 }
+
+/************************
+ * Template Definitions *
+ ************************/
+
+#include "codfigio_t.h"
 
 #endif

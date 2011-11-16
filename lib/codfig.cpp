@@ -42,6 +42,10 @@ currentProfile(defaultProfile), _pathSeparator(other._pathSeparator){
     copyProfiles(other);
 }
 
+Config::Config(ConfigIO *source):appID(source->getAppID()), _source(source)
+{
+}
+
 Config & Config::operator=(const Config &rhs) {
     if (this != &rhs) {
         appID = rhs.appID;

@@ -30,22 +30,18 @@ using std::string;
 using std::vector;
 #include "codfigexceptions.h"
 #include "codfigmodel.h"
-#include "codfigio.h"
+//#include "codfigio.h"
 
 namespace codfig {
 
+    class ConfigIO;
+
     class Config {
     public:
-        enum SaveStatus {
-            Saved,
-            IOError,
-            Fail
-        };
-
         Config(const string &applicationName,
                 const string &applicationVersion,
                 const string &developer);
-        //Config(ConfigIO * source);/*create config from source object*/
+        Config(ConfigIO *source);/*create config from source object*/
         Config(const Config &other);
         Config & operator=(const Config &rhs);
         ~Config();
