@@ -1,5 +1,5 @@
 /*
- * Copyright Â© Shaun Bouckaert 2009
+ * Copyright © Shaun Bouckaert 2009
  *
  * This file is part of Codfig.
  *
@@ -20,12 +20,14 @@
 
 #include "codfigio.h"
 
+#ifndef TRAINMEDITATION_CODFIGIO_T_H
+#define TRAINMEDITATION_CODFIGIO_T_H
+
 using namespace codfig;
 
-void ConfigIO::startProfile(Config &config, const string &name) {
-    config.selectProfile(config.addProfile(name));   
-}
+template <class T>
+    void ConfigIO::addEntry(Config &config, const string &path, const T &value) {
+        config[path].value<T>(value);
+    }
 
-void ConfigIO::addPath(Config &config, const string &path) {
-    config[path];
-}
+#endif
