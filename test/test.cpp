@@ -1,5 +1,5 @@
 /*
- * Copyright © Shaun Bouckaert 2009
+ * Copyright © Shaun Bouckaert 2011
  *
  * This file is part of Codfig.
  *
@@ -81,7 +81,6 @@ int main(int argc, char * argv []) {
 #endif
 
         cout << endl << "Completed Test Suite." << endl << endl;
-        std::cin.get();
 
         return 0;
 }
