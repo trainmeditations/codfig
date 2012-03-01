@@ -1,5 +1,5 @@
 /*
- * Copyright © Shaun Bouckaert 2009
+ * Copyright © Shaun Bouckaert 2012
  *
  * This file is part of Codfig.
  *
@@ -42,8 +42,10 @@ currentProfile(defaultProfile), _pathSeparator(other._pathSeparator){
     copyProfiles(other);
 }
 
-Config::Config(ConfigIO *source):appID(source->getAppID()), _source(source)
+Config::Config(ConfigIO *source):appID(source->getAppID()), defaultProfile(new ConfigProfile("default")),
+    currentProfile(defaultProfile), _pathSeparator('.'), _source(source)
 {
+    source->readConfig(*this);
 }
 
 Config & Config::operator=(const Config &rhs) {
@@ -81,6 +83,10 @@ Config::~Config(){
 		delete *iter;
 		*iter = NULL;
 	}
+}
+
+void Config::clearSource() {
+    _source = NULL;
 }
 
 
