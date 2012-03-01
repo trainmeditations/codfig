@@ -25,9 +25,5 @@
 
 using namespace codfig;
 
-template <class T>
-    void ConfigIO::addEntry(Config &config, const string &path, const T &value) {
-        config[path].value<T>(value);
-    }
 
 #endif

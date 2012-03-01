@@ -1,5 +1,5 @@
 /*
- * Copyright © Shaun Bouckaert 2009
+ * Copyright © Shaun Bouckaert 2012
  *
  * This file is part of Codfig.
  *
@@ -22,10 +22,3 @@
 
 using namespace codfig;
 
-void ConfigIO::startProfile(Config &config, const string &name) {
-    config.selectProfile(config.addProfile(name));   
-}
-
-void ConfigIO::addPath(Config &config, const string &path) {
-    config[path];
-}

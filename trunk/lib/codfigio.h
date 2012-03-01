@@ -1,5 +1,5 @@
 /*
- * Copyright © Shaun Bouckaert 2009
+ * Copyright © Shaun Bouckaert 2012
  *
  * This file is part of Codfig.
  *
@@ -21,12 +21,7 @@
 #ifndef TRAINMEDITATIONS_CODFIGIO_H
 #define TRAINMEDITATIONS_CODFIGIO_H
 
-#include <string>
-#include <vector>
 #include "codfig.h"
-
-using std::string;
-using std::vector;
 
 namespace codfig {
 
@@ -38,23 +33,17 @@ namespace codfig {
 
     class ConfigIO {
     public:
+        //force abstract with pure virtual destructor
         virtual ~ConfigIO() = 0;
+
         virtual ApplicationID getAppID() = 0;
-        void readConfig(Config &config);
-        void writeConfig(Config &config);
 
-        //virtual void writeValue(const ConfigEntry &entry) = 0;
-        //virtual void removeEntry(const string &path) = 0;
+        /*
+         * config will be empty except for an empty default profile which is also current profile
+         */
+        virtual void readConfig(Config &config) = 0;
 
-    protected:
-
-        //READING
-        void startProfile(Config &config, const string &name);
-        void addPath(Config &config, const string &path);
-        template <class T>
-            void addEntry(Config &config, const string &path, const T& value);
-
-        //WRITING
+        virtual void writeConfig(Config &config) = 0;
 
 	};
 }
@@ -63,6 +52,6 @@ namespace codfig {
  * Template Definitions *
  ************************/
 
-#include "codfigio_t.h"
+//#include "codfigio_t.h"
 
 #endif
