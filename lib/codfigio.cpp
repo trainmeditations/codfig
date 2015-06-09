@@ -22,3 +22,7 @@
 
 using namespace codfig;
 
+ConfigIO::ConfigIO(const ApplicationID &_appID):appID(_appID){}
+
+ConfigIO::~ConfigIO(){}
+

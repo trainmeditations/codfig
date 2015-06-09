@@ -30,7 +30,6 @@ using std::string;
 using std::vector;
 #include "codfigexceptions.h"
 #include "codfigmodel.h"
-//#include "codfigio.h"
 
 namespace codfig {
 
@@ -46,7 +45,7 @@ namespace codfig {
         Config & operator=(const Config &rhs);
         ~Config();
 
-        inline const ApplicationID & applicationID() const { return appID; }
+        inline ApplicationID applicationID() const { return appID; }
 
         void setSource(ConfigIO *source);
         bool save();

@@ -26,15 +26,17 @@
 
 #include <string>
 #include <fstream>
+#include "codfig.h"
 #include "codfigio.h"
 
 namespace codfig {
 	class ConfigFileIO:public ConfigIO {
     protected:
-        ConfigFileIO(const std::string &filename);
+        ConfigFileIO(const std::string &filename, const ApplicationID & _appID);
+    public:
+        static const std::string stdConfigPath();
 	protected:
         std::string _filename;
-        const static std::string stdConfigPath;
 	};
 }
 

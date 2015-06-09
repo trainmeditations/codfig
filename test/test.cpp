@@ -173,11 +173,11 @@ bool runTests(Test test, bool colours){
         case iniIn:
         {
             cout << (testName = "ini Input") << "\"." << endl;
-            Config testIOConfig("Test App", "0.0.0", "Shaun Bouckaert");
+            //ConfigIOini iniIOFile("test.ini");
+            //Config testIOConfig(iniIOFile);
             
-            failures += boolTest("Check number of root sections",
-                                 testIOConfig.getEntryNames().size() == 2);
-            if (failures) break;
+            /*failures += boolTest("Check number of root sections",
+                                 testIOConfig.getEntryNames().size() == 2);*/
             /*failures += boolTest(("Check first root section name " + testIOConfig.getSectionNames()[0]).c_str(),
                                  testIOConfig.getSectionNames()[0] == "owner" || testIOConfig.getSectionNames()[0] == "database");
             failures += boolTest(("Check second root section name " + testIOConfig.getSectionNames()[1]).c_str(),

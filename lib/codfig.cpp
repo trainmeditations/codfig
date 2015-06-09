@@ -42,7 +42,7 @@ currentProfile(defaultProfile), _pathSeparator(other._pathSeparator){
     copyProfiles(other);
 }
 
-Config::Config(ConfigIO *source):appID(source->getAppID()), defaultProfile(new ConfigProfile("default")),
+Config::Config(ConfigIO *source):appID(source->applicationID()), defaultProfile(new ConfigProfile("default")),
     currentProfile(defaultProfile), _pathSeparator('.'), _source(source)
 {
     source->readConfig(*this);

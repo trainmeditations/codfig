@@ -33,7 +33,7 @@ using std::string;
 namespace codfig {
 	class ConfigIOini:public ConfigFileIO {
 	public:
-		ConfigIOini(const string &iniFilePath);
+        ConfigIOini(const string &iniFilePath, const ApplicationID &_appID);
         void getValue(const string &path, ConfigEntry &value);
         void writeValue(const string &path, ConfigEntry &value);
 	};

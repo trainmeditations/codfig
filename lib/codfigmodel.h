@@ -47,8 +47,6 @@ namespace codfig{
         string _developer;
     };
 
-    class ConfigEntry;
-    
     class ConfigValue {
     protected:
         class AbstractValueBox {
@@ -87,6 +85,8 @@ namespace codfig{
         AbstractValueBox * _value;
     };
 
+    class ConfigEntry;
+
     class EntryContainer {
     public:
         EntryContainer();
@@ -109,7 +109,6 @@ namespace codfig{
         ConfigEntry(EntryContainer *parent, const string &name);
         ConfigEntry(const ConfigEntry & other, EntryContainer *parent);
         inline const string &path() const {return _path;}
-        //ConfigEntry(const ConfigValue &value);
         ~ConfigEntry();
     private:
         ConfigEntry(const ConfigEntry & other);

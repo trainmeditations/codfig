@@ -26,7 +26,7 @@
 
 using codfig::ConfigIOini;
 
-ConfigIOini::ConfigIOini(const string &iniFilePath):
-		ConfigFileIO(iniFilePath)
+ConfigIOini::ConfigIOini(const string &iniFilePath, const ApplicationID &_appID):
+        ConfigFileIO(iniFilePath, _appID)
 {}
 

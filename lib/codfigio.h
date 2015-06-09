@@ -32,11 +32,13 @@ namespace codfig {
      */
 
     class ConfigIO {
+    protected:
+        ConfigIO(const ApplicationID &_appID);
     public:
         //force abstract with pure virtual destructor
         virtual ~ConfigIO() = 0;
 
-        virtual ApplicationID getAppID() = 0;
+        inline ApplicationID applicationID() const { return appID; }
 
         /*
          * config will be empty except for an empty default profile which is also current profile
@@ -45,7 +47,10 @@ namespace codfig {
 
         virtual void writeConfig(Config &config) = 0;
 
+    protected:
+        ApplicationID appID;
 	};
+
 }
 
 /************************

@@ -97,17 +97,13 @@ EntryContainer::~EntryContainer()
 
 ConfigEntry * EntryContainer::addEntry(const string &name)
 {
-    /*
-     * TODO: check if value exists and replace it with a section
-     *
-     */
     if (!subEntries.count(name)) {
-        //subSections.insert(map<string, ConfigSection *>::value_type(name, new ConfigSection()));
         ConfigEntry * newCE = new ConfigEntry(this, name);
         subEntries[name] = newCE;
         return newCE;
     } else {
-        throw duplicate_name("section", name);
+        //this should never happen as entries are only added if they don't already exist
+        throw duplicate_name("entry", name);
     }
 }
 
@@ -160,10 +156,6 @@ ConfigEntry::ConfigEntry(EntryContainer *parent, const string &name): _parent(pa
         _path = name;
     }
 }
-
-/*ConfigSection::ConfigSection(const ConfigValue &value):
-        ConfigEntry(value)
-{}*/
 
 ConfigEntry::ConfigEntry(const ConfigEntry & other, EntryContainer *parent):
 EntryContainer(other), ConfigValue(other), _parent(parent)
