@@ -1,7 +1,7 @@
 /*
- * Copyright © Shaun Bouckaert 2009
+ * Copyright © 2009-2010, 2015 Shaun Bouckaert
  *
- * This file is part of Codfig.
+ *  This file is part of Codfig.
  *
  *  Codfig is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
