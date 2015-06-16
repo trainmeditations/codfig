@@ -32,7 +32,7 @@
 
 #include <iostream>
 #include <string>
-#include <cstdlib>
+//#include <cstdlib>
 #include "codfig.h"
 #include "tests.h"
 #include "buildopts.h"

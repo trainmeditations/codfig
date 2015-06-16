@@ -52,7 +52,7 @@ namespace codfig{
         class AbstractValueBox {
         public:
             virtual AbstractValueBox * cloneValue() const = 0;
-            virtual ~AbstractValueBox();
+            virtual ~AbstractValueBox() = 0;
             virtual string getStringValue() const = 0;
         };
 

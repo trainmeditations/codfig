@@ -115,7 +115,7 @@ void EntryContainer::removeEntry(const string &name)
     } //should I throw an exception on else? strict mode?
 }
 
-ConfigEntry & EntryContainer::getEntry(const std::string &name)
+ConfigEntry & EntryContainer::getEntry(const string &name)
 {
     if (subEntries.count(name)) {
         return *subEntries[name];
