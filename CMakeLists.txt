@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 project (Codfig)
 
 option (BUILD_INI "Build support for INI files" ON)
-option (BUILD_TEST "Build test binary" OFF)
+option (BUILD_TEST "Build test binary" ON)
 #option (BUILD_XML "Build support for XML files" OFF)
 #option (BUILD_YAML "Build support for YAML files" OFF)
 option (BUILD_SHARED_LIBS "Build Codfig as a shared library" OFF)
