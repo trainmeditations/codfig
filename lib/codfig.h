@@ -1,5 +1,5 @@
 /*
- * Copyright © 2006, 2009-2012, 2015 Shaun Bouckaert
+ * Copyright © 2006, 2009-2012, 2015-2016 Shaun Bouckaert
  *
  *  This file is part of Codfig.
  *
@@ -47,10 +47,9 @@ namespace codfig {
 
         inline ApplicationID applicationID() const { return appID; }
 
-        void setSource(ConfigIO *source);
-        bool save();
-        void reload();
-        void loadFromSource(ConfigIO *source);
+        inline void setSource(ConfigIO *source)
+                { _source=source; }
+        void reload(); //clear the cache or reset time
         void clearSource();
         
         inline void setPathSeperator(char pathSeparator)
