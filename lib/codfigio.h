@@ -53,10 +53,4 @@ namespace codfig {
 
 }
 
-/************************
- * Template Definitions *
- ************************/
-
-//#include "codfigio_t.h"
-
 #endif
