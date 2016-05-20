@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009-2011, 2015 Shaun Bouckaert
+ * Copyright © 2009-2011, 2015-2016 Shaun Bouckaert
  *
  *  This file is part of Codfig.
  *
@@ -18,19 +18,33 @@
  *
  */
 
-#include "codfigmodel.h"
+#include "configentry.h"
 
 using namespace codfig;
 
-ConfigProfile::ConfigProfile(const string & profileName):name(profileName)
+ConfigEntry::ConfigEntry(EntryContainer *parent, const string &name): _parent(parent)
+{
+    ConfigEntry * parentE = NULL;
+    if (parentE = dynamic_cast<ConfigEntry *>(parent)) {
+        _path = parentE->path() + '.' + name;
+    } else {
+        _path = name;
+    }
+}
+
+ConfigEntry::ConfigEntry(const ConfigEntry & other, EntryContainer *parent):
+EntryContainer(other), ConfigValue(other), _parent(parent)
 {}
 
-const string & ConfigProfile::getName() const
+/*ConfigEntry & ConfigEntry::operator=(const ConfigEntry & rhs)
 {
-    return name;
-}
+    if (this != &rhs) {
+        EntryContainer::operator=(rhs);
+                ConfigValue::operator=(rhs);
+    }
+    return *this;
+}*/
 
-void ConfigProfile::setName(const string &newName)
-{
-    name = newName;
-}
+ConfigEntry::~ConfigEntry()
+{}
+

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009-2011, 2015 Shaun Bouckaert
+ * Copyright © 2009-2011, 2015-2016 Shaun Bouckaert
  *
  *  This file is part of Codfig.
  *
@@ -18,33 +18,27 @@
  *
  */
 
-// File: codfigmodel.h
-// model of configuration data
+#ifndef TRAINMEDITATIONS_CONFIGENTRY_H
+#define TRAINMEDITATIONS_CONFIGENTRY_H
 
-#ifndef TRAINMEDITATION_CODFIGMODEL_H
-#define TRAINMEDITATION_CODFIGMODEL_H
-
-#include <string>
-#include <vector>
-
-#include "applicationid.h"
-#include "configvalue.h"
 #include "entrycontainer.h"
-#include "configentry.h"
+#include "configvalue.h"
 
-using std::string;
-using std::vector;
+namespace codfig {
 
-namespace codfig{
-
-    class ConfigProfile:public EntryContainer {
+    class ConfigEntry:public EntryContainer, public ConfigValue {
     public:
-        ConfigProfile(const string & profileName);
-        void setName(const string &newName);
-        const string &getName() const;
+        ConfigEntry(EntryContainer *parent, const string &name);
+        ConfigEntry(const ConfigEntry & other, EntryContainer *parent);
+        inline const string &path() const {return _path;}
+        ~ConfigEntry();
     private:
-        string name;
+        ConfigEntry(const ConfigEntry & other);
+        ConfigEntry & operator=(const ConfigEntry & rhs);
+        string _path;
+        EntryContainer *_parent;
     };
+
 }
 
-#endif
+#endif // TRAINMEDITATIONS_CONFIGENTRY_H
