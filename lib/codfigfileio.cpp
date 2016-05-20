@@ -45,7 +45,9 @@ const string ConfigFileIO::stdConfigPath() {
     HRESULT result = SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, _confPath);
     assert(result == S_OK);
     configPath = _confPath;
-#elif defined _
+//#elif defined _
+#else
+    configPath = "./";
 #endif
     return configPath;
 }

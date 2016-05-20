@@ -21,7 +21,7 @@
 #ifndef TRAINMEDITATIONS_CODFIGIO_H
 #define TRAINMEDITATIONS_CODFIGIO_H
 
-#include "codfig.h"
+#include "codfigmodel.h"
 
 namespace codfig {
 
@@ -43,9 +43,9 @@ namespace codfig {
         /*
          * config will be empty except for an empty default profile which is also current profile
          */
-        virtual void readConfig(Config &config) = 0;
+        //virtual void readConfig(Config &config) = 0;
 
-        virtual void writeConfig(Config &config) = 0;
+        //virtual void writeConfig(Config &config) = 0;
 
     protected:
         ApplicationID appID;
