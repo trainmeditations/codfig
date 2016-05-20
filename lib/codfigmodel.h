@@ -29,50 +29,13 @@
 #include <map>
 
 #include "applicationid.h"
+#include "configvalue.h"
 
 using std::string;
 using std::vector;
 using std::map;
 
 namespace codfig{
-    class ConfigValue {
-    protected:
-        class AbstractValueBox {
-        public:
-            virtual AbstractValueBox * cloneValue() const = 0;
-            virtual ~AbstractValueBox() = 0;
-            virtual string getStringValue() const = 0;
-        };
-
-        template <class T> class ValueBox:public AbstractValueBox {
-        public:
-            ValueBox();
-            ValueBox(T value);
-            ~ValueBox();
-            ValueBox<T> * cloneValue() const;
-            inline const T &value() const {return _value;}
-            inline T &value() { return _value;}
-            string getStringValue() const;
-            void setValueByString(const string &stringValue);
-        private:
-            T _value;
-        };
-
-    public:
-        ConfigValue();
-        ConfigValue(const ConfigValue & other);
-        ConfigValue & operator=(const ConfigValue & rhs);
-        virtual ~ConfigValue();
-        string stringValue() const;
-        template <class T>
-            const T &value() const;
-        template <class T>
-            T &value();
-        int intValue();
-    private:
-        AbstractValueBox * _value;
-    };
-
     class ConfigEntry;
 
     class EntryContainer {
@@ -114,11 +77,5 @@ namespace codfig{
         string name;
     };
 }
-
-/************************
-* Template Definitions *
-************************/
-
-#include "codfigmodel_t.h"
 
 #endif

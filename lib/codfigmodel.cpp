@@ -22,40 +22,6 @@
 
 using namespace codfig;
 
-ConfigValue::AbstractValueBox::~AbstractValueBox()
-{}
-
-ConfigValue::ConfigValue():_value(NULL)
-{}
-
-ConfigValue::ConfigValue(const ConfigValue & other):_value(NULL)
-{
-    if (other._value) _value = other._value->cloneValue();
-}
-
-ConfigValue & ConfigValue::operator=(const ConfigValue & other)
-{
-    if (this != &other) {
-        delete _value;
-        if (other._value) {
-            _value = other._value->cloneValue();
-        } else {
-            _value = NULL;
-        }
-    }
-    return *this;
-}
-
-string ConfigValue::stringValue() const
-{
-    return _value->getStringValue();
-}
-
-ConfigValue::~ConfigValue()
-{
-    if (_value) delete _value;
-}
-
 EntryContainer::EntryContainer()
 {}
 

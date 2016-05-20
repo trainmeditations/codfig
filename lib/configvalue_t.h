@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009-2011 Shaun Bouckaert
+ * Copyright © 2009-2011 2016 Shaun Bouckaert
  *
  *  This file is part of Codfig.
  *
@@ -21,8 +21,8 @@
 // File: codfigmodel_t.h
 // codfig model template definitions
 
-#ifndef TRAINMEDITATION_CODFIGMODEL_T_H
-#define TRAINMEDITATION_CODFIGMODEL_T_H
+#ifndef TRAINMEDITATIONS_CONFIGVALUE_T_H
+#define TRAINMEDITATIONS_CONFIGVALUE_T_H
 
 #include "codfigmodel.h"
 #include "codfigexceptions.h"
@@ -86,4 +86,4 @@ template <class T>
     }
 }
 
-#endif
+#endif //TRAINMEDITATIONS_CONFIGVALUE_T_H
