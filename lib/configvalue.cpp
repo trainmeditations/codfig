@@ -51,6 +51,11 @@ string ConfigValue::stringValue() const
     return _value->getStringValue();
 }
 
+int ConfigValue::intValue()
+{
+    return value<int>();
+}
+
 ConfigValue::~ConfigValue()
 {
     if (_value) delete _value;
