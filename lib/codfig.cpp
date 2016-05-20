@@ -45,7 +45,8 @@ currentProfile(defaultProfile), _pathSeparator(other._pathSeparator){
 Config::Config(ConfigIO *source):appID(source->applicationID()), defaultProfile(new ConfigProfile("default")),
     currentProfile(defaultProfile), _pathSeparator('.'), _source(source)
 {
-    source->readConfig(*this);
+    //source->readConfig(*this);
+    //TODO: Remove body
 }
 
 Config & Config::operator=(const Config &rhs) {
