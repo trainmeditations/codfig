@@ -22,10 +22,6 @@
 
 using namespace codfig;
 
-ApplicationID::ApplicationID(const string &applicationName, const string &applicationVersion, const string &developer):
-        _appName(applicationName), _appVer(applicationVersion), _developer(developer)
-{}
-
 ConfigValue::AbstractValueBox::~AbstractValueBox()
 {}
 

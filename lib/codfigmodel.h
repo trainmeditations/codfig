@@ -28,25 +28,13 @@
 #include <vector>
 #include <map>
 
+#include "applicationid.h"
+
 using std::string;
 using std::vector;
 using std::map;
 
 namespace codfig{
-    class ApplicationID {
-    public:
-        ApplicationID(const string &applicationName,
-                        const string &applicationVersion,
-                        const string &developer);
-        inline const string &applicationName() const { return _appName;}
-        inline const string &applicationVersion() const {return _appVer;}
-        inline const string &developer() const {return _developer;}
-    private:
-        string _appName;
-        string _appVer;
-        string _developer;
-    };
-
     class ConfigValue {
     protected:
         class AbstractValueBox {
