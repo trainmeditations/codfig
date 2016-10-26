@@ -6,3 +6,4 @@ add_library( Codfig codfig.cpp codfig.h codfigmodel.h
     configprofile.cpp configprofile.h
     codfigexceptions.cpp codfigexceptions.h codfigio.h codfigio.cpp )
 add_library( CodfigFileIO codfigfileio.h codfigfileio.cpp )
+target_link_libraries( CodfigFileIO Codfig)
