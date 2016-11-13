@@ -34,7 +34,7 @@ namespace codfig {
     protected:
         ConfigFileIO(const std::string &filename, const ApplicationID & _appID);
     public:
-        static const std::string stdConfigPath();
+        static std::string stdConfigPath();
 	protected:
         std::string _filename;
 	};
