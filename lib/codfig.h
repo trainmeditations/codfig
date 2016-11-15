@@ -29,7 +29,7 @@ using std::string;
 #include <vector>
 using std::vector;
 #include "codfigexceptions.h"
-#include "codfigmodel.h"
+#include "codfigmodel.hpp"
 
 namespace codfig {
 

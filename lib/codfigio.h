@@ -21,7 +21,7 @@
 #ifndef TRAINMEDITATIONS_CODFIGIO_H
 #define TRAINMEDITATIONS_CODFIGIO_H
 
-#include "codfigmodel.h"
+#include "codfigmodel.hpp"
 
 namespace codfig {
 

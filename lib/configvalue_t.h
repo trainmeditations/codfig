@@ -24,7 +24,7 @@
 #ifndef TRAINMEDITATIONS_CONFIGVALUE_T_H
 #define TRAINMEDITATIONS_CONFIGVALUE_T_H
 
-#include "codfigmodel.h"
+#include "codfigmodel.hpp"
 #include "codfigexceptions.h"
 #include <sstream>
 
