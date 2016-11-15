@@ -25,7 +25,6 @@
 #define TRAINMEDITATIONS_CODFIGFILEIO_H
 
 #include <string>
-#include <fstream>
 #include "codfig.h"
 #include "codfigio.h"
 
@@ -35,6 +34,8 @@ namespace codfig {
         ConfigFileIO(const std::string &filename, const ApplicationID & _appID);
     public:
         static std::string stdConfigPath();
+    private:
+        static bool createDirectoryIfNotExist(const string& path);
 	protected:
         std::string _filename;
 	};

@@ -29,6 +29,11 @@
 const char _pathSep = '\\';
 #endif
 
+#ifdef __unix__
+const char _pathSep = '/';
+#include <sys/stat.h>
+#endif
+
 using std::string;
 using std::fstream;
 using std::stringstream;
@@ -39,6 +44,16 @@ _filename(filename), ConfigIO(_appID)
 {
     fstream file(filename.c_str());
     file.close();
+}
+
+bool ConfigFileIO::createDirectoryIfNotExist(const string& path) {
+#ifdef WIN32
+    return (_mkdir(path.c_str()) == 0 || errno == EEXIST);
+#elif defined(__unix__)
+    return (mkdir(path.c_str(), 0700) == 0 || errno == EEXIST);
+#else
+    throw std::logic_error("Incompatible OS");
+#endif
 }
 
 string ConfigFileIO::stdConfigPath(){
