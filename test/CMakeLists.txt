@@ -22,3 +22,4 @@ ADD_EXECUTABLE(codfigTest test.cpp tests.cpp tests.h buildopts.h)
 #Link the executable to the Codfig and other optional libraries
 TARGET_LINK_LIBRARIES(codfigTest Codfig ${OPT_LIBS})
 
+set_property(DIRECTORY ${Codfig_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT codfigTest)

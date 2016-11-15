@@ -58,7 +58,7 @@ bool runTests(Test, bool = false);
 
 
 int main(int argc, char * argv []) {
-    //MS Visual C++ Memory Leak Detection - Uncomment the lines to use
+    //MS Visual C++ Memory Leak Detection
     #ifdef _MSC_VER
     _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
     #endif
