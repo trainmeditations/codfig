@@ -33,7 +33,7 @@ namespace codfig {
     protected:
         ConfigFileIO(const std::string &filename, const ApplicationID & _appID);
     public:
-        static std::string stdConfigPath();
+        static std::string stdUserConfigPath();
     private:
         static bool createDirectoryIfNotExist(const string& path);
 	protected:

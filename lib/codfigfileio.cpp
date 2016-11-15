@@ -26,6 +26,7 @@
 
 #ifdef _WIN32
 #include <shlobj.h>
+#include <direct.h>
 const char _pathSep = '\\';
 #endif
 
@@ -56,7 +57,7 @@ bool ConfigFileIO::createDirectoryIfNotExist(const string& path) {
 #endif
 }
 
-string ConfigFileIO::stdConfigPath(){
+string ConfigFileIO::stdUserConfigPath(){
     stringstream cfgPath;
     //Windows first, then *nixes
 #ifdef WIN32
