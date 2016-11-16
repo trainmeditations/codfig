@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009-2011, 2015 Shaun Bouckaert
+ * Copyright © 2009, 2015 Shaun Bouckaert
  *
  *  This file is part of Codfig.
  *
@@ -18,24 +18,35 @@
  *
  */
 
-// File: codfigio_ini.h
-// decleration of the ConfigIO controller class for INI files
-// INI files do not support different profiles.
+// File: codfigexceptions.hpp
+// Decleration of exception classes
 
-#ifndef TRAINMEDITATIONS_CODFIGIO_INI_H
-#define TRAINMEDITATIONS_CODFIGIO_INI_H
+#ifndef TRAINMEDITATIONS_CODFIGEXCEPTIONS_HPP
+#define TRAINMEDITATIONS_CODFIGEXCEPTIONS_HPP
 
-#include "codfigfileio.h"
-
+#include <stdexcept>
 #include <string>
-using std::string;
 
 namespace codfig {
-	class ConfigIOini:public ConfigFileIO {
-	public:
-        ConfigIOini(const string &iniFilePath, const ApplicationID &_appID);
-        void getValue(const string &path, ConfigEntry &value);
-        void writeValue(const string &path, ConfigEntry &value);
+
+	class bad_path: public std::runtime_error {
+		public:
+			explicit bad_path(const std::string &path);
+	};
+
+	class wrong_type: public std::logic_error {
+		public:
+			explicit wrong_type(const std::string &name);
+	};
+
+	class value_not_set: public std::runtime_error {
+		public:
+			explicit value_not_set(const std::string &name);
+	};
+
+	class duplicate_name: public std::runtime_error {
+		public:
+			explicit duplicate_name(const std::string &type, const std::string &name);
 	};
 }
 

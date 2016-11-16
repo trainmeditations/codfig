@@ -21,7 +21,7 @@
 // File: codfigexceptions.cpp
 // Definition of exception classes
 
-#include "codfigexceptions.h"
+#include "codfigexceptions.hpp"
 
 using namespace codfig;
 

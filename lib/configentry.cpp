@@ -18,7 +18,7 @@
  *
  */
 
-#include "configentry.h"
+#include "configentry.hpp"
 
 using namespace codfig;
 

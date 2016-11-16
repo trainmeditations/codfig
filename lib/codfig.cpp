@@ -20,8 +20,8 @@
 
 #include <algorithm>
 
-#include "codfig.h"
-#include "codfigio.h"
+#include "codfig.hpp"
+#include "codfigio.hpp"
 
 using namespace codfig;
 

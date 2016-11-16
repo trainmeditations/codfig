@@ -18,7 +18,7 @@
  *
  */
 
-#include "configvalue.h"
+#include "configvalue.hpp"
 
 using namespace codfig;
 

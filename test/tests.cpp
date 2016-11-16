@@ -20,7 +20,7 @@
 
 #include <iostream>
 
-#include "tests.h"
+#include "tests.hpp"
 
 using std::cout;
 using std::endl;

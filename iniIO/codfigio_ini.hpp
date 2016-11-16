@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009-2011, 2015-2016 Shaun Bouckaert
+ * Copyright © 2009-2011, 2015 Shaun Bouckaert
  *
  *  This file is part of Codfig.
  *
@@ -18,27 +18,25 @@
  *
  */
 
-#ifndef TRAINMEDITATIONS_APPLICATIONID_H
-#define TRAINMEDITATIONS_APPLICATIONID_H
+// File: codfigio_ini.hpp
+// decleration of the ConfigIO controller class for INI files
+// INI files do not support different profiles.
+
+#ifndef TRAINMEDITATIONS_CODFIGIO_INI_HPP
+#define TRAINMEDITATIONS_CODFIGIO_INI_HPP
+
+#include "codfigfileio.hpp"
 
 #include <string>
-
 using std::string;
 
 namespace codfig {
-    class ApplicationID {
-    public:
-        ApplicationID(const string &applicationName,
-                        const string &applicationVersion,
-                        const string &developer);
-        inline const string &applicationName() const { return _appName;}
-        inline const string &applicationVersion() const {return _appVer;}
-        inline const string &developer() const {return _developer;}
-    private:
-        string _appName;
-        string _appVer;
-        string _developer;
-    };
+	class ConfigIOini:public ConfigFileIO {
+	public:
+        ConfigIOini(const string &iniFilePath, const ApplicationID &_appID);
+        void getValue(const string &path, ConfigEntry &value);
+        void writeValue(const string &path, ConfigEntry &value);
+	};
 }
 
-#endif // TRAINMEDITATIONS_APPLICATIONID_H
+#endif

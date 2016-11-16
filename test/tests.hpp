@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef TESTS_H
-#define TESTS_H
+#ifndef TESTS_HPP
+#define TESTS_HPP
 
 #include <iostream>
 

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009-2012, 2015 Shaun Bouckaert
+ * Copyright © 2009-2011, 2015-2016 Shaun Bouckaert
  *
  *  This file is part of Codfig.
  *
@@ -18,11 +18,23 @@
  *
  */
 
-#include "codfigio.hpp"
+#ifndef TRAINMEDITATIONS_CONFIGPROFILE_HPP
+#define TRAINMEDITATIONS_CONFIGPROFILE_HPP
 
-using namespace codfig;
+#include "entrycontainer.hpp"
+#include <string>
 
-ConfigIO::ConfigIO(const ApplicationID &_appID):appID(_appID){}
+using std::string;
 
-ConfigIO::~ConfigIO(){}
+namespace codfig {
+    class ConfigProfile:public EntryContainer {
+    public:
+        ConfigProfile(const string & profileName);
+        void setName(const string &newName);
+        const string &getName() const;
+    private:
+        string name;
+    };
+}
 
+#endif // TRAINMEDITATIONS_CONFIGPROFILE_H

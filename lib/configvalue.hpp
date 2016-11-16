@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef TRAINMEDITATIONS_CONFIGVALUE_H
-#define TRAINMEDITATIONS_CONFIGVALUE_H
+#ifndef TRAINMEDITATIONS_CONFIGVALUE_HPP
+#define TRAINMEDITATIONS_CONFIGVALUE_HPP
 
 #include <string>
 
@@ -69,6 +69,6 @@ namespace codfig {
 * Template Definitions *
 ************************/
 
-#include "configvalue_t.h"
+#include "configvalue_t.hpp"
 
 #endif // TRAINMEDITATIONS_CONFIGVALUE_H

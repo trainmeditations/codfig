@@ -17,7 +17,7 @@
  *  along with Codfig.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-#include "codfigfileio.h"
+#include "codfigfileio.hpp"
 
 #include <iostream>
 #include <fstream>

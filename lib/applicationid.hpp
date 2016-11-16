@@ -18,27 +18,27 @@
  *
  */
 
-#ifndef TRAINMEDITATIONS_CONFIGENTRY_H
-#define TRAINMEDITATIONS_CONFIGENTRY_H
+#ifndef TRAINMEDITATIONS_APPLICATIONID_HPP
+#define TRAINMEDITATIONS_APPLICATIONID_HPP
 
-#include "entrycontainer.h"
-#include "configvalue.h"
+#include <string>
+
+using std::string;
 
 namespace codfig {
-
-    class ConfigEntry:public EntryContainer, public ConfigValue {
+    class ApplicationID {
     public:
-        ConfigEntry(EntryContainer *parent, const string &name);
-        ConfigEntry(const ConfigEntry & other, EntryContainer *parent);
-        inline const string &path() const {return _path;}
-        ~ConfigEntry();
+        ApplicationID(const string &applicationName,
+                        const string &applicationVersion,
+                        const string &developer);
+        inline const string &applicationName() const { return _appName;}
+        inline const string &applicationVersion() const {return _appVer;}
+        inline const string &developer() const {return _developer;}
     private:
-        ConfigEntry(const ConfigEntry & other);
-        ConfigEntry & operator=(const ConfigEntry & rhs);
-        string _path;
-        EntryContainer *_parent;
+        string _appName;
+        string _appVer;
+        string _developer;
     };
-
 }
 
-#endif // TRAINMEDITATIONS_CONFIGENTRY_H
+#endif // TRAINMEDITATIONS_APPLICATIONID_H

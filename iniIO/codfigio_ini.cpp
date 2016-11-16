@@ -22,7 +22,7 @@
 #include <fstream>
 #include <algorithm>
 
-#include "codfigio_ini.h"
+#include "codfigio_ini.hpp"
 
 using codfig::ConfigIOini;
 

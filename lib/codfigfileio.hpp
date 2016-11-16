@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009-2011, 2015-2016 Shaun Bouckaert
+ * Copyright © 2009-2011, 2015 Shaun Bouckaert
  *
  *  This file is part of Codfig.
  *
@@ -18,23 +18,27 @@
  *
  */
 
-#ifndef TRAINMEDITATIONS_CONFIGPROFILE_H
-#define TRAINMEDITATIONS_CONFIGPROFILE_H
+// File: codfigfileio.h
+// decleration of the ConfigIO controller class for files
 
-#include "entrycontainer.h"
+#ifndef TRAINMEDITATIONS_CODFIGFILEIO_HPP
+#define TRAINMEDITATIONS_CODFIGFILEIO_HPP
+
 #include <string>
-
-using std::string;
+#include "codfig.hpp"
+#include "codfigio.hpp"
 
 namespace codfig {
-    class ConfigProfile:public EntryContainer {
+	class ConfigFileIO:public ConfigIO {
+    protected:
+        ConfigFileIO(const std::string &filename, const ApplicationID & _appID);
     public:
-        ConfigProfile(const string & profileName);
-        void setName(const string &newName);
-        const string &getName() const;
+        static std::string stdUserConfigPath();
     private:
-        string name;
-    };
+        static bool createDirectoryIfNotExist(const string& path);
+	protected:
+        std::string _filename;
+	};
 }
 
-#endif // TRAINMEDITATIONS_CONFIGPROFILE_H
+#endif

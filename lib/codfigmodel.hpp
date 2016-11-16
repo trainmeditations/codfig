@@ -21,13 +21,13 @@
 // File: codfigmodel.h
 // model of configuration data
 
-#ifndef TRAINMEDITATION_CODFIGMODEL_H
-#define TRAINMEDITATION_CODFIGMODEL_H
+#ifndef TRAINMEDITATION_CODFIGMODEL_HPP
+#define TRAINMEDITATION_CODFIGMODEL_HPP
 
-#include "applicationid.h"
-#include "configvalue.h"
-#include "entrycontainer.h"
-#include "configentry.h"
-#include "configprofile.h"
+#include "applicationid.hpp"
+#include "configvalue.hpp"
+#include "entrycontainer.hpp"
+#include "configentry.hpp"
+#include "configprofile.hpp"
 
 #endif

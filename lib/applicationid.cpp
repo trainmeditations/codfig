@@ -18,7 +18,7 @@
  *
  */
 
-#include "applicationid.h"
+#include "applicationid.hpp"
 
 using namespace codfig;
 

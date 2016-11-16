@@ -21,11 +21,11 @@
 // File: codfigmodel_t.h
 // codfig model template definitions
 
-#ifndef TRAINMEDITATIONS_CONFIGVALUE_T_H
-#define TRAINMEDITATIONS_CONFIGVALUE_T_H
+#ifndef TRAINMEDITATIONS_CONFIGVALUE_T_HPP
+#define TRAINMEDITATIONS_CONFIGVALUE_T_HPP
 
 #include "codfigmodel.hpp"
-#include "codfigexceptions.h"
+#include "codfigexceptions.hpp"
 #include <sstream>
 
 using namespace codfig;

@@ -18,7 +18,7 @@
  *
  */
 
-#include "configprofile.h"
+#include "configprofile.hpp"
 
 using namespace codfig;
 

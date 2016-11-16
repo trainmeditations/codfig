@@ -33,8 +33,8 @@
 #include <iostream>
 #include <string>
 //#include <cstdlib>
-#include "codfig.h"
-#include "tests.h"
+#include "codfig.hpp"
+#include "tests.hpp"
 #include "buildopts.h"
 
 using std::cout;
@@ -44,7 +44,7 @@ using std::string;
 using codfig::Config;
 
 #if Test_INI
-#include "codfigio_ini.h"
+#include "codfigio_ini.hpp"
 using codfig::ConfigIOini;
 #endif
 

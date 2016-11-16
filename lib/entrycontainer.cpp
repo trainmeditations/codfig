@@ -18,9 +18,9 @@
  *
  */
 
-#include "entrycontainer.h"
-#include "configentry.h"
-#include "codfigexceptions.h"
+#include "entrycontainer.hpp"
+#include "configentry.hpp"
+#include "codfigexceptions.hpp"
 
 using namespace codfig;
 

@@ -21,14 +21,14 @@
 // File: codfig.h
 // decleration of the Config controller class
 
-#ifndef TRAINMEDITATIONS_CODFIG_H
-#define TRAINMEDITATIONS_CODFIG_H
+#ifndef TRAINMEDITATIONS_CODFIG_HPP
+#define TRAINMEDITATIONS_CODFIG_HPP
 
 #include <string>
 using std::string;
 #include <vector>
 using std::vector;
-#include "codfigexceptions.h"
+#include "codfigexceptions.hpp"
 #include "codfigmodel.hpp"
 
 namespace codfig {
