@@ -55,9 +55,9 @@ namespace codfig {
         inline void setPathSeperator(char pathSeparator)
                { _pathSeparator=pathSeparator; }
 
-        int addProfile(const string &name);
-        void removeProfile(const int &index);
-        void selectProfile(const int &index);
+        size_t addProfile(const string &name);
+        void removeProfile(const size_t &index);
+        void selectProfile(const size_t &index);
         void selectDefaultProfile();
         const vector<string> getProfileList() const;
 

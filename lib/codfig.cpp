@@ -91,19 +91,19 @@ void Config::clearSource() {
 }
 
 
-int Config::addProfile(const string &name){
+size_t Config::addProfile(const string &name){
 	profiles.push_back(new ConfigProfile(name));
 	return profiles.size() - 1;
 }
 
-void Config::removeProfile(const int &index){
+void Config::removeProfile(const size_t &index){
 	ConfigProfile * profile = profiles[index];
 	vector<ConfigProfile *>::iterator iter = std::find((profiles.begin()+index), profiles.end(), profile);
 	profiles.erase(iter);
 	delete profile;
 }
 
-void Config::selectProfile(const int &index){
+void Config::selectProfile(const size_t &index){
 	currentProfile = profiles[index];
 }
 
