@@ -49,8 +49,8 @@ namespace codfig {
 
         inline void setSource(ConfigIO *source)
                 { _source=source; }
-        void reload(); //clear the cache or reset time
-        void clearSource();
+        //void reload(); //clear the cache or reset time
+        //void clearSource();
         
         inline void setPathSeperator(char pathSeparator)
                { _pathSeparator=pathSeparator; }

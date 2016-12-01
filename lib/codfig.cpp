@@ -25,6 +25,8 @@
 
 using namespace codfig;
 
+static const char defaultPathSep = '.';
+
 /*
  * main Config class
  */
@@ -33,7 +35,7 @@ Config::Config(const string &applicationName,
                const string &applicationVersion,
                const string &developer):
 appID(applicationName, applicationVersion, developer), defaultProfile(new ConfigProfile("default")),
-currentProfile(defaultProfile), _pathSeparator('.'){}
+currentProfile(defaultProfile), _pathSeparator(defaultPathSep){}
 
 Config::Config(const Config & other):
 appID(other.appID), defaultProfile(new ConfigProfile(*(other.defaultProfile))),
@@ -43,7 +45,7 @@ currentProfile(defaultProfile), _pathSeparator(other._pathSeparator){
 }
 
 Config::Config(ConfigIO *source):appID(source->applicationID()), defaultProfile(new ConfigProfile("default")),
-    currentProfile(defaultProfile), _pathSeparator('.'), _source(source)
+    currentProfile(defaultProfile), _pathSeparator(defaultPathSep), _source(source)
 {
     //source->readConfig(*this);
     //TODO: Remove body
@@ -86,9 +88,9 @@ Config::~Config(){
 	}
 }
 
-void Config::clearSource() {
+/*void Config::clearSource() {
     _source = NULL;
-}
+}*/
 
 
 size_t Config::addProfile(const string &name){
