@@ -18,9 +18,6 @@
  *
  */
 
-// File: codfigmodel_t.h
-// codfig model template definitions
-
 #ifndef TRAINMEDITATIONS_CONFIGVALUE_T_HPP
 #define TRAINMEDITATIONS_CONFIGVALUE_T_HPP
 
