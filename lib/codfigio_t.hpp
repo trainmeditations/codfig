@@ -37,11 +37,9 @@ void ConfigIO::writeValue(const string &path, const T & value) {
 }
 
 template <class T>
-T ConfigIO::readValue(const string &path) {
+void ConfigIO::readValue(const string &path, T &outValue) {
     stringstream tempval(readRawStringValue(path));
-    T val;
-    tempval >> val;
-    return val;
+    tempval >> outValue;
 }
 
 #endif //TRAINMEDITATIONS_CODFIGIO_T_H

@@ -51,7 +51,7 @@ namespace codfig {
         virtual void writeRawStringValue(const string & path, const string & value) = 0;
 
         template <class T>
-        T readValue(const string & path);
+        void readValue(const string & path, T & outValue);
 
         template <class T>
         void writeValue(const string & path, const T & value);
