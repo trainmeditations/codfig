@@ -47,10 +47,25 @@ namespace codfig {
 
         //virtual void writeConfig(Config &config) = 0;
 
+        virtual string readRawStringValue(const string & path) = 0;
+        virtual void writeRawStringValue(const string & path, const string & value) = 0;
+
+        template <class T>
+        T readValue(const string & path);
+
+        template <class T>
+        void writeValue(const string & path, const T & value);
+
     protected:
         ApplicationID appID;
 	};
 
 }
+
+/************************
+* Template Definitions *
+************************/
+
+#include "codfigio_t.hpp"
 
 #endif

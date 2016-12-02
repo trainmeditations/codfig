@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009-2012, 2015 Shaun Bouckaert
+ * Copyright © 2016 Shaun Bouckaert
  *
  *  This file is part of Codfig.
  *
@@ -18,10 +18,30 @@
  *
  */
 
+#ifndef TRAINMEDITATIONS_CODFIGIO_T_HPP
+#define TRAINMEDITATIONS_CODFIGIO_T_HPP
+
 #include "codfigio.hpp"
+
+#include <sstream>
+
+using std::stringstream;
 
 using namespace codfig;
 
-ConfigIO::ConfigIO(const ApplicationID &_appID):appID(_appID){}
+template <class T>
+void ConfigIO::writeValue(const string &path, const T & value) {
+    stringstream tempval;
+    tempval << value;
+    writeRawStringValue(path, tempval.str());
+}
 
-ConfigIO::~ConfigIO(){}
+template <class T>
+T ConfigIO::readValue(const string &path) {
+    stringstream tempval(readRawStringValue(path));
+    T val;
+    tempval >> val;
+    return val;
+}
+
+#endif //TRAINMEDITATIONS_CODFIGIO_T_H

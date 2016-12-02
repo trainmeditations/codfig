@@ -5,6 +5,6 @@ add_library( Codfig codfig.cpp codfig.hpp codfigmodel.hpp
     configentry.cpp configentry.hpp
     configprofile.cpp configprofile.hpp
     codfigexceptions.cpp codfigexceptions.hpp
-    codfigio.hpp codfigio.cpp )
+    codfigio.hpp codfigio_t.hpp codfigio.cpp )
 add_library( CodfigFileIO codfigfileio.hpp codfigfileio.cpp )
 target_link_libraries( CodfigFileIO Codfig )
