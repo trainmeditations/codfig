@@ -34,11 +34,11 @@ namespace codfig {
     class ConfigIO {
     protected:
         ConfigIO(const ApplicationID &_appID);
+        virtual string readRawStringValue(const string & path) = 0;
+        virtual void writeRawStringValue(const string & path, const string & value) = 0;
     public:
         inline ApplicationID applicationID() const { return appID; }
 
-        virtual string readRawStringValue(const string & path) = 0;
-        virtual void writeRawStringValue(const string & path, const string & value) = 0;
 
         template <class T>
         void readValue(const string & path, T & outValue);
