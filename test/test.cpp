@@ -35,7 +35,7 @@
 //#include <cstdlib>
 #include "codfig.hpp"
 #include "tests.hpp"
-#include "buildopts.h"
+#include "buildopts.hpp"
 
 using std::cout;
 using std::endl;
