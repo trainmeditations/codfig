@@ -35,9 +35,6 @@ namespace codfig {
     protected:
         ConfigIO(const ApplicationID &_appID);
     public:
-        //force abstract with pure virtual destructor
-        virtual ~ConfigIO() = 0;
-
         inline ApplicationID applicationID() const { return appID; }
 
         virtual string readRawStringValue(const string & path) = 0;
