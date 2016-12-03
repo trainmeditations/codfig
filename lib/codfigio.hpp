@@ -46,6 +46,9 @@ namespace codfig {
         template <class T>
         void writeValue(const string & path, const T & value);
 
+        //use specialisation for specific types eg:
+        //template <> void readValue(const string & path, int & outValue);
+
     protected:
         ApplicationID appID;
 	};
