@@ -40,13 +40,6 @@ namespace codfig {
 
         inline ApplicationID applicationID() const { return appID; }
 
-        /*
-         * config will be empty except for an empty default profile which is also current profile
-         */
-        //virtual void readConfig(Config &config) = 0;
-
-        //virtual void writeConfig(Config &config) = 0;
-
         virtual string readRawStringValue(const string & path) = 0;
         virtual void writeRawStringValue(const string & path, const string & value) = 0;
 
