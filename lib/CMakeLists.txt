@@ -6,5 +6,6 @@ add_library( Codfig codfig.cpp codfig.hpp
     configprofile.cpp configprofile.hpp
     codfigexceptions.cpp codfigexceptions.hpp
     codfigio.hpp codfigio_t.hpp codfigio.cpp )
+target_compile_features(Codfig PRIVATE cxx_deleted_functions)
 add_library( CodfigFileIO codfigfileio.hpp codfigfileio.cpp )
 target_link_libraries( CodfigFileIO Codfig )
