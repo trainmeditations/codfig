@@ -39,7 +39,6 @@ namespace codfig {
     public:
         inline ApplicationID applicationID() const { return appID; }
 
-
         template <class T>
         void readValue(const string & path, T & outValue);
 

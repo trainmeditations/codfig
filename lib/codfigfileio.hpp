@@ -25,19 +25,21 @@
 #define TRAINMEDITATIONS_CODFIGFILEIO_HPP
 
 #include <string>
+using std::string;
+
 #include "codfig.hpp"
 #include "codfigio.hpp"
 
 namespace codfig {
 	class ConfigFileIO:public ConfigIO {
     protected:
-        ConfigFileIO(const std::string &filename, const ApplicationID & _appID);
+        ConfigFileIO(const string &filename, const ApplicationID & _appID);
     public:
-        static std::string stdUserConfigPath();
+        static string stdUserConfigPath();
     private:
         static bool createDirectoryIfNotExist(const string& path);
 	protected:
-        std::string _filename;
+        string _filename;
 	};
 }
 

@@ -21,7 +21,6 @@
 #include <algorithm>
 
 #include "codfig.hpp"
-#include "codfigio.hpp"
 
 using namespace codfig;
 
@@ -146,9 +145,6 @@ const ConfigEntry & Config::findEntry(string path) const
 		path = path.substr(separatorPos+1);
 	}
 	return currentEC->getEntry(path);
-    /*string::size_type seperatorPos = path.find_last_of(_pathSeparator);
-    const ConfigEntry &entry = findEntry(path.substr(0, seperatorPos));
-    return seperatorPos == string::npos?entry:entry.getEntry(path.substr(seperatorPos+1));*/
 }
 
 ConfigEntry & Config::findEntry(string path)
@@ -160,7 +156,4 @@ ConfigEntry & Config::findEntry(string path)
 		path = path.substr(separatorPos+1);
 	}
 	return currentEC->getEntry(path);
-    /*string::size_type seperatorPos = path.find_last_of(_pathSeparator);
-    ConfigEntry &section = findEntry(path.substr(0, seperatorPos));
-    return seperatorPos == string::npos?section:section.getEntry(path.substr(seperatorPos+1));*/
 }

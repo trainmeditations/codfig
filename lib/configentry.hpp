@@ -34,7 +34,7 @@ namespace codfig {
         ~ConfigEntry();
     private:
         ConfigEntry(const ConfigEntry & other);
-        ConfigEntry & operator=(const ConfigEntry & rhs);
+        ConfigEntry & operator=(const ConfigEntry & rhs) = delete;
         string _path;
         EntryContainer *_parent;
     };

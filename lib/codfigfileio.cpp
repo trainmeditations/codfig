@@ -22,7 +22,6 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <assert.h>
 
 #ifdef _WIN32
 #include <shlobj.h>

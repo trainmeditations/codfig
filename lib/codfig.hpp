@@ -28,12 +28,13 @@
 using std::string;
 #include <vector>
 using std::vector;
+
 #include "codfigexceptions.hpp"
-#include "codfigmodel.hpp"
+#include "configentry.hpp"
+#include "configprofile.hpp"
+#include "codfigio.hpp"
 
 namespace codfig {
-
-    class ConfigIO;
 
     class Config {
     public:

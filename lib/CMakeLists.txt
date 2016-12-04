@@ -1,4 +1,4 @@
-add_library( Codfig codfig.cpp codfig.hpp codfigmodel.hpp
+add_library( Codfig codfig.cpp codfig.hpp
     applicationid.cpp applicationid.hpp
     configvalue.cpp configvalue.hpp configvalue_t.hpp
     entrycontainer.cpp entrycontainer.hpp
