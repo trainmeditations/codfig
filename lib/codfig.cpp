@@ -60,7 +60,7 @@ Config & Config::operator=(const Config &rhs) {
 
         for (vector<ConfigProfile *>::iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
             delete *iter;
-            *iter = NULL;
+            //*iter = NULL;
         }
         profiles.clear();
         copyProfiles(rhs);
@@ -69,7 +69,7 @@ Config & Config::operator=(const Config &rhs) {
 }
 
 void Config::copyProfiles(const Config & other) {
-    ConfigProfile * newProfile = NULL;
+    ConfigProfile * newProfile;
     for (vector<ConfigProfile *>::const_iterator other_iter = other.profiles.begin();
       other_iter != other.profiles.end(); ++other_iter) {
         newProfile = new ConfigProfile(*(*other_iter));
@@ -79,11 +79,11 @@ void Config::copyProfiles(const Config & other) {
 }
 
 Config::~Config(){
-	currentProfile = NULL;
+    //currentProfile = NULL;
 	delete defaultProfile;
 	for (vector<ConfigProfile *>::iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
 		delete *iter;
-		*iter = NULL;
+        //*iter = NULL;
 	}
 }
 

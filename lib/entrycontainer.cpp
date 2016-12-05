@@ -55,7 +55,7 @@ EntryContainer::~EntryContainer()
 {
     for (map<string, ConfigEntry *>::iterator iter = subEntries.begin(); iter != subEntries.end(); ++iter) {
         delete iter->second;
-        iter->second = NULL;
+        //iter->second = NULL;
     }
 }
 
