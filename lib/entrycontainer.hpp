@@ -24,10 +24,12 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <memory>
 
 using std::map;
 using std::vector;
 using std::string;
+using std::shared_ptr;
 
 namespace codfig {
 
@@ -39,15 +41,15 @@ namespace codfig {
         EntryContainer(const EntryContainer & other);
         EntryContainer & operator=(const EntryContainer & rhs);
         virtual ~EntryContainer();
-        ConfigEntry * addEntry(const string &name);
+        shared_ptr<ConfigEntry> addEntry(const string &name);
         void removeEntry(const string &name);
-        ConfigEntry & getEntry(const string &name);
-        const ConfigEntry & getEntry(const string &name) const;
+        shared_ptr<ConfigEntry> getEntry(const string &name);
+        const shared_ptr<ConfigEntry> getEntry(const string &name) const;
         const vector<string> getEntryNames() const;
         bool hasEntry(const string &name) const;
     private:
         void copyEntries(const EntryContainer & other);
-        map<string, ConfigEntry *> subEntries;
+        map<string, shared_ptr<ConfigEntry>> subEntries;
     };
 
 }

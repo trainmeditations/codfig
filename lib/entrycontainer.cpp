@@ -35,9 +35,6 @@ EntryContainer::EntryContainer(const EntryContainer & other)
 EntryContainer & EntryContainer::operator=(const EntryContainer & rhs)
 {
     if (this != &rhs) {
-        for (map<string, ConfigEntry *>::iterator iter = subEntries.begin(); iter != subEntries.end(); iter++) {
-            delete iter->second;
-        }
         subEntries.clear();
         copyEntries(rhs);
     }
@@ -46,23 +43,18 @@ EntryContainer & EntryContainer::operator=(const EntryContainer & rhs)
 
 void EntryContainer::copyEntries(const EntryContainer & other)
 {
-    for (map<string, ConfigEntry *>::const_iterator other_iter = other.subEntries.begin(); other_iter != other.subEntries.end(); other_iter++) {
-        subEntries[other_iter->first] = new ConfigEntry(*(other_iter->second), this);
+    for (auto other_iter = other.subEntries.begin(); other_iter != other.subEntries.end(); other_iter++) {
+        subEntries[other_iter->first] = std::make_shared<ConfigEntry>(*(other_iter->second), this);
     }
 }
 
 EntryContainer::~EntryContainer()
-{
-    for (map<string, ConfigEntry *>::iterator iter = subEntries.begin(); iter != subEntries.end(); ++iter) {
-        delete iter->second;
-        //iter->second = NULL;
-    }
-}
+{}
 
-ConfigEntry * EntryContainer::addEntry(const string &name)
+shared_ptr<ConfigEntry> EntryContainer::addEntry(const string &name)
 {
     if (!subEntries.count(name)) {
-        ConfigEntry * newCE = new ConfigEntry(this, name);
+        shared_ptr<ConfigEntry> newCE = std::make_shared<ConfigEntry>(this, name);
         subEntries[name] = newCE;
         return newCE;
     } else {
@@ -74,24 +66,23 @@ ConfigEntry * EntryContainer::addEntry(const string &name)
 void EntryContainer::removeEntry(const string &name)
 {
     if (subEntries.count(name)) {
-        delete subEntries[name];
         subEntries.erase(name);
     } //should I throw an exception on else? strict mode?
 }
 
-ConfigEntry & EntryContainer::getEntry(const string &name)
+shared_ptr<ConfigEntry> EntryContainer::getEntry(const string &name)
 {
     if (subEntries.count(name)) {
-        return *subEntries[name];
+        return subEntries[name];
     } else {
-        return *(addEntry(name));
+        return addEntry(name);
     }
 }
 
-const ConfigEntry & EntryContainer::getEntry(const string &name) const
+const shared_ptr<ConfigEntry> EntryContainer::getEntry(const string &name) const
 {
     if (subEntries.count(name)) {
-        return *(*subEntries.find(name)).second;
+        return (*subEntries.find(name)).second;
     } else {
         throw bad_path(name);
     }
@@ -105,7 +96,7 @@ bool EntryContainer::hasEntry(const string &name) const
 const vector<string> EntryContainer::getEntryNames() const
 {
     vector<string> names;
-    for (map<string, ConfigEntry *>::const_iterator iter = subEntries.begin(); iter != subEntries.end(); ++iter) {
+    for (auto iter = subEntries.begin(); iter != subEntries.end(); ++iter) {
         names.push_back(iter->first);
     }
     return names;

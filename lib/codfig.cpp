@@ -43,25 +43,20 @@ currentProfile(defaultProfile), _pathSeparator(other._pathSeparator){
     copyProfiles(other);
 }
 
-Config::Config(ConfigIO *source):appID(source->applicationID()), defaultProfile(new ConfigProfile("default")),
+/*Config::Config(ConfigIO *source):appID(source->applicationID()), defaultProfile(new ConfigProfile("default")),
     currentProfile(defaultProfile), _pathSeparator(defaultPathSep), _source(source)
 {
     //source->readConfig(*this);
     //TODO: Remove body
-}
+}*/
 
 Config & Config::operator=(const Config &rhs) {
     if (this != &rhs) {
         appID = rhs.appID;
 
-        delete defaultProfile;
-        defaultProfile = new ConfigProfile(*(rhs.defaultProfile));
+        defaultProfile = std::make_shared<ConfigProfile>(*(rhs.defaultProfile));
         currentProfile = defaultProfile;
 
-        for (vector<ConfigProfile *>::iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
-            delete *iter;
-            //*iter = NULL;
-        }
         profiles.clear();
         copyProfiles(rhs);
     }
@@ -69,23 +64,16 @@ Config & Config::operator=(const Config &rhs) {
 }
 
 void Config::copyProfiles(const Config & other) {
-    ConfigProfile * newProfile;
-    for (vector<ConfigProfile *>::const_iterator other_iter = other.profiles.begin();
+    shared_ptr<ConfigProfile> newProfile;
+    for (auto other_iter = other.profiles.begin();
       other_iter != other.profiles.end(); ++other_iter) {
-        newProfile = new ConfigProfile(*(*other_iter));
+        newProfile = std::make_shared<ConfigProfile>(**other_iter);
         profiles.push_back(newProfile);
         if (other.currentProfile == *other_iter) currentProfile = newProfile;
     }
 }
 
-Config::~Config(){
-    //currentProfile = NULL;
-	delete defaultProfile;
-	for (vector<ConfigProfile *>::iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
-		delete *iter;
-        //*iter = NULL;
-	}
-}
+Config::~Config(){}
 
 /*void Config::clearSource() {
     _source = NULL;
@@ -93,15 +81,14 @@ Config::~Config(){
 
 
 size_t Config::addProfile(const string &name){
-	profiles.push_back(new ConfigProfile(name));
+    profiles.push_back(std::make_shared<ConfigProfile>(name));
 	return profiles.size() - 1;
 }
 
 void Config::removeProfile(const size_t &index){
-	ConfigProfile * profile = profiles[index];
-	vector<ConfigProfile *>::iterator iter = std::find((profiles.begin()+index), profiles.end(), profile);
+    shared_ptr<ConfigProfile> profile = profiles[index];
+    auto iter = std::find((profiles.begin()+index), profiles.end(), profile);
 	profiles.erase(iter);
-	delete profile;
 }
 
 void Config::selectProfile(const size_t &index){
@@ -114,7 +101,7 @@ void Config::selectDefaultProfile(){
 
 const vector<string> Config::getProfileList() const {
 	vector<string> profileList = vector<string>();
-	for (vector<ConfigProfile *>::const_iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
+    for (auto iter = profiles.begin(); iter != profiles.end(); ++iter) {
 		profileList.push_back((*iter)->getName());
 	}
 	return profileList;
@@ -138,22 +125,22 @@ const vector<string> Config::getEntryNames() const {
 
 const ConfigEntry & Config::findEntry(string path) const
 {
-	const EntryContainer *currentEC = currentProfile;
+    shared_ptr<const EntryContainer> currentEC = currentProfile;
 	string::size_type separatorPos;
 	while ((separatorPos = path.find(_pathSeparator)) != string::npos) {
-		currentEC = &(currentEC->getEntry(path.substr(0, separatorPos)));
+        currentEC = currentEC->getEntry(path.substr(0, separatorPos));
 		path = path.substr(separatorPos+1);
 	}
-	return currentEC->getEntry(path);
+    return *(currentEC->getEntry(path));
 }
 
 ConfigEntry & Config::findEntry(string path)
 {
-	EntryContainer *currentEC = currentProfile;
+    shared_ptr<EntryContainer> currentEC = currentProfile;
 	string::size_type separatorPos;
 	while ((separatorPos = path.find(_pathSeparator)) != string::npos) {
-		currentEC = &(currentEC->getEntry(path.substr(0, separatorPos)));
+        currentEC = currentEC->getEntry(path.substr(0, separatorPos));
 		path = path.substr(separatorPos+1);
 	}
-	return currentEC->getEntry(path);
+    return *(currentEC->getEntry(path));
 }

@@ -28,6 +28,8 @@
 using std::string;
 #include <vector>
 using std::vector;
+#include <memory>
+using std::shared_ptr;
 
 #include "codfigexceptions.hpp"
 #include "configentry.hpp"
@@ -41,7 +43,7 @@ namespace codfig {
         Config(const string &applicationName,
                 const string &applicationVersion,
                 const string &developer);
-        Config(ConfigIO *source);/*create config from source object*/
+        /*Config(ConfigIO *source);/*create config from source object*/
         Config(const Config &other);
         Config & operator=(const Config &rhs);
         ~Config();
@@ -74,9 +76,9 @@ namespace codfig {
         void copyProfiles(const Config &other);
 
         ApplicationID appID;
-        ConfigProfile * defaultProfile;
-        ConfigProfile * currentProfile;
-        vector<ConfigProfile *> profiles;
+        shared_ptr<ConfigProfile> defaultProfile;
+        shared_ptr<ConfigProfile> currentProfile;
+        vector<shared_ptr<ConfigProfile>> profiles;
         char _pathSeparator;
         ConfigIO * _source;
     };
