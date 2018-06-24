@@ -85,10 +85,8 @@ size_t Config::addProfile(const string &name){
 	return profiles.size() - 1;
 }
 
-void Config::removeProfile(const size_t &index){
-    shared_ptr<ConfigProfile> profile = profiles[index];
-    auto iter = std::find((profiles.begin()+index), profiles.end(), profile);
-	profiles.erase(iter);
+void Config::removeProfile(const size_t index){
+    profiles.erase(profiles.begin()+index);
 }
 
 void Config::selectProfile(const size_t &index){
