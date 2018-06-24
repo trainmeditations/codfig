@@ -33,7 +33,7 @@ namespace codfig {
         inline const string &path() const {return _path;}
         ~ConfigEntry();
     private:
-        ConfigEntry(const ConfigEntry & other);
+        ConfigEntry(const ConfigEntry & other) = delete;
         ConfigEntry & operator=(const ConfigEntry & rhs) = delete;
         string _path;
         EntryContainer *_parent;

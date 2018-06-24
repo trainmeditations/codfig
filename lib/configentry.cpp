@@ -24,8 +24,8 @@ using namespace codfig;
 
 ConfigEntry::ConfigEntry(EntryContainer *parent, const string &name): _parent(parent)
 {
-    ConfigEntry * parentE = NULL;
-    if (parentE = dynamic_cast<ConfigEntry *>(parent)) {
+    ConfigEntry * parentE = nullptr;
+    if ((parentE = dynamic_cast<ConfigEntry *>(parent))) {
         _path = parentE->path() + '.' + name;
     } else {
         _path = name;
