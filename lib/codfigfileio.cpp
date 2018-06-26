@@ -40,7 +40,7 @@ using std::stringstream;
 using namespace codfig;
 
 ConfigFileIO::ConfigFileIO(const string &filename, const ApplicationID & _appID):
-_filename(filename), ConfigIO(_appID)
+ConfigIO(_appID), _filename(filename)
 {
     fstream file(filename.c_str());
     file.close();

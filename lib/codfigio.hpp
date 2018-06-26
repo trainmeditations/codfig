@@ -48,6 +48,8 @@ namespace codfig {
         //use specialisation for specific types eg:
         //template <> void readValue(const string & path, int & outValue);
 
+        virtual ~ConfigIO() = 0;
+
     protected:
         ApplicationID appID;
 	};
