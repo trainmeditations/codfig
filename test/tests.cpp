@@ -24,8 +24,9 @@
 
 using std::cout;
 using std::endl;
+using std::string;
 
-int boolTest(const char * message, bool test) {
+unsigned int boolTest(string message, bool test) {
 	cout << "|-" << message << ": ";
 	if (test) {
 		cout << "success." << endl;

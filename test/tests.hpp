@@ -22,11 +22,13 @@
 #define TESTS_HPP
 
 #include <iostream>
+#include <string>
 
 using std::cout;
 using std::endl;
+using std::string;
 
-int boolTest(const char *, bool);
+unsigned int boolTest(string, bool);
 
 /*template <class E, class F, class A, class O>
 int exceptionTest(const char *, A, const O &, F);//replace third arg with variable argument list
@@ -49,7 +51,7 @@ int exceptionTest(const char * message, A argument, const O & object, F function
 
 
 template <class E, class F, class A, class O>
-int exceptionTest(const char * message, A argument, O & object, F functionP) {
+unsigned int exceptionTest(const string message, A argument, O & object, F functionP) {
 	cout << "|-" << message << ": ";
 	try {
 			(object.*functionP)(argument);
@@ -65,7 +67,7 @@ int exceptionTest(const char * message, A argument, O & object, F functionP) {
 }
 
 template <class E, class F, class O>
-        int exceptionTestNoArg(const char * message, O & object, F functionP) {
+unsigned int exceptionTestNoArg(const string message, O & object, F functionP) {
     cout << "|-" << message << ": ";
     try {
         (object.*functionP)();
@@ -81,7 +83,7 @@ template <class E, class F, class O>
 }
 
 template <class F, class A, class O>
-int noExceptionTest(const char *message, A argument, O & object, F functionP) {
+unsigned int noExceptionTest(const string message, A argument, O & object, F functionP) {
     cout << "|-" << message << ": ";
     try {
         (object.*functionP)(argument);
@@ -94,7 +96,7 @@ int noExceptionTest(const char *message, A argument, O & object, F functionP) {
 }
 
 template <class D, class A>
-int isDescendant(const char *message, A &ancestor) {
+int isDescendant(const string message, A &ancestor) {
     cout << "|-" << message << ": ";
     A *ancestorP = &ancestor;
     D *descendant = dynamic_cast<D *>(ancestorP);
