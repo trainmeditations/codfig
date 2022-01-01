@@ -47,7 +47,7 @@ ConfigIO(_appID), _filename(filename)
 }
 
 bool ConfigFileIO::createDirectoryIfNotExist(const string& path) {
-#ifdef WIN32
+#ifdef _WIN32
     return (_mkdir(path.c_str()) == 0 || errno == EEXIST);
 #elif defined(__unix__)
     return (mkdir(path.c_str(), 0700) == 0 || errno == EEXIST);
@@ -59,7 +59,7 @@ bool ConfigFileIO::createDirectoryIfNotExist(const string& path) {
 string ConfigFileIO::stdUserConfigPath(){
     stringstream cfgPath;
     //Windows first, then *nixes
-#ifdef WIN32
+#ifdef _WIN32
     //using ansi windows for now
     //assume appdata directory exists
     char _confPath[MAX_PATH];
