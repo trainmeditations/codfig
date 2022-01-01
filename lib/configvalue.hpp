@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009-2011, 2015-2016 Shaun Bouckaert
+ * Copyright © 2009-2011, 2015-2016, 2021-2022 Shaun Bouckaert
  *
  *  This file is part of Codfig.
  *
@@ -55,6 +55,7 @@ namespace codfig {
         ConfigValue & operator=(const ConfigValue & rhs);
         virtual ~ConfigValue();
         string stringValue() const;
+        //make value() private?
         template <class T>
             const T &value() const;
         template <class T>

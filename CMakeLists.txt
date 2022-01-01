@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
 project (Codfig)
 
 option (BUILD_INI "Build support for INI files" ON)

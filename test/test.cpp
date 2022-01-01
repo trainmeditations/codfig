@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009-2012, 2015 Shaun Bouckaert
+ * Copyright © 2009-2012, 2015, 2021-2022 Shaun Bouckaert
  *
  *  This file is part of Codfig.
  *
@@ -120,9 +120,16 @@ bool runTests(Test test, bool colours){
             failures += boolTest("Compare float value",
                                  testConfig["accounts.isp.smtp.data"].value<float>() == 17.0F);
 
-            //Compare bool value
+            //Compare bool value with operator compare
             failures += boolTest("Compare bool value",
-                                 testConfig["accounts.isp.smtp.default"].value<bool>() == false);
+                                 testConfig["accounts.isp.smtp.default"] == false);
+            //Compare cstring values with operator compare
+            failures += boolTest("Compare cstring value with == operator",
+                                testConfig["accounts.isp2.number"] == "073344556677");
+            string isp2Number;
+            testConfig["accounts.isp2.number"] >> isp2Number;
+            failures += boolTest("Compare cstring after >> operator",
+                                isp2Number == "073344556677");
         }break;
 
         case structure:
@@ -232,8 +239,9 @@ Config getFixture(Fixture fixture) {
         testConfig["accounts.isp.smtp.ip"].value<string>() = "127.0.0.1";
         testConfig["accounts.isp.smtp.port"].value<int>() = 25;
         testConfig["accounts.isp.smtp.data"].value<float>() = 17.0F;
-        testConfig["accounts.isp.smtp.default"].value<bool>() = false;
-        testConfig["accounts.isp2.number"].value<string>() = "073344556677";
+        //value assignment with operators
+        testConfig["accounts.isp.smtp.default"] << false;
+        testConfig["accounts.isp2.number"] << "073344556677";
         testConfig.addProfile("Test Profile");
         break;
     }

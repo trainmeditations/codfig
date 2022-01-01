@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009-2011, 2015-2016, 2018 Shaun Bouckaert
+ * Copyright © 2009-2011, 2015-2016, 2018, 2021-2022 Shaun Bouckaert
  *
  *  This file is part of Codfig.
  *
@@ -36,6 +36,7 @@ ConfigEntry::ConfigEntry(const ConfigEntry & other, EntryContainer *parent):
 EntryContainer(other), ConfigValue(other), _parent(parent)
 {}
 
+//copying explicitly prohibited
 /*ConfigEntry & ConfigEntry::operator=(const ConfigEntry & rhs)
 {
     if (this != &rhs) {
@@ -44,6 +45,15 @@ EntryContainer(other), ConfigValue(other), _parent(parent)
     }
     return *this;
 }*/
+
+ConfigEntry &codfig::operator<< (ConfigEntry &entry, const char *value){
+    entry.value<string>() = value;
+    return entry;
+}
+
+bool ConfigEntry::operator==(const char *other) {
+        return this->value<string>() == other;
+}
 
 ConfigEntry::~ConfigEntry()
 {}

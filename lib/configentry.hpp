@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009-2011, 2015-2016 Shaun Bouckaert
+ * Copyright © 2009-2011, 2015-2016, 2021-2022 Shaun Bouckaert
  *
  *  This file is part of Codfig.
  *
@@ -24,6 +24,9 @@
 #include "entrycontainer.hpp"
 #include "configvalue.hpp"
 
+#include <string>
+using std::string;
+
 namespace codfig {
 
     class ConfigEntry:public EntryContainer, public ConfigValue {
@@ -31,14 +34,39 @@ namespace codfig {
         ConfigEntry(EntryContainer *parent, const string &name);
         ConfigEntry(const ConfigEntry & other, EntryContainer *parent);
         inline const string &path() const {return _path;}
+        template <class T>
+            bool operator==(const T& other);
+        bool operator==(const char *other);
         ~ConfigEntry();
     private:
+        //explicit copy prohibition with delete
         ConfigEntry(const ConfigEntry & other) = delete;
         ConfigEntry & operator=(const ConfigEntry & rhs) = delete;
         string _path;
         EntryContainer *_parent;
+        friend ConfigEntry &operator<< (ConfigEntry &entry, const char value[]);
+        template <class T>
+            friend ConfigEntry& operator<< (ConfigEntry &entry, const T &value);
+        template <class T>
+            friend void operator>> (const ConfigEntry &entry, T &value);
     };
 
+    ConfigEntry &operator<< (ConfigEntry &entry, const char *value);
+    
+    template <class T>
+        ConfigEntry &operator<< (ConfigEntry &entry, const T &value);
+
+    //template < std::size_t N >
+    //    void operator<<(ConfigEntry &entry, const char(&value)[N]);
+    
+    template <class T>
+        void operator>> (const ConfigEntry &entry, T &value);
 }
+
+/************************
+* Template Definitions *
+************************/
+
+#include "configentry_t.hpp"
 
 #endif // TRAINMEDITATIONS_CONFIGENTRY_H
