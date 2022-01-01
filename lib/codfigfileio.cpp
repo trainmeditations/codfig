@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009-2011, 2015 Shaun Bouckaert
+ * Copyright © 2009-2011, 2015, 2018 Shaun Bouckaert
  *
  *  This file is part of Codfig.
  *
