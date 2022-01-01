@@ -1,4 +1,7 @@
-cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5.2 FATAL_ERROR)
+if (POLICY CMP0115)
+	cmake_policy(SET CMP0115 NEW)
+endif()
 project (Codfig)
 
 option (BUILD_INI "Build support for INI files" ON)
