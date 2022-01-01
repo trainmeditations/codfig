@@ -40,8 +40,9 @@ template <class T>
     }*/
 
 template <class T>
-    void codfig::operator>> (const ConfigEntry &entry, T &value) {
+    const ConfigEntry &codfig::operator>> (const ConfigEntry &entry, T &value) {
         value = entry.value<T>();
+        return entry;
     }
 
 template <class T>

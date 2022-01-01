@@ -46,9 +46,9 @@ namespace codfig {
         EntryContainer *_parent;
         friend ConfigEntry &operator<< (ConfigEntry &entry, const char value[]);
         template <class T>
-            friend ConfigEntry& operator<< (ConfigEntry &entry, const T &value);
+            friend ConfigEntry &operator<< (ConfigEntry &entry, const T &value);
         template <class T>
-            friend void operator>> (const ConfigEntry &entry, T &value);
+            friend const ConfigEntry &operator>> (const ConfigEntry &entry, T &value);
     };
 
     ConfigEntry &operator<< (ConfigEntry &entry, const char *value);
@@ -56,11 +56,12 @@ namespace codfig {
     template <class T>
         ConfigEntry &operator<< (ConfigEntry &entry, const T &value);
 
+    //Array input?
     //template < std::size_t N >
     //    void operator<<(ConfigEntry &entry, const char(&value)[N]);
     
     template <class T>
-        void operator>> (const ConfigEntry &entry, T &value);
+        const ConfigEntry &operator>> (const ConfigEntry &entry, T &value);
 }
 
 /************************

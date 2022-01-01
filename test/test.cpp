@@ -126,10 +126,12 @@ bool runTests(Test test, bool colours){
             //Compare cstring values with operator compare
             failures += boolTest("Compare cstring value with == operator",
                                 testConfig["accounts.isp2.number"] == "073344556677");
-            string isp2Number;
-            testConfig["accounts.isp2.number"] >> isp2Number;
+            string isp2Number, isp2Number2;
+            testConfig["accounts.isp2.number"] >> isp2Number >> isp2Number2;
             failures += boolTest("Compare cstring after >> operator",
                                 isp2Number == "073344556677");
+            failures += boolTest("Compare chained >> operator",
+                                isp2Number2 == "073344556677");
         }break;
 
         case structure:
